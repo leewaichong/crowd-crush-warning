@@ -25,7 +25,7 @@ class ReplayTests(unittest.TestCase):
         self.assertIn('id="time" type="range"', html)
         self.assertIn('Time relative to festival opening (s)', html)
         self.assertIn('Spatially averaged density (m^-2)', html)
-        self.assertIn('Missing trailing padding rows', html)
+        self.assertIn('missing padding rows: 1', html)
         self.assertIn('Francois Gu, Benjamin Guiselin, and Denis Bartolo', html)
         self.assertIn('10.5281/zenodo.14050598', html)
         self.assertIn('CC BY 4.0', html)
@@ -36,7 +36,7 @@ class ReplayTests(unittest.TestCase):
     def test_cursor_uses_prior_display_sample_and_reports_time_age_or_coverage(self):
         html = render_density_replay(table())
         self.assertIn("p[0]<=t", html)
-        self.assertIn("age '+(t-best[0])+' s", html)
+        self.assertIn("age '+formatSeconds(t-best[0])+' s", html)
         self.assertIn("outside actual coverage", html)
         self.assertIn("class:'cursor-line'", html)
         self.assertIn("plot.querySelector('.cursor-line')?.remove()", html)
@@ -45,9 +45,25 @@ class ReplayTests(unittest.TestCase):
     def test_axis_has_numeric_tick_labels_and_year_color_legend(self):
         html = render_density_replay(table())
         self.assertIn("class:'tick'", html)
-        self.assertIn('id="legend"', html)
-        self.assertIn("stroke:s.color", html)
-        self.assertIn("String(s.year)", html)
+        self.assertIn('class="legend" aria-label="Year and missing row counts"', html)
+        self.assertIn('style="background:#175ea8"', html)
+        self.assertIn('2022 · missing padding rows: 1', html)
+        self.assertIn('2023 · missing padding rows: 3', html)
+
+    def test_responsive_chart_is_scrollable_without_expanding_page(self):
+        html = render_density_replay(table())
+        self.assertIn('.chart-scroll{max-width:100%;overflow-x:auto', html)
+        self.assertIn('min-width:720px;height:auto;aspect-ratio:900 / 470', html)
+        self.assertIn('Scroll the chart horizontally to see the full time axis.', html)
+        self.assertRegex(html, r'<div class="legend".*?</div>\s*<p class="mobile-hint".*?</p>\s*<div class="chart-scroll".*?<svg')
+        self.assertNotIn('id="legend"', html)
+
+    def test_cursor_labels_retained_sample_and_rounds_seconds(self):
+        html = render_density_replay(table())
+        self.assertIn('retained display sample at or before cursor', html)
+        self.assertIn('function formatSeconds(value){return Number(value.toFixed(3)).toString();}', html)
+        self.assertIn("formatSeconds(t-best[0])+' s'", html)
+        self.assertNotIn('0.07999999999992724', html)
 
     def test_escapes_embedded_script_delimiters_and_year_markup(self):
         t = table()

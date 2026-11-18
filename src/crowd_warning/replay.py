@@ -91,13 +91,15 @@ def render_density_replay(table):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Temporal density source viewer</title>
 <style>
-:root{{color-scheme:light;font:16px system-ui,sans-serif;color:#18212b;background:#fff}}body{{max-width:1100px;margin:2rem auto;padding:0 1rem}}h1{{font-size:1.6rem}}.controls{{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}}select,input{{font:inherit}}input[type=range]{{flex:1;min-width:220px}}svg{{width:100%;height:470px;border:1px solid #cbd3da;background:#fff}}.axis{{stroke:#59636e;stroke-width:1}}.line{{fill:none;stroke-width:2}}.grid{{stroke:#e5e9ed}}.cursor-line{{stroke:#a43b28;stroke-width:2;stroke-dasharray:5 4}}#readout{{font-variant-numeric:tabular-nums;min-height:1.5em}}footer{{border-top:1px solid #ccd3da;margin-top:1.5rem;padding-top:1rem;font-size:.92rem}}.legend{{font-size:13px}}
+:root{{color-scheme:light;font:16px system-ui,sans-serif;color:#18212b;background:#fff}}body{{max-width:1100px;margin:2rem auto;padding:0 1rem}}h1{{font-size:1.6rem}}.controls{{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}}select,input{{font:inherit}}input[type=range]{{flex:1;min-width:220px}}.chart-scroll{{max-width:100%;overflow-x:auto;border:1px solid #cbd3da}}svg{{display:block;width:100%;min-width:720px;height:auto;aspect-ratio:900 / 470;background:#fff}}.axis{{stroke:#59636e;stroke-width:1}}.line{{fill:none;stroke-width:2}}.grid{{stroke:#e5e9ed}}.cursor-line{{stroke:#a43b28;stroke-width:2;stroke-dasharray:5 4}}#readout{{font-variant-numeric:tabular-nums;min-height:1.5em}}footer{{border-top:1px solid #ccd3da;margin-top:1.5rem;padding-top:1rem;font-size:.92rem}}.legend{{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;margin:.75rem 0}}.legend-item{{display:inline-flex;align-items:center;gap:.4rem}}.swatch{{width:1rem;height:.2rem;display:inline-block}}.mobile-hint{{display:none}}@media(max-width:760px){{.mobile-hint{{display:block;font-size:.9rem;color:#4b5560}}}}
 </style></head><body><h1>Temporal density source viewer</h1>
 <p>Spatially averaged density from the source table. This is a technical source viewer, not an empirical warning result.</p>
 <div class="controls"><label for="year">Year</label><select id="year"><option value="all">All years</option>{''.join(f'<option value="{_escape(item["year"])}">{_escape(item["year"])}</option>' for item in clean)}</select>
 <label for="time">Time cursor</label><input id="time" type="range" min="0" max="0" step="1" value="0"></div>
 <div id="readout" aria-live="polite" role="status"></div>
-<svg id="chart" viewBox="0 0 900 470" role="img" aria-label="Density by time relative to festival opening"><g id="plot"></g><text x="470" y="455" text-anchor="middle">Time relative to festival opening (s)</text><text x="18" y="205" text-anchor="middle" transform="rotate(-90 18 205)">Spatially averaged density (m^-2)</text><g id="legend" class="legend"></g></svg>
+<div class="legend" aria-label="Year and missing row counts">{''.join(f'<span class="legend-item"><span class="swatch" style="background:{item["color"]}" aria-hidden="true"></span>{_escape(item["year"])} · missing padding rows: {item["missing_count"]}</span>' for item in clean)}</div>
+<p class="mobile-hint">Scroll the chart horizontally to see the full time axis.</p>
+<div class="chart-scroll" tabindex="0" role="region" aria-label="Scrollable density chart"><svg id="chart" viewBox="0 0 900 470" role="img" aria-label="Density by time relative to festival opening"><g id="plot"></g><text x="470" y="455" text-anchor="middle">Time relative to festival opening (s)</text><text x="18" y="205" text-anchor="middle" transform="rotate(-90 18 205)">Spatially averaged density (m^-2)</text></svg></div>
 <p id="decimation"></p><p>Missing count is the number of omitted trailing source padding rows. Lines connect retained display samples. No values are interpolated.</p>
 <footer><p>Limits: the source provides spatially averaged density and time relative to festival opening. The chart defines no hazard threshold or safety state and makes no forecast. Unknown camera scale and source gaps remain unknown.</p><p id="source"></p></footer>
 <script>
@@ -105,22 +107,23 @@ def render_density_replay(table):
 const data={payload};
 const source={encoded_source};
 document.getElementById('source').innerHTML=source;
-const plot=document.getElementById('plot'), legend=document.getElementById('legend'), year=document.getElementById('year'), cursor=document.getElementById('time'), readout=document.getElementById('readout');
+const plot=document.getElementById('plot'), year=document.getElementById('year'), cursor=document.getElementById('time'), readout=document.getElementById('readout');
 const ns='http://www.w3.org/2000/svg', L=82, R=865, T=30, B=385;
 function node(tag,attrs,text){{const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;return e;}}
+function formatSeconds(value){{return Number(value.toFixed(3)).toString();}}
 function selected(){{return year.value==='all'?data:data.filter(s=>String(s.year)===year.value);}}
-function draw(){{plot.replaceChildren();legend.replaceChildren();const sets=selected(), all=sets.flatMap(s=>s.points);if(!all.length){{readout.textContent='No numeric observations for this year.';cursor.disabled=true;return;}}cursor.disabled=false;
+function draw(){{plot.replaceChildren();const sets=selected(), all=sets.flatMap(s=>s.points);if(!all.length){{readout.textContent='No numeric observations for this year.';cursor.disabled=true;return;}}cursor.disabled=false;
 const xmin=Math.min(...all.map(p=>p[0])),xmax=Math.max(...all.map(p=>p[0])), rawMax=Math.max(...all.map(p=>p[1])),ymax=rawMax||1;
 const x=t=>L+(t-xmin)/(xmax-xmin||1)*(R-L), y=v=>B-v/ymax*(B-T);
 for(let i=0;i<=4;i++){{const value=ymax*(4-i)/4, py=y(value);plot.append(node('line',{{x1:L,y1:py,x2:R,y2:py,class:'grid'}}),node('text',{{x:L-9,y:py+4,'text-anchor':'end',class:'tick'}},Number(value.toPrecision(3)).toString()));}}
 for(let i=0;i<=4;i++){{const value=xmin+(xmax-xmin)*i/4, px=x(value);plot.append(node('line',{{x1:px,y1:B,x2:px,y2:B+5,class:'axis'}}),node('text',{{x:px,y:B+22,'text-anchor':'middle',class:'tick'}},Number(value.toPrecision(3)).toString()));}}
 plot.append(node('line',{{x1:L,y1:B,x2:R,y2:B,class:'axis'}}),node('line',{{x1:L,y1:T,x2:L,y2:B,class:'axis'}}));
-for(let i=0;i<sets.length;i++){{const s=sets[i];let d='';for(let j=0;j<s.points.length;j++){{const p=s.points[j];d+=(j?' L':'M')+x(p[0])+' '+y(p[1]);}}plot.append(node('path',{{d,class:'line',stroke:s.color}}));const gx=625+(i%2)*125,gy=18+Math.floor(i/2)*18;legend.append(node('line',{{x1:gx,y1:gy,x2:gx+18,y2:gy,stroke:s.color,'stroke-width':3}}),node('text',{{x:gx+23,y:gy+4}},String(s.year)+' missing: '+s.missing_count));}}
+for(let i=0;i<sets.length;i++){{const s=sets[i];let d='';for(let j=0;j<s.points.length;j++){{const p=s.points[j];d+=(j?' L':'M')+x(p[0])+' '+y(p[1]);}}plot.append(node('path',{{d,class:'line',stroke:s.color}}));}}
 const allTimes=sets.flatMap(s=>s.points.map(p=>p[0])).sort((a,b)=>a-b);cursor.min='0';cursor.max=String(allTimes.length-1);cursor.dataset.times=JSON.stringify(allTimes);cursor.value=String(Math.floor(allTimes.length/2));
 document.getElementById('decimation').textContent=data.some(s=>s.observation_count>s.points.length)?'Display decimation is active. Each series keeps endpoints and bucket extrema; slider timestamps are retained display samples.':'All numeric source observations are displayed.';
 update();}}
 function update(){{const times=JSON.parse(cursor.dataset.times||'[]');if(!times.length)return;const t=times[Number(cursor.value)], sets=selected();const xmin=Math.min(...sets.flatMap(s=>s.points.map(p=>p[0]))),xmax=Math.max(...sets.flatMap(s=>s.points.map(p=>p[0])));plot.querySelector('.cursor-line')?.remove();plot.append(node('line',{{x1:L+(t-xmin)/(xmax-xmin||1)*(R-L),y1:T,x2:L+(t-xmin)/(xmax-xmin||1)*(R-L),y2:B,class:'cursor-line'}}));
-const vals=sets.map(s=>{{if(t<s.start||t>s.end)return s.year+': outside actual coverage';let best=null;for(const p of s.points)if(p[0]<=t)best=p;if(!best)return s.year+': outside actual coverage';return s.year+': '+best[1].toLocaleString()+' m^-2 at '+best[0]+' s, age '+(t-best[0])+' s';}});readout.textContent='Cursor: '+t+' s relative to festival opening. '+vals.join(' | ')+'. Missing trailing padding rows: '+sets.reduce((n,s)=>n+s.missing_count,0)+'.';}}
+const vals=sets.map(s=>{{if(t<s.start||t>s.end)return s.year+': outside actual coverage';let best=null;for(const p of s.points)if(p[0]<=t)best=p;if(!best)return s.year+': outside actual coverage';return s.year+': retained display sample at or before cursor, '+best[1].toLocaleString()+' m^-2 at '+formatSeconds(best[0])+' s, age '+formatSeconds(t-best[0])+' s';}});readout.textContent='Cursor: '+formatSeconds(t)+' s relative to festival opening. '+vals.join(' | ');}}
 year.addEventListener('change',draw);cursor.addEventListener('input',update);draw();
 </script></body></html>'''
 
