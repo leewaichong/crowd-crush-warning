@@ -34,7 +34,9 @@
       "first_data_row_frame": 0,
       "first_data_row_t_s": "-76545.000",
       "first_data_row_elapsed_from_header_s": 0.0,
-      "clock_admission": "header parsed; frame-time relation one-to-one"
+      "clock_admission": "header parsed; frame-time relation one-to-one",
+      "paper_table3_start_utc_plus_1": "22:40:45",
+      "recording_start_header_vs_paper": "Unresolved 210-second disagreement; header-relative envelope only, not wall-clock/video admission."
     },
     {
       "member": "Data_Madras/TopView_trajectories/TopView_1B.txt",
@@ -833,5 +835,6 @@
       "label_end": null,
       "status": "untimed-excluded"
     }
-  ]
+  ],
+  "external_clock_validation_limit": "Counts describe the declared header-relative trajectory envelope, not verified video alignment or wall-clock accuracy. Supplementary Table 3 gives TopView_1A start 22:40:45 UTC+1 while its released file header says 22:44:15 UTC+1. The discrepancy is unresolved; neither value was repaired or used to infer a video offset."
 }
