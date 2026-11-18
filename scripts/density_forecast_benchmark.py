@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import bisect
 import hashlib
 import json
 import math
@@ -108,32 +109,48 @@ def _ar_forecast(last: float, fit: dict[str, float | bool], steps: int) -> float
     return prediction
 
 
-def forecast_year(points: list[list[float]], fit: dict[str, float | bool], year: int) -> list[dict]:
+def _match_observation(points: list[list[float]], times: list[float], scheduled: float) -> list[float]:
+    index = bisect.bisect_left(times, scheduled)
+    candidates = points[max(0, index - 1):min(len(points), index + 1)]
+    if not candidates:
+        raise ValueError("scheduled timestamp has no source observation")
+    match = min(candidates, key=lambda row: abs(row[0] - scheduled))
+    if abs(match[0] - scheduled) > 1e-6:
+        raise ValueError("scheduled origin or target is absent from the observed grid")
+    return match
+
+
+def forecast_year(points: list[list[float]], fit: dict[str, float | bool] | None, year: int,
+                  fit_reason: str | None = None) -> list[dict]:
     _grid(points)
-    by_time = {round(timestamp, 6): value for timestamp, value in points}
+    times = [row[0] for row in points]
     start, end = points[0][0], points[-1][0]
     rows = []
-    origin = start + WARMUP_S
-    while origin + HORIZON_S <= end + 1e-6:
-        origin_key, target_key = round(origin, 6), round(origin + HORIZON_S, 6)
-        if origin_key not in by_time or target_key not in by_time:
-            raise ValueError("scheduled origin or target is absent from the observed grid")
-        history = [(t, value) for t, value in points if origin - WARMUP_S - 1e-6 <= t <= origin + 1e-6]
-        actual, persistence = by_time[target_key], by_time[origin_key]
+    scheduled_origin = start + WARMUP_S
+    while scheduled_origin + HORIZON_S <= end + 1e-6:
+        scheduled_target = scheduled_origin + HORIZON_S
+        origin_point = _match_observation(points, times, scheduled_origin)
+        target_point = _match_observation(points, times, scheduled_target)
+        origin, target = origin_point[0], target_point[0]
+        history = [(t, value) for t, value in points if origin - WARMUP_S - 1e-6 <= t <= origin]
+        actual, persistence = target_point[1], origin_point[1]
         predictions: dict[str, float | None] = {"persistence": persistence, "local_trend": None, "ar1": None}
         abstentions: dict[str, str] = {}
         local_intercept = local_slope = None
         local_start = local_end = None
         try:
-            local, local_intercept, local_slope, local_start = _ols(history, target_key)
+            local, local_intercept, local_slope, local_start = _ols(history, target)
             predictions["local_trend"] = local
             local_end = history[-1][0]
         except ValueError as exc:
             abstentions["local_trend"] = str(exc)
-        try:
-            predictions["ar1"] = _ar_forecast(persistence, fit, round(HORIZON_S / GRID_S))
-        except (ValueError, OverflowError) as exc:
-            abstentions["ar1"] = str(exc)
+        if fit is None:
+            abstentions["ar1"] = fit_reason or "AR(1) training fit is unavailable"
+        else:
+            try:
+                predictions["ar1"] = _ar_forecast(persistence, fit, round(HORIZON_S / GRID_S))
+            except (ValueError, OverflowError) as exc:
+                abstentions["ar1"] = str(exc)
         errors = {}
         for arm in ARMS:
             prediction = predictions[arm]
@@ -144,13 +161,15 @@ def forecast_year(points: list[list[float]], fit: dict[str, float | bool], year:
                 error = None
             errors[arm] = error
         rows.append({
-            "year": year, "origin_timestamp_s": origin_key, "cutoff_timestamp_s": origin_key,
-            "target_timestamp_s": target_key, "actual_timestamp_s": target_key, "actual": actual,
+            "year": year, "scheduled_origin_timestamp_s": scheduled_origin,
+            "scheduled_target_timestamp_s": scheduled_target,
+            "origin_timestamp_s": origin, "cutoff_timestamp_s": origin,
+            "target_timestamp_s": target, "actual_timestamp_s": target, "actual": actual,
             "local_trend_window_start_s": local_start, "local_trend_window_end_s": local_end,
             "local_trend_intercept": local_intercept, "local_trend_slope_per_s": local_slope,
             "predictions": predictions, "errors": errors, "arm_abstentions": abstentions,
         })
-        origin += ORIGIN_STEP_S
+        scheduled_origin += ORIGIN_STEP_S
     return rows
 
 
@@ -185,37 +204,63 @@ def _metrics(rows: list[dict], seed: int = 0) -> dict:
             "disagreement_count": sum(r["predictions"][arm] != r["predictions"]["persistence"] for r in pairs),
             "largest_five_absolute_error_disagreements": disagreements[:5],
         }
-    complete = [r for r in rows if all(r["errors"][arm] is not None for arm in ARMS)]
-    metrics["bootstrap"] = _bootstrap(complete, seed)
-    metrics["bootstrap"]["common_complete_origin_count"] = len(complete)
-    metrics["bootstrap"]["note"] = "Intervals use common complete origins and shared circular block indices across arms."
+    arm_bootstrap = {
+        arm: _bootstrap_arm(valid[arm], seed)
+        for arm in ARMS
+    }
+    paired_bootstrap = {
+        arm: _bootstrap_pair([{
+            "candidate_error": row["errors"][arm],
+            "persistence_error": row["errors"]["persistence"],
+        } for row in paired_rows[arm]], seed)
+        for arm in ARMS[1:]
+    }
+    metrics["bootstrap"] = {"arms": arm_bootstrap, "paired_vs_persistence": paired_bootstrap}
     return metrics
 
 
-def _bootstrap(rows: list[dict], seed: int) -> dict:
+def _bootstrap_indices(n: int, seed: int) -> list[list[int]]:
     import random
-    n = len(rows)
     if not n:
-        return {"replicates": BOOTSTRAP_REPLICATES, "block_length": BOOTSTRAP_BLOCK, "seed": seed, "intervals": {}}
+        return []
     rng = random.Random(seed)
-    keys = [f"{metric}:{arm}" for metric in ("mae", "rmse") for arm in ARMS]
-    keys += [f"{metric}_delta:{arm}" for metric in ("mae", "rmse") for arm in ARMS[1:]]
-    samples = {key: [] for key in keys}
     blocks_needed = math.ceil(n / BOOTSTRAP_BLOCK)
+    samples = []
     for _ in range(BOOTSTRAP_REPLICATES):
         starts = [rng.randrange(n) for _ in range(blocks_needed)]
-        indices = [(start + offset) % n for start in starts for offset in range(BOOTSTRAP_BLOCK)][:n]
-        selected = [rows[index] for index in indices]
-        errors = {arm: [row["errors"][arm] for row in selected] for arm in ARMS}
-        for arm in ARMS:
-            samples[f"mae:{arm}"].append(sum(abs(e) for e in errors[arm]) / n)
-            samples[f"rmse:{arm}"].append(math.sqrt(sum(e * e for e in errors[arm]) / n))
-        for arm in ARMS[1:]:
-            samples[f"mae_delta:{arm}"].append(sum(abs(a) - abs(p) for a, p in zip(errors[arm], errors["persistence"])) / n)
-            samples[f"rmse_delta:{arm}"].append(
-                math.sqrt(sum(a * a for a in errors[arm]) / n) - math.sqrt(sum(p * p for p in errors["persistence"]) / n))
-    return {"replicates": BOOTSTRAP_REPLICATES, "block_length": BOOTSTRAP_BLOCK, "seed": seed,
-            "interpretation": "descriptive intervals only", "intervals": {key: _percentile_interval(values) for key, values in samples.items()}}
+        samples.append([(start + offset) % n for start in starts for offset in range(BOOTSTRAP_BLOCK)][:n])
+    return samples
+
+
+def _bootstrap_arm(rows: list[dict], seed: int) -> dict:
+    n = len(rows)
+    mae_values, rmse_values = [], []
+    for indices in _bootstrap_indices(n, seed):
+        errors = [rows[index]["errors"] for index in indices]
+        mae_values.append(sum(abs(error) for error in errors) / n)
+        rmse_values.append(math.sqrt(sum(error * error for error in errors) / n))
+    return {
+        "n": n, "replicates": BOOTSTRAP_REPLICATES, "block_length": BOOTSTRAP_BLOCK, "seed": seed,
+        "mae_interval": _percentile_interval(mae_values) if n else None,
+        "rmse_interval": _percentile_interval(rmse_values) if n else None,
+    }
+
+
+def _bootstrap_pair(rows: list[dict], seed: int) -> dict:
+    n = len(rows)
+    mae_values, rmse_values = [], []
+    for indices in _bootstrap_indices(n, seed):
+        sampled = [rows[index] for index in indices]
+        candidate = [row["candidate_error"] for row in sampled]
+        persistence = [row["persistence_error"] for row in sampled]
+        mae_values.append(sum(abs(a) - abs(p) for a, p in zip(candidate, persistence)) / n)
+        rmse_values.append(math.sqrt(sum(a * a for a in candidate) / n) -
+                           math.sqrt(sum(p * p for p in persistence) / n))
+    return {
+        "n": n, "replicates": BOOTSTRAP_REPLICATES, "block_length": BOOTSTRAP_BLOCK, "seed": seed,
+        "mae_delta_interval": _percentile_interval(mae_values) if n else None,
+        "rmse_delta_interval": _percentile_interval(rmse_values) if n else None,
+    }
 
 
 def _git_state() -> tuple[str, bool]:
@@ -259,7 +304,6 @@ def run(input_path: Path, output_dir: Path, protocol_path: Path, command: list[s
         "config_sha256": _sha256(config_path), "split": config["split"],
         "control": config["control"], "model_identity": "local discrete density forecasts; no external endpoint",
         "expected_outputs": config["expected_outputs"], "seed_policy": config["seed_policy"],
-        "source_counts": "pending source validation",
     }
     _json_write(manifest_path, manifest)
     _event(trail_path, "started", git_sha=sha, input_sha256=_sha256(input_path), protocol_sha256=_sha256(protocol_copy))
@@ -274,19 +318,27 @@ def run(input_path: Path, output_dir: Path, protocol_path: Path, command: list[s
             "scheduled_origins": _scheduled_count(series[year]),
             "completed_origins": None, "excluded_origins": 0,
         } for year in YEARS}
-        manifest["source_counts"] = counts
-        manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
         _event(trail_path, "source_validated", counts=counts, parser_metadata={k: v for k, v in table.items() if k != "series"})
-        fit = fit_ar1(series[2022])
-        _json_write(output_dir / "model.json", {
+        fit_reason = None
+        try:
+            fit = fit_ar1(series[2022])
+        except ValueError as exc:
+            fit, fit_reason = None, str(exc)
+        model = {
             "identity": "local discrete AR(1), fit on adjacent 2022 training observations",
-            "parameters": fit, "math": "OLS intercept and phi; population variance of training residuals",
+            "status": "available" if fit is not None else "unavailable",
+            "parameters": fit, "unavailable_reason": fit_reason,
+            "math": "OLS intercept and phi; population variance of training residuals",
             "phi_diagnostic": "abs(phi) < 1 recorded as a training diagnostic; no stationarity gate",
             "forecast": "finite-step discrete recurrence in closed form; phi == 1 uses last + steps * intercept",
             "units": "source-declared density units m^-2",
-        })
-        _event(trail_path, "fit_completed", training_year=2022, parameters=fit)
-        rows_by_year = {year: forecast_year(series[year], fit, year) for year in YEARS}
+        }
+        _json_write(output_dir / "model.json", model)
+        if fit is None:
+            _event(trail_path, "fit_unavailable", training_year=2022, reason=fit_reason)
+        else:
+            _event(trail_path, "fit_completed", training_year=2022, parameters=fit)
+        rows_by_year = {year: forecast_year(series[year], fit, year, fit_reason) for year in YEARS}
         for year in YEARS:
             scheduled = counts[str(year)]["scheduled_origins"]
             if len(rows_by_year[year]) != scheduled or scheduled == 0:
@@ -307,7 +359,9 @@ def run(input_path: Path, output_dir: Path, protocol_path: Path, command: list[s
         empty = [name for name in artifacts if not (output_dir / name).is_file() or (output_dir / name).stat().st_size == 0]
         if empty:
             raise ValueError(f"required output artifacts are missing or empty: {empty}")
-        _event(trail_path, "completed", counts=counts, artifacts=artifacts)
+        checksums = {name: _sha256(output_dir / name) for name in artifacts if name != "trail.jsonl"}
+        _event(trail_path, "completed", outputs_confirmed=True, counts=counts,
+               artifacts=artifacts, sha256=checksums)
         # Completion is recorded in the append-only trail. The manifest remains the immutable start record.
     except Exception as exc:
         _event(trail_path, "failed", error_type=type(exc).__name__, reason=str(exc))
