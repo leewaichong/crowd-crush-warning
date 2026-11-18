@@ -1,0 +1,24 @@
+{
+  "manifest_version": 1,
+  "source_record": {
+    "doi": "10.5281/zenodo.14050598",
+    "url": "https://zenodo.org/records/14050598",
+    "version": "record 14050598, revision 6, published 2025-02-06",
+    "license": {
+      "id": "CC-BY-4.0",
+      "scope": "record"
+    }
+  },
+  "files": [
+    {
+      "path": "data_density_over_time.txt",
+      "url": "https://zenodo.org/api/records/14050598/files/data_density_over_time.txt/content",
+      "size_bytes": 4636050,
+      "sha256": "cbc48912b51e1824017b046a6ee5f1d5eef19a529ba33d9aee361d21cd36561c",
+      "source_checksum": "md5:19271a43d04e63e89df98e6756eb87fc",
+      "retrieved_at": "2026-11-18T02:26:01Z",
+      "purpose": "measurement",
+      "status": "inspected"
+    }
+  ]
+}

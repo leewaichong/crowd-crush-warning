@@ -4,16 +4,22 @@ Snapshot date: 18 November 2026.
 
 ## Implemented
 
-The repository contains offline observation ingestion, causal temporal zone-motion features, a conditional stochastic proxy-crossing model, evaluation utilities, and a command-line interface. Forecasting abstains if any observed zone lacks two complete adequate feature observations. Forecast responses record forecast origin, input cutoff, seed, effective model parameters, and discretization. Evaluation helpers support alarm-episode matching for preselected alarm rows, disjoint valid timeline exposure accounting, venue/event splitting, and chronology checks. The legacy row-matching helper remains available, so callers must explicitly choose episode matching for episode-level accounting. The code does not ingest video, estimate physical force, or fit spatial propagation from crowd data.
+The offline CLI supports observation validation, causal temporal features, conditional proxy-crossing forecasts, diagnostic baselines, source-manifest integrity checks, and inspection and replay of the Pamplona temporal-density table. The parser checks the source's six-column tab-separated schema, increasing times, finite values, nonnegative densities, and trailing missing pairs. The viewer is self-contained HTML and makes no hazard classification.
 
-## Locally verified
+Baseline signals include current density, previous valid pressure proxy, and one-sided excess CUSUM against the causal past mean. Parameters are explicit research settings. They are not safety limits or calibrated warning thresholds. The CUSUM family is informed by Page (1954), not a calibrated reproduction.
 
-Locally verified on 18 November 2026: the integrated full suite ran 66 tests and passed. These checks concern software behavior only; they do not establish empirical model performance.
+Event matching and alarm-episode matching scope pooled data by recording identifier when present, otherwise event identifier, and by venue when supplied. Without identifiers, callers must partition inputs by recording. Episode matching expects selected alarm rows and does not automatically convert all forecasts to alarms.
 
-## Evaluated
+The temporal-density source describes spatially averaged density in m^-2 against author-declared seconds relative to festival opening. It has 90,000 table rows and numeric counts of 80,025, 85,875, and 90,000 for 2022, 2023, and 2024. Trailing padding counts are 9,975, 4,125, and 0. It supplies no velocity, calibrated harm probability, or outcome labels. Five selected source files totalling 4,697,499 bytes were inspected against official checksums. The full 1.22 GB record was not fetched or audited.
 
-**Real crowd evaluation: NOT RUN. Warning effectiveness: NOT RUN.** No real crowd dataset, independently established outcome labels, frozen protocol, or empirical result is included.
+## Local verification
 
-## Evidence limits
+Verification runs locally on the home Mac. This snapshot does not state an integrated test count. Software checks establish code behavior only; they do not establish empirical model performance.
 
-No real crowd data have been admitted, no harm probability is calibrated, and no useful-warning evidence exists. The episode helper requires callers to supply selected alarm rows; legacy row matching remains available and does not automatically use episode accounting. Software checks do not establish warning effectiveness.
+## Evaluation
+
+**Real crowd evaluation: NOT RUN. Warning effectiveness: NOT RUN.** The source inspection is technical only. No effectiveness experiment, validated warning, calibrated harm probability, or useful-warning result is claimed.
+
+## Rights and evidence limits
+
+The source verifier checks local file size and checksums against a manifest. It does not fetch files or determine rights clearance. The Zenodo record declares record-level CC BY 4.0; applicability to individual files still requires review. The Nature paper authors and dataset-record authors are distinct. MIT covers original code only.

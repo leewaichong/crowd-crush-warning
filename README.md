@@ -1,54 +1,56 @@
 # Crowd crush warning research prototype
 
-## Research question
+This repository contains offline research code for studying crowd motion and density. It is not a validated crowd safety system. Its outputs do not measure physical force, provide calibrated harm probabilities, or establish useful warning lead time.
 
-Can changes in observed crowd motion provide a reproducible basis for studying how hazardous crowd dynamics develop? This repository is an offline research prototype for exploring that question. It is not a validated crowd safety system, and its outputs are not evidence of physical force, injury risk, or useful warning lead time.
+## Implemented
 
-## What the code currently does
+The command line accepts already-extracted zone observations, validates them, computes causal trailing-window features, and produces conditional stochastic proxy-crossing frequencies. It also provides causal diagnostic baselines, local source-manifest integrity checks, event and alarm-episode matching scoped by recording context, and a parser and offline viewer for the published Pamplona temporal-density table.
 
-The current input begins after video analysis: each record describes a zone observation with a timestamp, a density value, two velocity components, quality, and a calibration flag. The code validates those records, computes causal trailing-window features for each zone, and can simulate conditional proxy-crossing frequencies under a selected stochastic model. It does not ingest camera footage, estimate these fields from pixels, fit a propagation model from crowd data, or issue a validated warning.
+The baseline arms are density, lagged persistence, and one-sided excess CUSUM. CUSUM is included as a diagnostic family informed by Page's continuous inspection schemes. Its parameters are explicit research settings, not calibrated thresholds. It does not reproduce Page's industrial calibration or establish warning performance.
 
-The temporal zone-average velocity variance in this prototype is variance across successive observations for a zone. It differs from the local spatial variance around a local velocity field used in Helbing, Johansson, and Al-Abideen's 2007 analysis. The prototype's global mean-reversion model also does not represent measured spatial propagation between people or zones. See the [literature review and research questions](docs/exploration.md) and [source citations](CITATIONS.md) for context and attribution.
+The Pamplona table contains 90,000 rows with author-declared time in seconds relative to festival opening and spatially averaged density in m^-2. The three series contain 80,025, 85,875, and 90,000 numeric observations for 2022, 2023, and 2024. Their remaining rows are trailing padding: 9,975, 4,125, and 0. The table contains no velocity, calibrated harm probability, or outcome labels. The viewer inspects source values; it does not define a hazard threshold or produce a warning.
 
-## Current status
+**Real crowd evaluation: NOT RUN. Warning effectiveness: NOT RUN.** Source inspection and software checks do not establish predictive or safety performance. The [status snapshot](docs/STATE.md) records these limits.
 
-Implemented code includes offline observation ingestion, temporal zone-motion features, conditional stochastic proxy-crossing forecasts, evaluation helpers, and a command-line interface. Forecasting abstains when any observed zone lacks two complete adequate observations. Forecast output records its origin and input cutoff, seed, effective model parameters, and time discretization. Evaluation helpers include alarm-episode matching for preselected alarm rows, disjoint valid timeline exposure accounting, venue/event splitting, and chronology checks. The legacy row-matching helper remains available; callers must select episode matching when they need episode-level accounting.
+## Local commands
 
-**Real crowd evaluation: NOT RUN. Warning effectiveness: NOT RUN.** No real crowd dataset has been admitted, no harm probability is calibrated, and there is no evidence of useful warning performance. The [status snapshot](docs/STATE.md) records the integrated implementation and remaining evidence limits.
-
-## Offline use
-
-The commands below run against a local observations file. They do not contact a service or load video.
+The commands use Python's standard library. They read local files and do not connect to a camera or service, except for the explicit `curl` download shown below.
 
 ```sh
 PYTHONPATH=src python3 -m crowd_warning validate observations.jsonl
 PYTHONPATH=src python3 -m crowd_warning features observations.jsonl --window-s 5
 PYTHONPATH=src python3 -m crowd_warning forecast observations.jsonl --threshold 1.0 --horizon-s 30
+PYTHONPATH=src python3 -m crowd_warning baselines observations.jsonl \
+  --density-threshold 2 --proxy-threshold 2 --change-threshold 2
 ```
 
-The forecast command requires an explicit threshold. That is a model input for conditional proxy-crossing calculations, not a safety threshold. The commands write JSON to stdout. Input, integration, or non-finite output errors produce a JSON error on stderr and a nonzero exit status.
+The forecast threshold and baseline parameters are model inputs, not safety limits. Forecast outputs are conditional proxy-crossing calculations. Commands write JSON to stdout; input or calculation errors produce JSON on stderr and a nonzero exit status.
 
-## Input schema
+### Inspect the published temporal-density table
 
-The loader accepts JSON Lines (`.jsonl` or `.ndjson`) and CSV (`.csv`). Each record has:
+Download the source file from the Zenodo record, verify it against the selected-file manifest, inspect its counts, and write a new standalone HTML viewer:
 
-| Field | Meaning |
-| --- | --- |
-| `timestamp_s` | Observation time in seconds |
-| `zone_id` | Zone identifier |
-| `density_per_m2` | Supplied density value per square metre |
-| `vx_mps`, `vy_mps` | Supplied velocity components in metres per second |
-| `quality` | Supplied observation quality value |
-| `calibrated` | Whether the supplied observation is marked calibrated |
+```sh
+mkdir -p data
+curl --fail --location \
+  'https://zenodo.org/records/14050598/files/data_density_over_time.txt?download=1' \
+  --output data/data_density_over_time.txt
+PYTHONPATH=src python3 -m crowd_warning verify-source sources/pamplona-density.json --base-dir data
+PYTHONPATH=src python3 -m crowd_warning inspect-density data/data_density_over_time.txt
+PYTHONPATH=src python3 -m crowd_warning replay-density data/data_density_over_time.txt \
+  --output pamplona-density-viewer.html
+```
 
-The code does not derive these fields from video or independently verify the calibration. Feature windows require at least two observations for a zone before variance is available. Forecasting abstains if any observed zone lacks two complete adequate feature observations, or if observations have gaps, poor quality, or unknown calibration. The response enumerates incomplete zones and records forecast origin, input cutoff, seed, effective parameters, and discretization.
+The parser accepts this exact tab-separated source schema and rejects partial or non-trailing missing pairs, non-finite values, negative densities, and non-increasing time. The viewer runs offline, uses a light-only display, and does not interpolate across missing rows. It refuses to overwrite an existing output file. The data file is not included in this repository.
 
-## Research limits and data terms
+The reviewed subset contains five selected source files totaling 4,697,499 bytes, checked against official source checksums. That inspection did not fetch or audit the full 1.22 GB Zenodo record. Source-file integrity does not establish rights clearance, label validity, or measurement calibration.
 
-The [research review](docs/exploration.md) separates published findings from hypotheses and this prototype's implementation. It summarizes mechanism evidence, camera limits, candidate models, prior work, dataset records, and open research questions. No experiment is run by these commands.
+## Observation schema
 
-MIT applies to original code in this repository. It does not grant rights to papers, video, datasets, images, or other third-party material. Check each source's own licence and terms before obtaining or using it. The Zenodo record linked to Gu et al. is open under record-level CC BY 4.0 and lists 46 files totalling 1,217,698,331 bytes. No payload files were fetched or audited, so labels, calibration, and whether record-level terms apply to each file remain unchecked. Keep payloads external and inspect rights and contents before use. Public records reviewed here still do not establish a dataset pairing camera observations with independently adjudicated crush outcomes and matched non-event periods. See the research review for access distinctions.
+JSON Lines (`.jsonl` or `.ndjson`) and CSV (`.csv`) inputs contain `timestamp_s`, `zone_id`, `density_per_m2`, `vx_mps`, `vy_mps`, `quality`, and `calibrated`. These are supplied measurements. The code does not derive them from video or independently verify calibration. Feature windows need at least two adequate observations per zone. Forecasting abstains when a zone lacks sufficient history or has gaps, poor quality, or unknown calibration.
 
-## Licence and attribution
+Event matching uses recording identifiers when present, then event identifiers as a fallback, and includes venue context when supplied. Pooled rows without those identifiers must be partitioned by recording before matching. Alarm-episode matching expects selected alarm rows and matches episode starts within the requested horizon; it does not turn every forecast into an alarm.
 
-The original code is licensed under the [MIT License](LICENSE), copyright 2026 Lee Wai Chong. Research methods and findings remain attributed to their authors; references are listed in [CITATIONS.md](CITATIONS.md). Those references motivated questions explored here. They are not evidence that this code reproduces the papers or works empirically.
+## Data terms and attribution
+
+MIT applies to original code in this repository only. Papers, datasets, videos, and other third-party material retain their own terms. The Zenodo record declares record-level CC BY 4.0; that declaration does not by itself settle file-level rights. Keep downloaded data external and review applicable terms before use. The [research references](CITATIONS.md) distinguish the five-author Nature paper from the three-author dataset record.
