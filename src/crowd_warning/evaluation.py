@@ -24,19 +24,22 @@ def match_events(
     """Match each event to the earliest eligible forecast in its preceding horizon.
 
     Forecast rows require ``timestamp_s`` and ``zone_id``. Events require
-    ``timestamp_s`` and ``zone_id``. One forecast and one event can be matched
-    at most once; matching is chronological within each zone.
+    ``timestamp_s`` and ``zone_id``. Recording, event, and venue identifiers
+    scope matching when supplied. Without them, callers must prepartition a
+    single recording. One forecast and one event can be matched at most once.
     """
     if not math.isfinite(horizon_s) or horizon_s < 0:
         raise ValueError("horizon_s must be finite and non-negative")
     fs = _validated_rows(forecasts, "forecast")
     es = _validated_rows(events, "event")
+    _set_context([*fs, *es])
     unused = set(range(len(fs)))
     matches = []
     for ei, event in sorted(enumerate(es), key=lambda pair: (pair[1]["timestamp_s"], str(pair[1]["zone_id"]))):
         candidates = [
             i for i in unused
-            if fs[i]["zone_id"] == event["zone_id"]
+            if _same_scalar(fs[i]["zone_id"], event["zone_id"])
+            and fs[i]["_context_key"] == event["_context_key"]
             and 0 <= event["timestamp_s"] - fs[i]["timestamp_s"] <= horizon_s
         ]
         if candidates:
@@ -60,15 +63,18 @@ def match_events(
 def alarm_episodes(
     forecasts: Sequence[Mapping[str, Any]], *, episode_gap_s: float
 ) -> dict[str, Any]:
-    """Collapse repeated forecast rows into alarm episodes by zone.
+    """Collapse repeated forecast rows into alarm episodes by recording and zone.
 
     Rows are ordered by timestamp, then input order. A new episode begins when
     the gap from the preceding row in that zone is greater than episode_gap_s.
-    Duplicate (zone_id, timestamp_s) rows count once; the first input row wins.
+    Duplicate context, zone_id, and timestamp_s rows count once; the first
+    input row wins. Without recording identifiers, callers must prepartition.
     """
     if not math.isfinite(episode_gap_s) or episode_gap_s < 0:
         raise ValueError("episode_gap_s must be finite and non-negative")
     rows = _validated_rows(forecasts, "forecast")
+    if rows and "_context_fields" not in rows[0]:
+        _set_context(rows)
     seen = set()
     unique = []
     duplicates = []
@@ -76,25 +82,31 @@ def alarm_episodes(
         zone = row["zone_id"]
         if not isinstance(zone, (str, int, float, bool)) or (isinstance(zone, float) and not math.isfinite(zone)):
             raise ValueError(f"forecast row {index} zone_id must be a finite scalar")
-        key = (type(zone).__name__, str(zone), row["timestamp_s"])
+        key = (row["_context_key"], _scalar_key(zone), row["timestamp_s"])
         if key in seen:
             duplicates.append(index)
             continue
         seen.add(key)
         unique.append((index, row))
-    unique.sort(key=lambda item: (type(item[1]["zone_id"]).__name__, str(item[1]["zone_id"]),
+    unique.sort(key=lambda item: (item[1]["_context_key"], type(item[1]["zone_id"]).__name__, str(item[1]["zone_id"]),
                                   item[1]["timestamp_s"], item[0]))
     episodes = []
     for index, row in unique:
-        if (episodes and type(episodes[-1]["zone_id"]) is type(row["zone_id"])
-                and episodes[-1]["zone_id"] == row["zone_id"]
+        if (episodes and episodes[-1]["_context_key"] == row["_context_key"]
+                and _same_scalar(episodes[-1]["zone_id"], row["zone_id"])
                 and row["timestamp_s"] - episodes[-1]["end_timestamp_s"] <= episode_gap_s):
             episodes[-1]["end_timestamp_s"] = row["timestamp_s"]
             episodes[-1]["forecast_indices"].append(index)
         else:
             episodes.append({"zone_id": row["zone_id"], "start_timestamp_s": row["timestamp_s"],
                              "end_timestamp_s": row["timestamp_s"], "forecast_indices": [index]})
-    return {"episodes": episodes, "duplicate_forecast_indices": duplicates,
+            episodes[-1].update(row["_context_values"])
+            episodes[-1]["_context_values"] = row["_context_values"]
+            episodes[-1]["_context_key"] = row["_context_key"]
+    public_episodes = [{key: value for key, value in episode.items()
+                        if key not in ("_context_key", "_context_values")}
+                       for episode in episodes]
+    return {"episodes": public_episodes, "duplicate_forecast_indices": duplicates,
             "forecast_count": len(rows), "unique_forecast_count": len(unique)}
 
 
@@ -126,10 +138,16 @@ def match_alarm_episodes(
                     raise ValueError(f"forecast row {index} forecast_origin_s must be numeric") from exc
                 if not math.isfinite(declared_origin) or declared_origin != origin:
                     raise ValueError(f"forecast row {index} forecast_origin_s must equal timestamp_s")
-    episodic = alarm_episodes(forecasts, episode_gap_s=episode_gap_s)
-    rows = [{"timestamp_s": ep["start_timestamp_s"], "zone_id": ep["zone_id"]}
+    forecast_rows = _validated_rows(forecasts, "forecast")
+    event_rows = _validated_rows(events, "event")
+    context_rows = [*forecast_rows, *event_rows]
+    _set_context(context_rows)
+    episodic = alarm_episodes(forecast_rows, episode_gap_s=episode_gap_s)
+    fields = context_rows[0]["_context_fields"] if context_rows else ()
+    rows = [{"timestamp_s": ep["start_timestamp_s"], "zone_id": ep["zone_id"],
+             **{field: ep[field] for field in fields}}
             for ep in episodic["episodes"]]
-    result = match_events(rows, events, horizon_s=horizon_s)
+    result = match_events(rows, event_rows, horizon_s=horizon_s)
     for match in result["matches"]:
         match["episode_index"] = match.pop("forecast_index")
         match["forecast_indices"] = episodic["episodes"][match["episode_index"]]["forecast_indices"]
@@ -429,3 +447,30 @@ def _validated_rows(rows: Iterable[Mapping[str, Any]], kind: str) -> list[dict[s
             raise ValueError(f"{kind} row {index} has null zone_id")
         result.append({**row, "timestamp_s": timestamp})
     return result
+
+
+def _scalar_key(value: Any) -> tuple[str, str]:
+    return (type(value).__name__, str(value))
+
+
+def _same_scalar(left: Any, right: Any) -> bool:
+    return type(left) is type(right) and left == right
+
+
+def _set_context(rows: list[dict[str, Any]]) -> None:
+    """Attach one validated, type-aware recording context to pooled rows."""
+    fields = (["recording_id"] if any("recording_id" in row for row in rows)
+              else ["event_id"] if any("event_id" in row for row in rows) else [])
+    if any("venue_id" in row for row in rows):
+        fields.append("venue_id")
+    for index, row in enumerate(rows):
+        values = {}
+        for field in fields:
+            value = row.get(field)
+            if (not isinstance(value, (str, int)) or isinstance(value, bool)
+                    or (isinstance(value, str) and not value.strip())):
+                raise ValueError(f"row {index} requires a non-empty scalar {field}")
+            values[field] = value
+        row["_context_fields"] = tuple(fields)
+        row["_context_values"] = values
+        row["_context_key"] = tuple((field, *_scalar_key(value)) for field, value in values.items())
