@@ -12,6 +12,85 @@ from crowd_warning.evaluation import (alarm_episodes, brier_accounting, brier_sc
 
 
 class EvaluationFixtureTests(unittest.TestCase):
+    def test_matching_is_scoped_by_recording_and_zone_type(self):
+        forecasts = [
+            {"timestamp_s": 9, "zone_id": "A", "event_id": "video1"},
+            {"timestamp_s": 9, "zone_id": "A", "event_id": "video2"},
+        ]
+        events = [{"timestamp_s": 10, "zone_id": "A", "event_id": "video2"}]
+        result = match_events(forecasts, events, horizon_s=2)
+        self.assertEqual([m["forecast_index"] for m in result["matches"]], [1])
+        self.assertEqual(result["false_alarm_count"], 1)
+        typed = match_events([{"timestamp_s": 9, "zone_id": True}],
+                             [{"timestamp_s": 10, "zone_id": 1}], horizon_s=2)
+        self.assertEqual(typed["matched_event_count"], 0)
+
+    def test_recording_context_and_venue_scope_are_shared_by_episodes(self):
+        forecasts = [
+            {"timestamp_s": 9, "zone_id": "A", "recording_id": "r1", "event_id": "f1", "venue_id": 1},
+            {"timestamp_s": 9, "zone_id": "A", "recording_id": "r2", "event_id": "f2", "venue_id": 1},
+        ]
+        events = [{"timestamp_s": 10, "zone_id": "A", "recording_id": "r2", "event_id": "outcome", "venue_id": 1}]
+        result = match_alarm_episodes(forecasts, events, horizon_s=2, episode_gap_s=1)
+        self.assertEqual(result["episode_count"], 2)
+        self.assertEqual(result["matches"][0]["forecast_indices"], [1])
+        self.assertEqual(result["false_alarm_count"], 1)
+        self.assertEqual([ep["venue_id"] for ep in alarm_episodes(forecasts, episode_gap_s=1)["episodes"]], [1, 1])
+        venue_result = match_events(
+            [{"timestamp_s": 9, "zone_id": "A", "recording_id": "r", "venue_id": "v1"}],
+            [{"timestamp_s": 10, "zone_id": "A", "recording_id": "r", "venue_id": "v2"}],
+            horizon_s=2,
+        )
+        self.assertEqual(venue_result["matched_event_count"], 0)
+
+    def test_mixed_missing_context_rejected_across_pooled_rows(self):
+        with self.assertRaisesRegex(ValueError, "recording_id"):
+            match_events([{"timestamp_s": 9, "zone_id": "A", "recording_id": "r"}],
+                         [{"timestamp_s": 10, "zone_id": "A"}], horizon_s=2)
+        with self.assertRaisesRegex(ValueError, "venue_id"):
+            match_alarm_episodes([{"timestamp_s": 9, "zone_id": "A", "recording_id": "r", "venue_id": "v"}],
+                                 [{"timestamp_s": 10, "zone_id": "A", "recording_id": "r"}],
+                                 horizon_s=2, episode_gap_s=1)
+        for bad in (None, "", "  ", True, 1.5):
+            with self.subTest(value=bad), self.assertRaisesRegex(ValueError, "recording_id"):
+                match_events([{"timestamp_s": 9, "zone_id": "A", "recording_id": bad}],
+                             [{"timestamp_s": 10, "zone_id": "A", "recording_id": "r"}], horizon_s=2)
+
+    def test_recording_id_precedes_event_id_for_multiple_events(self):
+        forecasts = [{"timestamp_s": 9, "zone_id": "A", "recording_id": "r", "event_id": "hazard-1"},
+                     {"timestamp_s": 10, "zone_id": "A", "recording_id": "r", "event_id": "hazard-2"}]
+        events = [{"timestamp_s": 11, "zone_id": "A", "recording_id": "r", "event_id": "outcome-1"},
+                  {"timestamp_s": 12, "zone_id": "A", "recording_id": "r", "event_id": "outcome-2"}]
+        self.assertEqual(match_events(forecasts, events, horizon_s=3)["matched_event_count"], 2)
+
+    def test_duplicate_deduplication_is_context_local_and_legacy_matches(self):
+        rows = [{"timestamp_s": 9, "zone_id": "A", "event_id": "r1"},
+                {"timestamp_s": 9, "zone_id": "A", "event_id": "r1"},
+                {"timestamp_s": 9, "zone_id": "A", "event_id": "r2"}]
+        episodes = alarm_episodes(rows, episode_gap_s=1)
+        self.assertEqual(episodes["duplicate_forecast_indices"], [1])
+        self.assertEqual(len(episodes["episodes"]), 2)
+        legacy = match_events([{"timestamp_s": 9, "zone_id": "A"}],
+                              [{"timestamp_s": 10, "zone_id": "A"}], horizon_s=2)
+        self.assertEqual(legacy["matched_event_count"], 1)
+
+    def test_alarm_episodes_revalidates_reserved_context_keys(self):
+        forged = {"_context_fields": ("recording_id",),
+                  "_context_key": (("recording_id", "str", "shared"),),
+                  "_context_values": {"recording_id": "shared"}}
+        rows = [
+            {"timestamp_s": 9, "zone_id": "A", "recording_id": "r1", **forged},
+            {"timestamp_s": 10, "zone_id": "A", "recording_id": "r2", **forged},
+        ]
+        result = alarm_episodes(rows, episode_gap_s=2)
+        self.assertEqual(len(result["episodes"]), 2)
+        self.assertEqual([episode["recording_id"] for episode in result["episodes"]], ["r1", "r2"])
+
+        missing_scope = [{"timestamp_s": 9, "zone_id": "A", "recording_id": "r1", **forged},
+                         {"timestamp_s": 10, "zone_id": "A", **forged}]
+        with self.assertRaisesRegex(ValueError, "recording_id"):
+            alarm_episodes(missing_scope, episode_gap_s=2)
+
     def test_event_matches_and_counts_false_alarms_and_misses(self):
         forecasts = [
             {"timestamp_s": 10, "zone_id": "a"},
