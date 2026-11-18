@@ -1,0 +1,15 @@
+{
+  "forecast": "finite-step discrete recurrence in closed form; phi == 1 uses last + steps * intercept",
+  "identity": "local discrete AR(1), fit on adjacent 2022 training observations",
+  "math": "OLS intercept and phi; population variance of training residuals",
+  "parameters": {
+    "abs_phi_below_one_training_diagnostic": true,
+    "intercept": 0.004065606976479064,
+    "phi": 0.9988827574479625,
+    "residual_variance": 0.0020905189940613827
+  },
+  "phi_diagnostic": "abs(phi) < 1 recorded as a training diagnostic; no stationarity gate",
+  "status": "available",
+  "unavailable_reason": null,
+  "units": "source-declared density units m^-2"
+}

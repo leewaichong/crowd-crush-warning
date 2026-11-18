@@ -1,0 +1,500 @@
+{
+  "caveat": "The series reports spatial-average density in source-declared m^-2. It does not establish sensor accuracy or warning performance.",
+  "counts": {
+    "2022": {
+      "completed_origins": 105,
+      "excluded_origins": 0,
+      "scheduled_origins": 105,
+      "source_observations": 80025,
+      "trailing_padding_excluded_rows": 9975
+    },
+    "2023": {
+      "completed_origins": 113,
+      "excluded_origins": 0,
+      "scheduled_origins": 113,
+      "source_observations": 85875,
+      "trailing_padding_excluded_rows": 4125
+    },
+    "2024": {
+      "completed_origins": 118,
+      "excluded_origins": 0,
+      "scheduled_origins": 118,
+      "source_observations": 90000,
+      "trailing_padding_excluded_rows": 0
+    }
+  },
+  "status": "descriptive benchmark metrics; no generalization, promotion, significance, or safety claim",
+  "years": {
+    "2022": {
+      "arms": {
+        "ar1": {
+          "abstention_count": 0,
+          "mae": 0.48186897310413324,
+          "rmse": 0.5474291327075761,
+          "valid_count": 105
+        },
+        "local_trend": {
+          "abstention_count": 0,
+          "mae": 0.11295774380528742,
+          "rmse": 0.1918578726662772,
+          "valid_count": 105
+        },
+        "persistence": {
+          "abstention_count": 0,
+          "mae": 0.08330666666666667,
+          "rmse": 0.11185130946292689,
+          "valid_count": 105
+        }
+      },
+      "bootstrap": {
+        "arms": {
+          "ar1": {
+            "block_length": 5,
+            "mae_interval": [
+              0.3758277921889872,
+              0.5940899529110661
+            ],
+            "n": 105,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.44790900011973844,
+              0.6372039259843586
+            ],
+            "seed": 0
+          },
+          "local_trend": {
+            "block_length": 5,
+            "mae_interval": [
+              0.07875090219794678,
+              0.15685224786067092
+            ],
+            "n": 105,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.10966422005196674,
+              0.28007794500979133
+            ],
+            "seed": 0
+          },
+          "persistence": {
+            "block_length": 5,
+            "mae_interval": [
+              0.06335428571428568,
+              0.10477142857142853
+            ],
+            "n": 105,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.07969025452755603,
+              0.13999172968769405
+            ],
+            "seed": 0
+          }
+        },
+        "paired_vs_persistence": {
+          "ar1": {
+            "block_length": 5,
+            "mae_delta_interval": [
+              0.2999013887471834,
+              0.5049744031221481
+            ],
+            "n": 105,
+            "replicates": 1000,
+            "rmse_delta_interval": [
+              0.3466681912119378,
+              0.5196624775158832
+            ],
+            "seed": 0
+          },
+          "local_trend": {
+            "block_length": 5,
+            "mae_delta_interval": [
+              0.008709081741062438,
+              0.06261727717315803
+            ],
+            "n": 105,
+            "replicates": 1000,
+            "rmse_delta_interval": [
+              0.014444167727374335,
+              0.1533275537585408
+            ],
+            "seed": 0
+          }
+        }
+      },
+      "paired_vs_persistence": {
+        "ar1": {
+          "disagreement_count": 105,
+          "largest_five_absolute_error_disagreements": [
+            {
+              "absolute_error_difference": 0.8424451030488784,
+              "origin_timestamp_s": -351.0
+            },
+            {
+              "absolute_error_difference": 0.8386663246548878,
+              "origin_timestamp_s": -321.0
+            },
+            {
+              "absolute_error_difference": 0.8126501864235411,
+              "origin_timestamp_s": -381.0
+            },
+            {
+              "absolute_error_difference": 0.8069349112238431,
+              "origin_timestamp_s": -3141.0
+            },
+            {
+              "absolute_error_difference": 0.7951681576131611,
+              "origin_timestamp_s": -411.0
+            }
+          ],
+          "mae_delta": 0.3985623064374665,
+          "paired_count": 105,
+          "rmse_delta": 0.4355778232446492
+        },
+        "local_trend": {
+          "disagreement_count": 105,
+          "largest_five_absolute_error_disagreements": [
+            {
+              "absolute_error_difference": 1.034557912145508,
+              "origin_timestamp_s": -171.0
+            },
+            {
+              "absolute_error_difference": 0.39287671827634796,
+              "origin_timestamp_s": -2331.0
+            },
+            {
+              "absolute_error_difference": 0.36290413314162695,
+              "origin_timestamp_s": -141.0
+            },
+            {
+              "absolute_error_difference": 0.21329878601580798,
+              "origin_timestamp_s": -411.0
+            },
+            {
+              "absolute_error_difference": 0.1687483401563874,
+              "origin_timestamp_s": -741.0
+            }
+          ],
+          "mae_delta": 0.02965107713862077,
+          "paired_count": 105,
+          "rmse_delta": 0.08000656320335033
+        }
+      },
+      "scheduled_origin_count": 105
+    },
+    "2023": {
+      "arms": {
+        "ar1": {
+          "abstention_count": 0,
+          "mae": 0.48971408608224276,
+          "rmse": 0.615723935264734,
+          "valid_count": 113
+        },
+        "local_trend": {
+          "abstention_count": 0,
+          "mae": 0.07469155652564953,
+          "rmse": 0.1004502619622799,
+          "valid_count": 113
+        },
+        "persistence": {
+          "abstention_count": 0,
+          "mae": 0.06599292035398227,
+          "rmse": 0.08057834092700511,
+          "valid_count": 113
+        }
+      },
+      "bootstrap": {
+        "arms": {
+          "ar1": {
+            "block_length": 5,
+            "mae_interval": [
+              0.3469003139435518,
+              0.6558687494615268
+            ],
+            "n": 113,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.44450779380096006,
+              0.7813719790376066
+            ],
+            "seed": 0
+          },
+          "local_trend": {
+            "block_length": 5,
+            "mae_interval": [
+              0.062182252154975304,
+              0.08834514396608238
+            ],
+            "n": 113,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.08117630521465617,
+              0.12064333608458302
+            ],
+            "seed": 0
+          },
+          "persistence": {
+            "block_length": 5,
+            "mae_interval": [
+              0.05693362831858406,
+              0.07559203539823002
+            ],
+            "n": 113,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.06968310253397916,
+              0.09117736726230335
+            ],
+            "seed": 0
+          }
+        },
+        "paired_vs_persistence": {
+          "ar1": {
+            "block_length": 5,
+            "mae_delta_interval": [
+              0.28409836625846957,
+              0.5877014928243588
+            ],
+            "n": 113,
+            "replicates": 1000,
+            "rmse_delta_interval": [
+              0.3687067061719107,
+              0.6959126780525733
+            ],
+            "seed": 0
+          },
+          "local_trend": {
+            "block_length": 5,
+            "mae_delta_interval": [
+              -0.0008751298588635329,
+              0.017751572970176686
+            ],
+            "n": 113,
+            "replicates": 1000,
+            "rmse_delta_interval": [
+              0.00607696541262788,
+              0.032284965956961745
+            ],
+            "seed": 0
+          }
+        }
+      },
+      "paired_vs_persistence": {
+        "ar1": {
+          "disagreement_count": 113,
+          "largest_five_absolute_error_disagreements": [
+            {
+              "absolute_error_difference": 1.4318432133470473,
+              "origin_timestamp_s": -45.0
+            },
+            {
+              "absolute_error_difference": 1.4093095593284728,
+              "origin_timestamp_s": -75.0
+            },
+            {
+              "absolute_error_difference": 1.351130729683538,
+              "origin_timestamp_s": -105.0
+            },
+            {
+              "absolute_error_difference": 1.2784781424196199,
+              "origin_timestamp_s": -135.0
+            },
+            {
+              "absolute_error_difference": 1.271439923028427,
+              "origin_timestamp_s": -165.0
+            }
+          ],
+          "mae_delta": 0.4237211657282606,
+          "paired_count": 113,
+          "rmse_delta": 0.5351455943377289
+        },
+        "local_trend": {
+          "disagreement_count": 113,
+          "largest_five_absolute_error_disagreements": [
+            {
+              "absolute_error_difference": 0.1813694092274094,
+              "origin_timestamp_s": -525.0
+            },
+            {
+              "absolute_error_difference": 0.15760228206363713,
+              "origin_timestamp_s": -105.0
+            },
+            {
+              "absolute_error_difference": 0.14317215414907825,
+              "origin_timestamp_s": -1215.0
+            },
+            {
+              "absolute_error_difference": 0.13748553099413474,
+              "origin_timestamp_s": -765.0
+            },
+            {
+              "absolute_error_difference": 0.13574926197694293,
+              "origin_timestamp_s": -1125.0
+            }
+          ],
+          "mae_delta": 0.00869863617166728,
+          "paired_count": 113,
+          "rmse_delta": 0.019871921035274784
+        }
+      },
+      "scheduled_origin_count": 113
+    },
+    "2024": {
+      "arms": {
+        "ar1": {
+          "abstention_count": 0,
+          "mae": 0.43943296227066764,
+          "rmse": 0.5534069057032698,
+          "valid_count": 118
+        },
+        "local_trend": {
+          "abstention_count": 0,
+          "mae": 0.0722865150468932,
+          "rmse": 0.10113000336551735,
+          "valid_count": 118
+        },
+        "persistence": {
+          "abstention_count": 0,
+          "mae": 0.06733305084745769,
+          "rmse": 0.09137015840775171,
+          "valid_count": 118
+        }
+      },
+      "bootstrap": {
+        "arms": {
+          "ar1": {
+            "block_length": 5,
+            "mae_interval": [
+              0.3103372449777612,
+              0.5827226122164662
+            ],
+            "n": 118,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.40867788862012555,
+              0.6903052048407115
+            ],
+            "seed": 0
+          },
+          "local_trend": {
+            "block_length": 5,
+            "mae_interval": [
+              0.05450007410782576,
+              0.0911423282029788
+            ],
+            "n": 118,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.07558748345874713,
+              0.12536920687839007
+            ],
+            "seed": 0
+          },
+          "persistence": {
+            "block_length": 5,
+            "mae_interval": [
+              0.05339661016949158,
+              0.08432288135593226
+            ],
+            "n": 118,
+            "replicates": 1000,
+            "rmse_interval": [
+              0.07066659664477935,
+              0.11424456037935111
+            ],
+            "seed": 0
+          }
+        },
+        "paired_vs_persistence": {
+          "ar1": {
+            "block_length": 5,
+            "mae_delta_interval": [
+              0.2507703083122581,
+              0.5047133455954433
+            ],
+            "n": 118,
+            "replicates": 1000,
+            "rmse_delta_interval": [
+              0.33136969228431196,
+              0.58219474518192
+            ],
+            "seed": 0
+          },
+          "local_trend": {
+            "block_length": 5,
+            "mae_delta_interval": [
+              -0.005260922736507054,
+              0.015167257915639465
+            ],
+            "n": 118,
+            "replicates": 1000,
+            "rmse_delta_interval": [
+              -0.004746394100249643,
+              0.023779947020138054
+            ],
+            "seed": 0
+          }
+        }
+      },
+      "paired_vs_persistence": {
+        "ar1": {
+          "disagreement_count": 118,
+          "largest_five_absolute_error_disagreements": [
+            {
+              "absolute_error_difference": 1.1391895102745755,
+              "origin_timestamp_s": -60.0
+            },
+            {
+              "absolute_error_difference": 1.1063215703847833,
+              "origin_timestamp_s": -150.0
+            },
+            {
+              "absolute_error_difference": 1.094008682569826,
+              "origin_timestamp_s": -90.0
+            },
+            {
+              "absolute_error_difference": 1.0524604842282725,
+              "origin_timestamp_s": -180.0
+            },
+            {
+              "absolute_error_difference": 1.015942791990791,
+              "origin_timestamp_s": -120.0
+            }
+          ],
+          "mae_delta": 0.3720999114232097,
+          "paired_count": 118,
+          "rmse_delta": 0.4620367472955181
+        },
+        "local_trend": {
+          "disagreement_count": 118,
+          "largest_five_absolute_error_disagreements": [
+            {
+              "absolute_error_difference": 0.23774993838003322,
+              "origin_timestamp_s": -660.0
+            },
+            {
+              "absolute_error_difference": -0.22584461746041296,
+              "origin_timestamp_s": -210.0
+            },
+            {
+              "absolute_error_difference": 0.1618860862821192,
+              "origin_timestamp_s": -420.0
+            },
+            {
+              "absolute_error_difference": 0.13969072690314022,
+              "origin_timestamp_s": -480.0
+            },
+            {
+              "absolute_error_difference": -0.13247323781058196,
+              "origin_timestamp_s": -180.0
+            }
+          ],
+          "mae_delta": 0.0049534641994354554,
+          "paired_count": 118,
+          "rmse_delta": 0.009759844957765634
+        }
+      },
+      "scheduled_origin_count": 118
+    }
+  }
+}
