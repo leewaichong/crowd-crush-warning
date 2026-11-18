@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from density_forecast_benchmark import fit_ar1, forecast_year
+from density_forecast_benchmark import fit_ar1, forecast_year, _metrics
 
 
 class DensityBenchmarkTests(unittest.TestCase):
@@ -38,6 +38,14 @@ class DensityBenchmarkTests(unittest.TestCase):
         self.assertEqual(rows[0]["origin_timestamp_s"], points[750][0])
         self.assertEqual(rows[0]["target_timestamp_s"], points[1500][0])
         self.assertEqual(rows[0]["actual"], points[1500][1])
+        unavailable_rows = forecast_year(points, None, 2024, "fixture AR fit unavailable")
+        summary = _metrics(unavailable_rows)
+        bootstrap = summary["bootstrap"]["arms"]
+        self.assertEqual(bootstrap["ar1"]["n"], 0)
+        self.assertEqual(bootstrap["persistence"]["n"], len(unavailable_rows))
+        self.assertEqual(bootstrap["local_trend"]["n"], len(unavailable_rows))
+        self.assertIsNotNone(bootstrap["persistence"]["mae_interval"])
+        self.assertIsNotNone(bootstrap["local_trend"]["rmse_interval"])
 
 
 if __name__ == "__main__":

@@ -205,7 +205,7 @@ def _metrics(rows: list[dict], seed: int = 0) -> dict:
             "largest_five_absolute_error_disagreements": disagreements[:5],
         }
     arm_bootstrap = {
-        arm: _bootstrap_arm(valid[arm], seed)
+        arm: _bootstrap_arm([row["errors"][arm] for row in valid[arm]], seed)
         for arm in ARMS
     }
     paired_bootstrap = {
@@ -232,13 +232,13 @@ def _bootstrap_indices(n: int, seed: int) -> list[list[int]]:
     return samples
 
 
-def _bootstrap_arm(rows: list[dict], seed: int) -> dict:
-    n = len(rows)
+def _bootstrap_arm(errors: list[float], seed: int) -> dict:
+    n = len(errors)
     mae_values, rmse_values = [], []
     for indices in _bootstrap_indices(n, seed):
-        errors = [rows[index]["errors"] for index in indices]
-        mae_values.append(sum(abs(error) for error in errors) / n)
-        rmse_values.append(math.sqrt(sum(error * error for error in errors) / n))
+        sample = [errors[index] for index in indices]
+        mae_values.append(sum(abs(error) for error in sample) / n)
+        rmse_values.append(math.sqrt(sum(error * error for error in sample) / n))
     return {
         "n": n, "replicates": BOOTSTRAP_REPLICATES, "block_length": BOOTSTRAP_BLOCK, "seed": seed,
         "mae_interval": _percentile_interval(mae_values) if n else None,
