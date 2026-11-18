@@ -64,7 +64,7 @@ class VideoInspectionTests(unittest.TestCase):
 
     def test_bad_pts_abstain_and_gap_is_reported_when_configured(self):
         for pts, missing, duplicate, nonmonotonic in (
-            (["1", None, "2"], 1, 0, 0),
+            (["3", None, "2"], 1, 0, 1),
             (["1", "1", "2"], 0, 1, 0),
             (["2", "1", "3"], 0, 0, 1),
         ):
@@ -74,6 +74,10 @@ class VideoInspectionTests(unittest.TestCase):
                 self.assertEqual(result["missing_pts_count"], missing)
                 self.assertEqual(result["duplicate_pts_count"], duplicate)
                 self.assertEqual(result["nonmonotonic_pts_count"], nonmonotonic)
+                if pts == ["3", None, "2"]:
+                    interval = result["observed_deltas_s"][0]
+                    self.assertEqual((interval["from_frame"], interval["to_frame"]), (1, 3))
+                    self.assertEqual(interval["missing_pts_between"], 1)
 
         result, _ = self.inspect_with(["0", "0.5", "3"], max_gap_s=1.0)
         self.assertEqual(result["timing_status"], "abstain")

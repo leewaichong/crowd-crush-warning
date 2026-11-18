@@ -100,7 +100,7 @@ def inspect_video(path: str | Path, *, max_gap_s: float | None = None) -> dict[s
         raise ValueError("ffprobe returned malformed decoded-frame metadata")
 
     decode_command = [
-        ffmpeg, "-v", "error", "-xerror", "-i", str(source), "-map", "0:v:0",
+        ffmpeg, "-v", "error", "-xerror", "-nostdin", "-i", str(source), "-map", "0:v:0",
         "-an", "-sn", "-dn", "-f", "null", "-",
     ]
     try:
@@ -121,23 +121,27 @@ def inspect_video(path: str | Path, *, max_gap_s: float | None = None) -> dict[s
     excessive_gaps: list[dict[str, Any]] = []
     previous: float | None = None
     previous_index: int | None = None
+    missing_between_previous = 0
     for index, timestamp in enumerate(pts_values, start=1):
         if timestamp is None:
-            previous = None
-            previous_index = None
+            missing_between_previous += 1
             continue
         if timestamp in seen:
             duplicate_count += 1
         seen.add(timestamp)
         if previous is not None:
             delta = timestamp - previous
-            record = {"from_frame": previous_index, "to_frame": index, "delta_s": delta}
+            record = {
+                "from_frame": previous_index, "to_frame": index,
+                "missing_pts_between": missing_between_previous, "delta_s": delta,
+            }
             deltas.append(record)
             if delta < 0:
                 nonmonotonic_count += 1
             elif max_gap_s is not None and delta > max_gap_s:
                 excessive_gaps.append(record.copy())
         previous, previous_index = timestamp, index
+        missing_between_previous = 0
 
     timing_status = (
         "abstain"
