@@ -88,6 +88,9 @@ class CliSubprocessTests(unittest.TestCase):
     def write_density_table(self):
         path = self.directory / "density.tsv"
         path.write_text(
+            "Density averaged over space and plotted against time for Pamplona 2022, 2023 and 2024. "
+            "Time is negative, representing the time to the opening of the festival. "
+            "Delimiter is a tab character.\n"
             "Time 2022 (s)\tDensity 2022 (m^-2)\tTime 2023 (s)\tDensity 2023 (m^-2)\t"
             "Time 2024 (s)\tDensity 2024 (m^-2)\n"
             "\n"
