@@ -1,6 +1,6 @@
 # Pamplona density change-point forecast
 
-This is the completed, descriptive result of one exploratory forecast run on a published spatial-average density series. It is separate from a warning evaluation. Independent review of the 336 metric and control joins is still in progress, and root review is pending. Treat the package as audit-pending until both reviews are recorded.
+This is the completed, descriptive result of one exploratory forecast run on a published spatial-average density series. It is separate from a warning evaluation. An independent audit completed at `2026-11-18T06:09:35.866963+00:00`; all 21 checks passed and the findings list was empty. Maintainer review of the producer script, results, provenance, and audit is complete.
 
 ## Run record
 
@@ -20,7 +20,7 @@ Each forecast used the 30 seconds ending at its origin and predicted the next 30
 
 The rule minimizes `n * log(SSE / n) + k * log(n)`, using `k=1` for no split and `k=3` for one split. Exact ties favor no split, then the earliest split. Zero SSE receives a score of negative infinity. This is a BIC-inspired heuristic, not standard BIC applied under a validated likelihood, a posterior probability, or a significance test. The density series is serially dependent, and the split location is searched. Frequent selected splits do not show that the underlying crowd experienced physically real change points.
 
-The exact retained M04 schedule supplied 336 origins: 105 in 2022, 113 in 2023, and 118 in 2024. All rows had source-grid origin and target timestamps, source-matching actual and persistence values, and finite internally consistent retained control predictions. The run recomputed persistence and local trend from the source history, computed trailing mean and one-split forecasts, and carried forward the retained AR(1) forecasts. Local trend in this bundle is the run's causal 30-second recomputation; it is not described as a copied retained prediction. See `comparison.json` for the run's control-validation summary.
+The exact retained M04 schedule supplied 336 origins: 105 in 2022, 113 in 2023, and 118 in 2024. The audit checked every origin and target against the source, all output residuals, aggregate and per-year metrics, paired differences, 30-second causal history bounds, and retained controls. Persistence and AR(1) predictions exactly match the retained values. The run's causal local-trend predictions match the retained local-trend values on all 336 rows within `1e-10`; the maximum absolute difference was `1.0658141036401503e-14`, from equivalent algebraic expressions. Trailing mean and one-split forecasts were computed by the run. Independent split selection was recomputed with a separate `math.fsum` implementation on three sampled origins per year, nine rows total. The audit did not rerun all split fits. Its full report and executed audit script are included as `audit.json` and `audit_script.py`.
 
 ## Descriptive errors
 
@@ -38,4 +38,4 @@ These are descriptive forecast errors on one venue's series. The 2024 data had a
 
 ## Files and review status
 
-`manifest.json`, `trail.jsonl`, `origins.jsonl`, `metrics.json`, and `comparison.json` are byte-for-byte copies of the completed run artifacts. `origins.jsonl` contains derived forecast values and target density observations from the CC BY 4.0 source; attribution is in [CITATIONS.md](../../CITATIONS.md). No source rows or source file are included. Their hashes are retained in `trail.jsonl` and the manifest is included unchanged. Independent audit and root review remain pending.
+`manifest.json`, `trail.jsonl`, `origins.jsonl`, `metrics.json`, and `comparison.json` are byte-for-byte copies of the completed run artifacts. The run manifest and event trail retain their original hashes. `origins.jsonl` contains derived forecasts and target density observations from the CC BY 4.0 source, with attribution in [CITATIONS.md](../../CITATIONS.md). The full source table is not included; target density observations remain in the derived per-origin outputs under the source's CC BY 4.0 terms and attribution. The audit found no discrepancies in the checks it performed. Its stated limits, including sampled rather than exhaustive independent split-fit recomputation, remain part of this result.

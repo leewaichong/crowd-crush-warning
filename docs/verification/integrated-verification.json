@@ -1,0 +1,21 @@
+{
+  "git_sha": "29403b30a086485baa11df3e284f5f68ed75fabb",
+  "tracked_clean": true,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONPATH": "src"
+  },
+  "started_at_utc": "2026-11-18T06:08:13.395638+00:00",
+  "completed_at_utc": "2026-11-18T06:08:18.382884+00:00",
+  "exit_code": 0,
+  "log_sha256": "d415e30a2fbe7bba75dfcf2860caf2a576397aaa901d66978ca2bce12ec87923",
+  "scope": "Software verification only. No motion accuracy or warning evaluation."
+}
