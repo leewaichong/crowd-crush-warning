@@ -10,7 +10,7 @@ The baseline arms are density, lagged persistence, and one-sided excess CUSUM. C
 
 The Pamplona table contains 90,000 rows with author-declared time in seconds relative to festival opening and spatially averaged density in m^-2. The three series contain 80,025, 85,875, and 90,000 numeric observations for 2022, 2023, and 2024. Their remaining rows are trailing padding: 9,975, 4,125, and 0. The table contains no velocity, calibrated harm probability, or outcome labels. The viewer inspects source values; it does not define a hazard threshold or produce a warning.
 
-**Density forecasting component: evaluated descriptively** on one published spatial-average density series. This does not establish independent measurement accuracy, venue generalization, or warning effectiveness. **Motion accuracy: NOT RUN. Real crowd warning evaluation: NOT RUN.** See the [benchmark results](results/pamplona-density-30s-2026-11-18/README.md) and [status snapshot](docs/STATE.md).
+**Density forecasting component: evaluated descriptively** on one published spatial-average density series. The [30-second benchmark](results/pamplona-density-30s-2026-11-18/README.md) and [exploratory change-point run](results/pamplona-change-point-2026-11-18/README.md) do not establish independent measurement accuracy, venue generalization, or warning effectiveness. The change-point package awaits independent audit and root review. **Motion accuracy: NOT RUN. Real crowd warning evaluation: NOT RUN.** See the [status snapshot](docs/STATE.md).
 
 ## Local commands
 

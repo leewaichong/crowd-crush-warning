@@ -1,0 +1,5 @@
+{
+  "note": "Trailing mean is recomputed under the stated 30-second history rule.",
+  "source_origin_target_actual_persistence_local_trend_ar1_checks": "passed",
+  "verified_retained_control_rows": 336
+}

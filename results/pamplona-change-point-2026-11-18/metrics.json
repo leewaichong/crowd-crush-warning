@@ -1,0 +1,132 @@
+{
+  "arms": {
+    "ar1": {
+      "coverage": 336,
+      "mae": 0.46960423646180405,
+      "rmse": 0.5733281823753887
+    },
+    "local_trend": {
+      "coverage": 336,
+      "mae": 0.08580511238835384,
+      "rmse": 0.13597103520059972
+    },
+    "one_split": {
+      "coverage": 336,
+      "mae": 0.0629961971617974,
+      "rmse": 0.08681389058829742
+    },
+    "persistence": {
+      "coverage": 336,
+      "mae": 0.07187410714285715,
+      "rmse": 0.09500067371314998
+    },
+    "trailing_mean": {
+      "coverage": 336,
+      "mae": 0.06714837478599962,
+      "rmse": 0.08748863377307822
+    }
+  },
+  "by_year": {
+    "2022": {
+      "ar1": {
+        "coverage": 105,
+        "mae": 0.48186897310413307,
+        "rmse": 0.5474291327075761
+      },
+      "local_trend": {
+        "coverage": 105,
+        "mae": 0.11295774380528761,
+        "rmse": 0.1918578726662769
+      },
+      "one_split": {
+        "coverage": 105,
+        "mae": 0.07633591710283621,
+        "rmse": 0.11063283154515723
+      },
+      "persistence": {
+        "coverage": 105,
+        "mae": 0.08330666666666667,
+        "rmse": 0.11185130946292687
+      },
+      "trailing_mean": {
+        "coverage": 105,
+        "mae": 0.08043770211147037,
+        "rmse": 0.10777773476002905
+      }
+    },
+    "2023": {
+      "ar1": {
+        "coverage": 113,
+        "mae": 0.4897140860822428,
+        "rmse": 0.615723935264734
+      },
+      "local_trend": {
+        "coverage": 113,
+        "mae": 0.0746915565256492,
+        "rmse": 0.10045026196227974
+      },
+      "one_split": {
+        "coverage": 113,
+        "mae": 0.056125140661397586,
+        "rmse": 0.07196328399408226
+      },
+      "persistence": {
+        "coverage": 113,
+        "mae": 0.06599292035398227,
+        "rmse": 0.08057834092700508
+      },
+      "trailing_mean": {
+        "coverage": 113,
+        "mae": 0.060479511683536984,
+        "rmse": 0.07415087645546922
+      }
+    },
+    "2024": {
+      "ar1": {
+        "coverage": 118,
+        "mae": 0.43943296227066736,
+        "rmse": 0.5534069057032697
+      },
+      "local_trend": {
+        "coverage": 118,
+        "mae": 0.07228651504689262,
+        "rmse": 0.10113000336551697
+      },
+      "one_split": {
+        "coverage": 118,
+        "mae": 0.057706017422272854,
+        "rmse": 0.07489878872311274
+      },
+      "persistence": {
+        "coverage": 118,
+        "mae": 0.06733305084745769,
+        "rmse": 0.09137015840775171
+      },
+      "trailing_mean": {
+        "coverage": 118,
+        "mae": 0.06170941005213392,
+        "rmse": 0.07869882881857262
+      }
+    }
+  },
+  "paired_vs_persistence": {
+    "ar1": {
+      "count": 336,
+      "mean_absolute_error_difference": 0.3977301293189469
+    },
+    "local_trend": {
+      "count": 336,
+      "mean_absolute_error_difference": 0.013931005245496675
+    },
+    "one_split": {
+      "count": 336,
+      "mean_absolute_error_difference": -0.008877909981059756
+    },
+    "trailing_mean": {
+      "count": 336,
+      "mean_absolute_error_difference": -0.004725732356857541
+    }
+  },
+  "row_count": 336,
+  "status": "descriptive exploratory comparison; no warning, safety, or promotion claim"
+}
