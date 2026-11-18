@@ -5,8 +5,8 @@
       "sha256": "9495d2475f1b7410c438f7eee9ac309973f626d5156bea7f8db2e5c0be9af9b5"
     },
     "README.md": {
-      "bytes": 4875,
-      "sha256": "04885f725147f51b7a5f272aea57018f387e18e4fb62264d2360365fb0c224f1"
+      "bytes": 5014,
+      "sha256": "1d237dfc149ab821a81b952502aeb640a056c53fc139d45d5d62ef68bbc1f7dc"
     },
     "aggregate-summary.json": {
       "bytes": 5413,
@@ -52,7 +52,7 @@
       "bytes": 279,
       "sha256": "f9b500e1f8bc5cbe80031acecff8f79fc1cf4083a34a08e558d0094fd57371ac"
     },
-    "test_hmm.py": {
+    "tests/test_hmm.py": {
       "bytes": 2559,
       "sha256": "a4150eef00d7b3843c1e673ca31a0537de05894d57972dea7de72a87d97113f8"
     }

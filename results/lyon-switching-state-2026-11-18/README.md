@@ -16,7 +16,7 @@ Mean vector error and vector RMSE use source-declared projected-coordinate units
 | Validation | 48,621 | 0.012330 / 0.015377 | 0.011802 / 0.016355 | 0.008990 / 0.012289 | 0.015824 / 0.019218 |
 | Test | 46,699 | 0.012580 / 0.015626 | 0.011650 / 0.016174 | 0.008836 / 0.012071 | 0.016457 / 0.019528 |
 
-These numbers describe forecasts of source-reported increments, not independently measured physical velocity or ground truth. The source preprocessing is unknown and may use smoothing that is noncausal. The HMM's test mean error was higher than latest and trailing-five controls, and lower than the memoryless control. That single-record comparison establishes no effectiveness or generalization.
+These numbers describe forecasts of source-reported increments, not independently measured physical velocity or ground truth. The source preprocessing is unknown and may use smoothing that is noncausal. On test, the trailing mean of five wins both reported metrics, mean vector error and RMSE. The HMM RMSE is lower than latest-increment persistence, but its mean error is higher. The HMM remains an archived experiment with no production integration. This single-record comparison establishes no effectiveness or generalization.
 
 ## Model and audit
 
@@ -30,6 +30,6 @@ Independent measurement accuracy, online performance, warning effectiveness, saf
 
 ## Reproduction files and terms
 
-`hmm.py`, `config.json`, `test_hmm.py`, and `audit_helpers_v2.py` are archived source copies. `runner.py` is a public reproduction copy of the executed runner with only the `profile` and `model_identity` metadata entries removed. Its SHA-256 differs from the executed runner; both are recorded in provenance. The software check log records the two previously run analytic checks. No test suite was rerun for publication. The runner is a workspace-specific research helper, not a production CLI.
+`hmm.py`, `config.json`, `tests/test_hmm.py`, and `audit_helpers_v2.py` are archived source copies. `runner.py` is a public reproduction copy of the executed runner with only the `profile` and `model_identity` metadata entries removed. Its SHA-256 differs from the executed runner; both are recorded in provenance. The software check log records the two previously run analytic checks. No test suite was rerun for publication. The runner is a workspace-specific research helper, not a production CLI.
 
 Original code is MIT licensed; see [LICENSE](LICENSE). Dataset terms remain separate. Sources: Dufour et al., [Scientific Data paper](https://doi.org/10.1038/s41597-025-04732-3) and [Zenodo record 13830435](https://doi.org/10.5281/zenodo.13830435). HMM background: Rabiner (1989), [DOI 10.1109/5.18626](https://doi.org/10.1109/5.18626). The citations are background and source attribution, not endorsement.
