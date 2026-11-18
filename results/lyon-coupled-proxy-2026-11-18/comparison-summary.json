@@ -1,0 +1,230 @@
+{
+  "fitted_parameters": [
+    {
+      "marginal_diffusion_per_sqrt_source_second_by_zone_1_4": [
+        0.0050986005726412756,
+        0.008877884164978693,
+        0.00483564926626131,
+        0.005124145163369317
+      ],
+      "marginal_drift_per_source_second_by_zone_1_4": [
+        6.924908127094504e-06,
+        6.108288157151872e-05,
+        2.8950995600260826e-05,
+        -8.448833836059378e-05
+      ],
+      "q95_training_boundary": 0.023989088607973264,
+      "record": "TopView_1A",
+      "training_q_rows": 3802
+    },
+    {
+      "marginal_diffusion_per_sqrt_source_second_by_zone_1_4": [
+        0.0043122861247841095,
+        0.006081455600559458,
+        0.0037189879479467792,
+        0.0034106712516668615
+      ],
+      "marginal_drift_per_source_second_by_zone_1_4": [
+        3.308696388660524e-05,
+        3.849097872014757e-05,
+        4.441258989439073e-05,
+        4.7301168017501686e-05
+      ],
+      "q95_training_boundary": 0.017175667787796896,
+      "record": "TopView_2A",
+      "training_q_rows": 2895
+    }
+  ],
+  "records": [
+    {
+      "arms": {
+        "coupled": {
+          "brier_by_replicate_0_1_2": [
+            0.015170636615381268,
+            0.015905821223776984,
+            0.01615115194931668
+          ],
+          "descriptive_max": 0.01615115194931668,
+          "descriptive_mean": 0.015742536596158308,
+          "descriptive_min": 0.015170636615381268
+        },
+        "persistence": {
+          "brier_by_replicate_0_1_2": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "descriptive_max": 1.0,
+          "descriptive_mean": 1.0,
+          "descriptive_min": 1.0
+        },
+        "uncoupled": {
+          "brier_by_replicate_0_1_2": [
+            0.0008839471758574165,
+            0.0008935954909470752,
+            0.0009743098096927228
+          ],
+          "descriptive_max": 0.0009743098096927228,
+          "descriptive_mean": 0.0009172841588324048,
+          "descriptive_min": 0.0008839471758574165
+        }
+      },
+      "eligible_proxy_crossing_origins": 359,
+      "excluded_origins": {
+        "current_at_or_above_boundary": 9,
+        "horizon_unavailable": 900,
+        "incomplete_current_q": 0,
+        "incomplete_future_target": 0
+      },
+      "negative_proxy_crossing_origins": 0,
+      "partition": "validation",
+      "positive_proxy_crossing_origins": 359,
+      "record": "TopView_1A"
+    },
+    {
+      "arms": {
+        "coupled": {
+          "brier_by_replicate_0_1_2": [
+            0.023917134602864584,
+            0.023726781209309895,
+            0.02289403279622396
+          ],
+          "descriptive_max": 0.023917134602864584,
+          "descriptive_mean": 0.023512649536132812,
+          "descriptive_min": 0.02289403279622396
+        },
+        "persistence": {
+          "brier_by_replicate_0_1_2": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "descriptive_max": 1.0,
+          "descriptive_mean": 1.0,
+          "descriptive_min": 1.0
+        },
+        "uncoupled": {
+          "brier_by_replicate_0_1_2": [
+            0.0014391581217447916,
+            0.0014001634385850694,
+            0.0013503180609809027
+          ],
+          "descriptive_max": 0.0014391581217447916,
+          "descriptive_mean": 0.0013965465404369212,
+          "descriptive_min": 0.0013503180609809027
+        }
+      },
+      "eligible_proxy_crossing_origins": 360,
+      "excluded_origins": {
+        "current_at_or_above_boundary": 9,
+        "horizon_unavailable": 900,
+        "incomplete_current_q": 0,
+        "incomplete_future_target": 0
+      },
+      "negative_proxy_crossing_origins": 0,
+      "partition": "test",
+      "positive_proxy_crossing_origins": 360,
+      "record": "TopView_1A"
+    },
+    {
+      "arms": {
+        "coupled": {
+          "brier_by_replicate_0_1_2": [
+            0.7167873960552793,
+            0.7207537564364347,
+            0.7256000403201941
+          ],
+          "descriptive_max": 0.7256000403201941,
+          "descriptive_mean": 0.721047064270636,
+          "descriptive_min": 0.7167873960552793
+        },
+        "persistence": {
+          "brier_by_replicate_0_1_2": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "descriptive_max": 0.0,
+          "descriptive_mean": 0.0,
+          "descriptive_min": 0.0
+        },
+        "uncoupled": {
+          "brier_by_replicate_0_1_2": [
+            0.9315416740648674,
+            0.9358992143110796,
+            0.9343777280865293
+          ],
+          "descriptive_max": 0.9358992143110796,
+          "descriptive_mean": 0.9339395388208255,
+          "descriptive_min": 0.9315416740648674
+        }
+      },
+      "eligible_proxy_crossing_origins": 66,
+      "excluded_origins": {
+        "current_at_or_above_boundary": 0,
+        "horizon_unavailable": 900,
+        "incomplete_current_q": 0,
+        "incomplete_future_target": 0
+      },
+      "negative_proxy_crossing_origins": 66,
+      "partition": "validation",
+      "positive_proxy_crossing_origins": 0,
+      "record": "TopView_2A"
+    },
+    {
+      "arms": {
+        "coupled": {
+          "brier_by_replicate_0_1_2": [
+            0.015347798665364584,
+            0.014548561789772728,
+            0.015198216293797348
+          ],
+          "descriptive_max": 0.015347798665364584,
+          "descriptive_mean": 0.01503152558297822,
+          "descriptive_min": 0.014548561789772728
+        },
+        "persistence": {
+          "brier_by_replicate_0_1_2": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "descriptive_max": 1.0,
+          "descriptive_mean": 1.0,
+          "descriptive_min": 1.0
+        },
+        "uncoupled": {
+          "brier_by_replicate_0_1_2": [
+            0.0007862900242660985,
+            0.0007738055604876894,
+            0.0006776289506392045
+          ],
+          "descriptive_max": 0.0007862900242660985,
+          "descriptive_mean": 0.0007459081784643309,
+          "descriptive_min": 0.0006776289506392045
+        }
+      },
+      "eligible_proxy_crossing_origins": 66,
+      "excluded_origins": {
+        "current_at_or_above_boundary": 0,
+        "horizon_unavailable": 900,
+        "incomplete_current_q": 0,
+        "incomplete_future_target": 0
+      },
+      "negative_proxy_crossing_origins": 0,
+      "partition": "test",
+      "positive_proxy_crossing_origins": 66,
+      "record": "TopView_2A"
+    }
+  ],
+  "safety_evaluation": false,
+  "scope_notes": [
+    "Positive proxy-crossing origins are not crowd-event counts.",
+    "Every record-partition contains only one target class; this limits discrimination and calibration interpretation.",
+    "Origins overlap in time and are not independent cases. Three Monte Carlo replicates measure simulation variation, not independent data samples.",
+    "No pooling, confidence intervals, or significance tests were used.",
+    "The overlapping-origin horizon sum is omitted; it would not represent independent valid monitoring hours."
+  ],
+  "status": "descriptive_comparison_completed",
+  "target_definition": "a proxy crossing the nearest-rank 95th percentile of complete training q values within the next 30 source seconds"
+}

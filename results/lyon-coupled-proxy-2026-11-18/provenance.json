@@ -1,0 +1,57 @@
+{
+  "endpoint": null,
+  "exact_command": "python3 .planning/crowd16-comparison/20261118T095914Z/launch_comparison.py --attempt-dir .planning/crowd16-comparison/20261118T095914Z",
+  "frozen_run_input_sha256": {
+    "comparison_aggregates_private": "b383a9878e19c3aba6bc6901720eaac9bd730bf04ed44a2c5f20dc6e67b88dbd",
+    "comparison_execution": "8445198bf646d26afb59830e4fb9494c378a098c0592f210cfbcb4a97a10d459",
+    "comparison_freeze": "48492f33a46a5ab68bd6fbba9d3556de7c0028eab37f65c9335180a1379aacc7",
+    "comparison_launcher": "5533b6d997b1a8e8ef13823577aa4a464a778f261632fc9fae69e3c8f8241d64",
+    "comparison_protocol": "baa7e74f904fb54a3fbc5ed44ec5a31c089db747dfb091b664a1ea43dcfd5f29",
+    "comparison_result_private": "5f86a8689dcc437c1b1519c760f658b136b21392e5988edee495d8b3ee9f18c4",
+    "comparison_run_completion": "47457ec93eb31156395f894f3307fc980d5cf520f215674d3ccba667cf37244f",
+    "comparison_runner": "bb51601c06da103c39a1ca3e8b62d9edc4d63f8898c1d539aa706a662d53f1da"
+  },
+  "git_sha": "982b145e43f3e1c6f15729861a594f993a396155",
+  "method": {
+    "eligible_members": [
+      "TopView_1A",
+      "TopView_2A"
+    ],
+    "excluded_member": "TopView_1C, source gate found 136 missing training cells",
+    "forecast": "one-second Euler steps, no nonnegative clamp; coupled coefficient 0.15 and uncoupled coefficient 0.0; persistence predicts no new crossing",
+    "horizon_source_seconds": 30,
+    "jump_arm": "NOT RUN; jump rate and scale were frozen at zero; no jump effectiveness comparison",
+    "paths_per_replicate": 256,
+    "replicate_ids": [
+      0,
+      1,
+      2
+    ],
+    "split": "within-recording chronological partitions; floor(0.6*N) and floor(0.8*N)",
+    "threshold": "nearest-rank 95th percentile of finite pooled training q"
+  },
+  "model_identity": "local experimental runner using Python standard-library random.Random.gauss",
+  "python_runtime": "3.9.12 (v3.9.12:b28265d7e6, Mar 23 2022, 18:22:40) \n[Clang 13.0.0 (clang-1300.0.29.30)]",
+  "run_ended_utc": "2026-11-18T10:20:05.205584+00:00",
+  "run_exit_code": 0,
+  "run_runtime_seconds": 234.967166916,
+  "run_started_utc": "2026-11-18T10:16:10.238628+00:00",
+  "run_status": "completed",
+  "run_timed_out": false,
+  "source_hashes": {
+    "TopView_1A_member": "4f5c49d6569fce3f803bdb2b5e35e44d8b32a2aa94b78f266db2a4362fb6ff0b",
+    "TopView_2A_member": "8c099f61bf7ba74b615af1a54e3c685a586d96c0df4c3aee48ce6d2326788a4f",
+    "forecast_implementation": "899478df0c06ff0e185627b06ba55793677f4a0558e508f96272a7b90005d498",
+    "source_archive": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+    "source_manifest": "f4b9f0f1fc3343ab20d3f18f0f523d0aac753c4d7302cbd1f00013190f0037cf",
+    "source_reader": "928925be73800856da3879f066f981993283b20fa80e00de16dc91caeb66021b",
+    "training_fit_protocol": "4a30db370e7005603ee1d7561e6a359aa8ae14f694b19f4c7da1b987a6100a80"
+  },
+  "source_terms": {
+    "code": "MIT applies to original code only; source data and paper keep their own terms",
+    "dataset": "Zenodo record 13830435, CC BY 4.0 at record scope",
+    "paper": "Oscar Dufour et al., Scientific Data 12, 718 (2025), DOI 10.1038/s41597-025-04732-3"
+  },
+  "tracked_tree_clean_after": true,
+  "tracked_tree_clean_before": true
+}

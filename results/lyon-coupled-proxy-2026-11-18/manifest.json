@@ -1,0 +1,66 @@
+{
+  "algorithm": "SHA-256",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "f1b98fe590a9226263e3d51754790e15681dc2ba57fbbc27070e4af629083489",
+      "size_bytes": 6749
+    },
+    {
+      "path": "artifact-hashes.json",
+      "sha256": "5ea9d7fcdb33743c58309bf5632cd182f0934ffc579763d58a8b2899b65ccb8e",
+      "size_bytes": 1523
+    },
+    {
+      "path": "comparison-summary.json",
+      "sha256": "fd8f7c58b6a1427d66cc1509d45ba83edcd25e60fbdbdaf134dac2466be3c4b7",
+      "size_bytes": 7190
+    },
+    {
+      "path": "numerical-audit.json",
+      "sha256": "cf63521038604f40e01e0d82fdc7d4015e01473a6a3a08df6fc4436e7ed15acf",
+      "size_bytes": 5141
+    },
+    {
+      "path": "provenance.json",
+      "sha256": "dadda78f10dada6042d4c6c0278ecfef345e60682358d09f8cdfd4023b7f081c",
+      "size_bytes": 3247
+    },
+    {
+      "path": "research-code/audit_comparison.py",
+      "sha256": "693c3d454094a0e11adee44ac9ad92be1b818e855c8771908ae8b5066961a27b",
+      "size_bytes": 25998
+    },
+    {
+      "path": "research-code/launch_comparison.py",
+      "sha256": "5533b6d997b1a8e8ef13823577aa4a464a778f261632fc9fae69e3c8f8241d64",
+      "size_bytes": 5818
+    },
+    {
+      "path": "research-code/run_comparison.py",
+      "sha256": "bb51601c06da103c39a1ca3e8b62d9edc4d63f8898c1d539aa706a662d53f1da",
+      "size_bytes": 15068
+    },
+    {
+      "path": "run-logs/comparison-audit.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "run-logs/comparison-audit.stdout.log",
+      "sha256": "a39475d985c9a3a691fe3dbfe1c6a109b3ca5716bcb553c22ba8ab5e55e485a6",
+      "size_bytes": 129
+    },
+    {
+      "path": "run-logs/comparison.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "run-logs/comparison.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    }
+  ],
+  "manifest_excludes_self": true
+}

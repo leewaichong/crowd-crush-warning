@@ -1,0 +1,134 @@
+{
+  "v1_actual_audit": {
+    "completed_utc": "2026-11-18T10:27:08.564809+00:00",
+    "failure_stage": "timestamp validator, before numerical checks",
+    "reason": "completion marker time differs from execution completion time",
+    "result_sha256": "41d7a00b64f35c8af3e97f6c997a37e27082dbf82d22435ca3c4e2519700d4f4",
+    "script_sha256": "2e6b9a77d4c39220bbc0878ea0a2572157d27842fc4af7445df46d602895eada",
+    "started_utc": "2026-11-18T10:27:08.515257+00:00",
+    "status": "FAILED"
+  },
+  "v2_actual_audit": {
+    "assertion_groups_checked": 30,
+    "comparison_run_sha": "982b145e43f3e1c6f15729861a594f993a396155",
+    "completed_utc": "2026-11-18T10:31:37.660931+00:00",
+    "correction_completion_sha256": "9855a267dfc0ae9a9d2877718d0096898bed85216a877444567e46557548230c",
+    "execution_sha256": "7dbdf7a3f8f41f31330168179691391ed36c46b321b7ec9a5f82852d4e3aeb64",
+    "exit_status": 0,
+    "frozen_input_sha256": {
+      "comparison_aggregates_private": "b383a9878e19c3aba6bc6901720eaac9bd730bf04ed44a2c5f20dc6e67b88dbd",
+      "comparison_execution": "8445198bf646d26afb59830e4fb9494c378a098c0592f210cfbcb4a97a10d459",
+      "comparison_freeze": "48492f33a46a5ab68bd6fbba9d3556de7c0028eab37f65c9335180a1379aacc7",
+      "comparison_result_private": "5f86a8689dcc437c1b1519c760f658b136b21392e5988edee495d8b3ee9f18c4",
+      "comparison_run_completion": "47457ec93eb31156395f894f3307fc980d5cf520f215674d3ccba667cf37244f",
+      "source_archive": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c"
+    },
+    "method": "local standard-library independent recomputation from retained data and selected-origin Euler/RNG replay",
+    "metric_deltas_vs_retained_outputs": [
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "coupled",
+        "partition": "validation",
+        "record": "TopView_1A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "uncoupled",
+        "partition": "validation",
+        "record": "TopView_1A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "persistence",
+        "partition": "validation",
+        "record": "TopView_1A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "coupled",
+        "partition": "test",
+        "record": "TopView_1A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "uncoupled",
+        "partition": "test",
+        "record": "TopView_1A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "persistence",
+        "partition": "test",
+        "record": "TopView_1A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "coupled",
+        "partition": "validation",
+        "record": "TopView_2A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "uncoupled",
+        "partition": "validation",
+        "record": "TopView_2A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "persistence",
+        "partition": "validation",
+        "record": "TopView_2A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "coupled",
+        "partition": "test",
+        "record": "TopView_2A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "uncoupled",
+        "partition": "test",
+        "record": "TopView_2A"
+      },
+      {
+        "absolute_max_delta": 0.0,
+        "absolute_mean_brier_delta": 0.0,
+        "absolute_min_delta": 0.0,
+        "arm": "persistence",
+        "partition": "test",
+        "record": "TopView_2A"
+      }
+    ],
+    "protocol_sha256": "30d892efb8c1450a5d740c8ed828a585316f404e69d6952b9680ce041b6e044c",
+    "result_sha256": "f96b38eecf7c8901caef6a555e961cb2d958f456e948e1ad75fcd5a122dbe636",
+    "runtime_seconds": 3.706400208,
+    "scope": "Numerical consistency of retained private outputs only. Fit coefficients are recomputed from retained training q; no independent source-q reconstruction is claimed. This does not verify source measurements or warning effectiveness.",
+    "script_sha256": "693c3d454094a0e11adee44ac9ad92be1b818e855c8771908ae8b5066961a27b",
+    "selected_origin_replay": "12 selected origins, each across replicates 0, 1, and 2; 256 paths per replicate for each diffusion arm",
+    "started_utc": "2026-11-18T10:31:33.948223+00:00",
+    "status": "NUMERICAL_CONSISTENCY_AUDIT_PASSED"
+  }
+}
