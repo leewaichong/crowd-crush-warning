@@ -85,6 +85,19 @@ class CliSubprocessTests(unittest.TestCase):
         path.write_text(json.dumps(manifest), encoding="utf-8")
         return path
 
+    def write_density_table(self):
+        path = self.directory / "density.tsv"
+        path.write_text(
+            "Time 2022 (s)\tDensity 2022 (m^-2)\tTime 2023 (s)\tDensity 2023 (m^-2)\t"
+            "Time 2024 (s)\tDensity 2024 (m^-2)\n"
+            "\n"
+            "-2\t0.1\t-3\t0.2\t-1\t0.3\n"
+            "\n"
+            "-1\t0.2\t-2\t0.3\t0\t0.4\n",
+            encoding="utf-8",
+        )
+        return path
+
     @staticmethod
     def strict_json(text):
         def reject_constant(value):
@@ -173,6 +186,43 @@ class CliSubprocessTests(unittest.TestCase):
         self.assertIs(result["integrity_verified"], False)
         self.assertTrue(result["errors"])
         self.assertNotIn("Traceback", completed.stdout + completed.stderr)
+
+    def test_inspect_density_uses_real_density_module(self):
+        path = self.write_density_table()
+        completed = self.run_cli("inspect-density", path)
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(completed.stderr, "")
+        result = self.strict_json(completed.stdout)
+        self.assertEqual(result["source_format"], "zenodo-density-time-v1")
+        self.assertEqual(result["row_count"], 2)
+        self.assertEqual(result["time_reference"], "seconds_relative_to_festival_opening")
+        self.assertEqual([series["year"] for series in result["series"]], [2022, 2023, 2024])
+        self.assertTrue(all(series["observation_count"] == 2 for series in result["series"]))
+
+    def test_replay_density_creates_html_and_reports_input_digest(self):
+        path = self.write_density_table()
+        output = self.directory / "density-replay.html"
+        completed = self.run_cli("replay-density", path, "--output", output)
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(completed.stderr, "")
+        result = self.strict_json(completed.stdout)
+        self.assertEqual(result["status"], "written")
+        self.assertEqual(result["output"], str(output.resolve()))
+        self.assertEqual(result["input_sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+        self.assertIn("<!doctype html>", output.read_text(encoding="utf-8").lower())
+
+    def test_replay_density_refuses_existing_output_without_changing_it(self):
+        path = self.write_density_table()
+        output = self.directory / "existing.html"
+        original = b"keep this file\n"
+        output.write_bytes(original)
+        completed = self.run_cli("replay-density", path, "--output", output)
+        self.assertEqual(completed.returncode, 2)
+        self.assertEqual(completed.stdout, "")
+        self.assertNotIn("Traceback", completed.stderr)
+        error = self.strict_json(completed.stderr)
+        self.assertEqual(error["status"], "error")
+        self.assertEqual(output.read_bytes(), original)
 
 
 if __name__ == "__main__":
