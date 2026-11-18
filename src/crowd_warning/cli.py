@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from collections.abc import Sequence
@@ -44,6 +45,13 @@ def _parser() -> argparse.ArgumentParser:
     verify_source = commands.add_parser("verify-source", help="check a local source manifest")
     verify_source.add_argument("manifest", help="path to a source manifest JSON file")
     verify_source.add_argument("--base-dir", help="directory containing manifest files")
+
+    inspect_density = commands.add_parser("inspect-density", help="summarize a temporal density source")
+    inspect_density.add_argument("input", help="path to a temporal density table")
+
+    replay_density = commands.add_parser("replay-density", help="write a temporal density source viewer")
+    replay_density.add_argument("input", help="path to a temporal density table")
+    replay_density.add_argument("--output", required=True, help="new HTML output path; existing files are refused")
     return parser
 
 
@@ -105,6 +113,29 @@ def _run(args: argparse.Namespace) -> Any:
         base_dir = args.base_dir if args.base_dir is not None else manifest_path.parent
         return verify_source_manifest(manifest, base_dir=base_dir)
 
+    if args.command == "inspect-density":
+        from .density import read_density_table, summarize_density_table
+
+        table = read_density_table(args.input)
+        return summarize_density_table(table)
+
+    if args.command == "replay-density":
+        from .density import read_density_table
+        from .replay import render_density_replay
+
+        input_path = Path(args.input)
+        table = read_density_table(input_path)
+        input_sha256 = hashlib.sha256(input_path.read_bytes()).hexdigest()
+        html = render_density_replay(table)
+        output_path = Path(args.output)
+        with output_path.open("x", encoding="utf-8") as handle:
+            handle.write(html)
+        return {
+            "status": "written",
+            "output": str(output_path.resolve()),
+            "input_sha256": input_sha256,
+        }
+
     raise ValueError(f"unsupported command: {args.command}")
 
 
@@ -112,7 +143,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
         result = _run(args)
-    except Exception as exc:
+    except (ImportError, OSError, ValueError, TypeError, OverflowError) as exc:
         print(json.dumps({"status": "error", "error": str(exc)}), file=sys.stderr)
         return 2
 
