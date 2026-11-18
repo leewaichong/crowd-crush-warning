@@ -87,7 +87,11 @@ def summarize_camera_residual(
     *,
     background_cell_ids: Iterable[str] | None = None,
 ) -> dict[str, Any]:
-    """Summarize residuals against only caller-nominated background matches."""
+    """Return per-cell displacement residuals relative to nominated background.
+
+    Residuals are keyed by the field's string cell IDs and contain ``dx_px``
+    and ``dy_px`` components for every unique, nonboundary match.
+    """
     nominated = set(background_cell_ids or ())
     usable = [
         cell for cell in field.get("cells", [])
@@ -105,14 +109,21 @@ def summarize_camera_residual(
         }
     dx = float(np.median([cell["dx_px"] for cell in usable]))
     dy = float(np.median([cell["dy_px"] for cell in usable]))
+    matched = [
+        cell for cell in field.get("cells", [])
+        if cell.get("status") == "unique_minimum" and not cell.get("at_search_boundary")
+    ]
     return {
         "camera_motion_status": "caller_supplied_background",
         "background_cell_ids": [cell["cell_id"] for cell in usable],
         "background_verified": False,
         "translation_px": {"dx_px": dx, "dy_px": dy},
         "residuals_px": {
-            cell["cell_id"]: math.hypot(cell["dx_px"] - dx, cell["dy_px"] - dy)
-            for cell in usable
+            cell["cell_id"]: {
+                "dx_px": cell["dx_px"] - dx,
+                "dy_px": cell["dy_px"] - dy,
+            }
+            for cell in matched
         },
     }
 
