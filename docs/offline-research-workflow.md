@@ -33,6 +33,43 @@ PYTHONPATH=src python3 -m crowd_warning inspect-motion /example/local-data/video
 
 Options are `--width PIXELS` and `--sample-interval-s SECONDS`. The command rejects videos over 2,000 native frames or 60 seconds, and bounds decoded frame memory. A completed result reports `motion_status` as `ok` or `abstain`; invalid input, unavailable tools or NumPy, and probe or decode failures are command errors. The output describes image pixels only. Camera movement, visibility, calibration, and physical scale remain unknown. A block match or a unique minimum is not an accuracy or confidence measure and does not measure physical motion or force. Human review remains outside any operational claim.
 
+### Python quality and calibration APIs
+
+The optional Python APIs add a caller-evidence quality gate and a conditional projection. They do not add a CLI command or estimate camera stability, occlusion, or visibility. Supply evidence from outside these APIs. A reference string records where the caller's evidence came from; it does not mean the software checked that evidence.
+
+```python
+from crowd_warning.motion_quality import assess_motion_quality
+from crowd_warning.calibration import project_motion_video
+
+# Required caller-supplied inputs:
+# camera_review describes the caller's camera review, with "stable" and "reference".
+# visible_ids_by_pair contains an externally reviewed list of visible cell IDs per pair.
+# visibility_review contains a nonempty evidence reference per pair.
+# supplied_calibration is a caller-provided calibration mapping.
+quality_by_pair = [
+    assess_motion_quality(
+        pair["motion"],
+        camera_stable=camera_review["stable"],
+        camera_reference=camera_review["reference"],
+        visible_cell_ids=visible_ids_by_pair[index],
+        visibility_reference=visibility_review[index],
+    )
+    for index, pair in enumerate(video_result["pairs"])
+]
+
+projected = project_motion_video(
+    video_result,
+    calibration=supplied_calibration,
+    quality_by_pair=quality_by_pair,
+)
+```
+
+The example requires real caller inputs and is not run with guessed labels or calibration values. `assess_motion_quality` binds each assessment to the exact motion field using its canonical SHA-256 digest. It admits only unique, finite, nonboundary displacements in the caller's visible-ID list. Camera stability must be explicitly `True`, and both evidence references must be nonempty. Missing evidence abstains. The returned eligible IDs and counts describe admitted coverage; malformed fields, duplicate or unknown IDs, and malformed flags raise `ValueError`.
+
+`project_motion_video` requires a calibration marked `verified: True`, a nonempty reference, a source SHA-256 matching `video_result["input"]["sha256"]`, native dimensions matching the result, and a finite nonsingular `image_to_plane_m` 3 by 3 homography. This is a supplied calibration bound to that source and native image size. The matrix maps zero-based native pixel-center coordinates to metres on its supplied reference plane. The adapter accounts for the inspector's scaled dimensions and resize transform, uses the patch center, and maps both displacement endpoints. It retains the result's native/scaled dimensions, transform, and pair timing fields, including PTS. Missing calibration, quality, or usable timing abstains; malformed supplied context raises `ValueError`; a projection-horizon failure abstains for that cell.
+
+The original motion fields remain in pixel units. Projected fields use the separate `plane_vx_mps` and `plane_vy_mps` names and are conditional reference-plane image-pattern velocity. They are not pedestrian velocity or physical force. The visible-ID masks come from external evidence supplied by the caller; neither API independently checks visibility or estimates occlusion.
+
 ## 4. Inspect and replay the temporal-density table
 
 `inspect-density` parses the exact six-column tab-separated Pamplona table. It checks the expected description and header, finite values, nonnegative densities, strictly increasing times, and paired trailing missing values. It reports counts and ranges by year.
