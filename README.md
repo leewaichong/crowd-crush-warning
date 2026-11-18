@@ -62,7 +62,7 @@ PYTHONPATH=src python3 -m crowd_warning inspect-video data/video_crowd.mov
 
 ### Read one Lyon TopView trajectory member
 
-The [Lyon Zenodo record](https://doi.org/10.5281/zenodo.13830435) contains the separately admitted `Data_Madras.zip` archive and declares CC BY 4.0 at record scope. The archive homepage describes attributed research use. Manifest verification checks file integrity, not the applicability of rights to every use. Check the selected archive before reading it:
+The [Lyon Zenodo record](https://doi.org/10.5281/zenodo.13830435) contains the separately admitted `Data_Madras.zip` archive and declares CC BY 4.0 at record scope. Manifest verification checks file integrity; it does not determine rights for every use. Check the selected archive before reading it:
 
 ```sh
 curl --fail --location \
