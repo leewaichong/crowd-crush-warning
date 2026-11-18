@@ -61,6 +61,16 @@ def _parser() -> argparse.ArgumentParser:
         "--max-gap-s", type=float,
         help="report timestamp intervals above this positive finite research check",
     )
+
+    inspect_motion = commands.add_parser(
+        "inspect-motion", help="inspect image-space motion diagnostics in a local video"
+    )
+    inspect_motion.add_argument("input", help="path to a local video file")
+    inspect_motion.add_argument("--width", type=int, default=320, help="scaled grayscale frame width")
+    inspect_motion.add_argument(
+        "--sample-interval-s", type=float, default=1.0,
+        help="minimum interval between selected actual presentation timestamps",
+    )
     return parser
 
 
@@ -149,6 +159,13 @@ def _run(args: argparse.Namespace) -> Any:
         from .video import inspect_video
 
         return inspect_video(args.input, max_gap_s=args.max_gap_s)
+
+    if args.command == "inspect-motion":
+        from .motion_video import inspect_motion_video
+
+        return inspect_motion_video(
+            args.input, width=args.width, sample_interval_s=args.sample_interval_s
+        )
 
     raise ValueError(f"unsupported command: {args.command}")
 
