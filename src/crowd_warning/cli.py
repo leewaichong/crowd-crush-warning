@@ -6,6 +6,7 @@ import argparse
 import json
 import sys
 from collections.abc import Sequence
+from pathlib import Path
 from typing import Any
 
 
@@ -30,6 +31,19 @@ def _parser() -> argparse.ArgumentParser:
     forecast.add_argument("--paths", type=int, default=256)
     forecast.add_argument("--seed", type=int, default=0)
     forecast.add_argument("--window-s", type=float, default=5.0)
+
+    baselines = commands.add_parser("baselines", help="compute causal diagnostic baseline signals")
+    baselines.add_argument("input", help="path to the observation file")
+    baselines.add_argument("--density-threshold", type=float, required=True)
+    baselines.add_argument("--proxy-threshold", type=float, required=True)
+    baselines.add_argument("--change-threshold", type=float, required=True)
+    baselines.add_argument("--allowance", type=float, default=0.0)
+    baselines.add_argument("--window-s", type=float, default=5.0)
+    baselines.add_argument("--max-gap-s", type=float, default=5.0)
+
+    verify_source = commands.add_parser("verify-source", help="check a local source manifest")
+    verify_source.add_argument("manifest", help="path to a source manifest JSON file")
+    verify_source.add_argument("--base-dir", help="directory containing manifest files")
     return parser
 
 
@@ -67,6 +81,30 @@ def _run(args: argparse.Namespace) -> Any:
             seed=args.seed,
         )
 
+    if args.command == "baselines":
+        from .baselines import baseline_signals
+        from .features import extract_features
+
+        rows = _load_and_validate(args.input)
+        features = extract_features(rows, window_s=args.window_s)
+        return baseline_signals(
+            features,
+            density_threshold=args.density_threshold,
+            proxy_threshold=args.proxy_threshold,
+            change_threshold=args.change_threshold,
+            allowance=args.allowance,
+            max_gap_s=args.max_gap_s,
+        )
+
+    if args.command == "verify-source":
+        from .sources import verify_source_manifest
+
+        manifest_path = Path(args.manifest)
+        with manifest_path.open("r", encoding="utf-8") as handle:
+            manifest = json.load(handle)
+        base_dir = args.base_dir if args.base_dir is not None else manifest_path.parent
+        return verify_source_manifest(manifest, base_dir=base_dir)
+
     raise ValueError(f"unsupported command: {args.command}")
 
 
@@ -74,7 +112,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
         result = _run(args)
-    except (ImportError, OSError, ValueError) as exc:
+    except Exception as exc:
         print(json.dumps({"status": "error", "error": str(exc)}), file=sys.stderr)
         return 2
 
@@ -84,4 +122,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(json.dumps({"status": "error", "error": f"result is not valid JSON: {exc}"}), file=sys.stderr)
         return 2
     print(encoded)
+    if args.command == "verify-source" and result.get("integrity_verified") is not True:
+        return 2
     return 0

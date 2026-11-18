@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import math
 import os
@@ -55,6 +56,42 @@ class CliSubprocessTests(unittest.TestCase):
             writer.writerows(SYNTHETIC_ROWS)
         return path
 
+    def write_manifest(self, *, wrong_digest=False):
+        source = self.directory / "source.dat"
+        source.write_bytes(b"labelled unit-test fixture\n")
+        digest = hashlib.sha256(source.read_bytes()).hexdigest()
+        if wrong_digest:
+            digest = "0" * 64
+        manifest = {
+            "manifest_version": 1,
+            "source_record": {
+                "doi": "10.0000/unit-test",
+                "url": "https://example.invalid/unit-test",
+                "version": "fixture-v1",
+                "license": {"id": "CC-BY-4.0", "scope": "fixture"},
+            },
+            "files": [{
+                "path": source.name,
+                "url": "https://example.invalid/unit-test/source.dat",
+                "size_bytes": source.stat().st_size,
+                "sha256": digest,
+                "source_checksum": "md5:" + hashlib.md5(source.read_bytes()).hexdigest(),
+                "retrieved_at": "2026-11-18T00:00:00Z",
+                "purpose": "documentation",
+                "status": "inspected",
+            }],
+        }
+        path = self.directory / "manifest.json"
+        path.write_text(json.dumps(manifest), encoding="utf-8")
+        return path
+
+    @staticmethod
+    def strict_json(text):
+        def reject_constant(value):
+            raise ValueError(f"nonstandard JSON constant: {value}")
+
+        return json.loads(text, parse_constant=reject_constant)
+
     def test_validate_accepts_jsonl_and_csv(self):
         for path in (self.write_jsonl(), self.write_csv()):
             with self.subTest(extension=path.suffix):
@@ -101,6 +138,41 @@ class CliSubprocessTests(unittest.TestCase):
         error = json.loads(completed.stderr)
         self.assertEqual(error["status"], "error")
         self.assertIn("invalid JSON", error["error"])
+
+    def test_baselines_uses_real_features_and_baseline_module(self):
+        path = self.write_jsonl()
+        completed = self.run_cli(
+            "baselines", path,
+            "--density-threshold", "2",
+            "--proxy-threshold", "2",
+            "--change-threshold", "2",
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(completed.stderr, "")
+        rows = self.strict_json(completed.stdout)
+        self.assertEqual(len(rows), len(SYNTHETIC_ROWS))
+        self.assertEqual(rows[0]["forecast_origin_s"], rows[0]["timestamp_s"])
+        self.assertEqual(rows[0]["input_cutoff_s"], rows[0]["timestamp_s"])
+        self.assertEqual(set(rows[0]["arms"]), {"density", "persistence", "change_point"})
+
+    def test_verify_source_reports_success_from_real_source_module(self):
+        manifest = self.write_manifest()
+        completed = self.run_cli("verify-source", manifest)
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(completed.stderr, "")
+        result = self.strict_json(completed.stdout)
+        self.assertIs(result["integrity_verified"], True)
+        self.assertEqual(result["files_checked"], 1)
+
+    def test_verify_source_integrity_failure_is_json_nonzero_without_traceback(self):
+        manifest = self.write_manifest(wrong_digest=True)
+        completed = self.run_cli("verify-source", manifest)
+        self.assertEqual(completed.returncode, 2)
+        self.assertEqual(completed.stderr, "")
+        result = self.strict_json(completed.stdout)
+        self.assertIs(result["integrity_verified"], False)
+        self.assertTrue(result["errors"])
+        self.assertNotIn("Traceback", completed.stdout + completed.stderr)
 
 
 if __name__ == "__main__":
