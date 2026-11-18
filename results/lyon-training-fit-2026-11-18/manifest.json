@@ -2,7 +2,7 @@
   "archive_status": {
     "execution": "fitted-exploratory training-only proxy fit; process completed with return code 0",
     "forecast_or_effectiveness_evaluation": "not run",
-    "independent_numerical_audit": "raw audit exited 1 and marked passed=false due to three provenance assertions; root maintainer reconciliation accepted numerical and provenance evidence. See audit-summary.json."
+    "independent_numerical_audit": "raw audit exited 1 and marked passed=false due to three provenance assertions; maintainer reconciliation accepted numerical and provenance evidence. See audit-summary.json."
   },
   "execution_records": {
     "copied_original_logs": [
@@ -30,15 +30,15 @@
     "private_fit_output_sha256": "30e1f19d53a6b4c11fbed57fa498a6b371ad5cafa5095cd0cbc4a1f28cabf209"
   },
   "fit_output_sanitization": {
-    "changes": "Public summary was built by allowlisting safe fields. It removes tile_bounds_source_declared_m_private and input.provenance.archive_path; omits the original provenance object (command argv, platform, script/protocol/freeze hashes and Git-before/after fields); replaces the private q-value file path with its checksum/count; and omits the q rows. It contains no individual trajectory IDs or coordinates. The safe manifest retains run hashes and provenance separately. Fit parameter and proxy-threshold values remain copied from the original fit output without numerical edits.",
+    "changes": "Public summary was built by allowlisting safe fields. It removes tile_bounds_source_declared_m_private and input.archive_path; omits the original provenance object (command argv, platform, script/protocol/freeze hashes and Git-before/after fields); replaces the private q-value file path with its checksum/count; and omits the q rows. It contains no individual trajectory IDs or coordinates. The safe manifest retains run hashes and provenance separately. Fit parameter and proxy-threshold values remain copied from the original fit output without numerical edits.",
     "private_original_path": "work/m08-crowd15/run-20261118T082232Z/training-fit.json",
     "private_original_sha256": "30e1f19d53a6b4c11fbed57fa498a6b371ad5cafa5095cd0cbc4a1f28cabf209",
     "private_q_data_treatment": "The 11,500 q rows were never embedded in the private fit JSON; the separate ignored JSONL is retained locally and excluded from this archive. The sanitized summary carries only its SHA-256 and row count.",
     "public_derived_path": "fit-summary.json",
-    "public_derived_sha256": "306456df1ddf8a84e16b7ff6e5354b045a97d602fdfe230546c6cc1a9d534b6e",
+    "public_derived_sha256": "de036dd142698e863f9da10726aac5195c8a92a7dfaaebc35d16e468800f825c",
     "removed_or_replaced_fields": [
       "tile_bounds_source_declared_m_private",
-      "input.provenance.archive_path",
+      "input.archive_path",
       "provenance.command_argv",
       "provenance.platform",
       "provenance.prepared_script_sha256",
@@ -155,7 +155,7 @@
   },
   "audit": {
     "summary_path": "audit-summary.json",
-    "summary_status": "derived summary of preserved raw audit and root maintainer reconciliation; original audit exit and pass fields are retained as recorded",
+    "summary_status": "derived summary of preserved raw audit and maintainer reconciliation; original audit exit and pass fields are retained as recorded",
     "raw_audit_sha256": "8cb75f78fb566c97986c0c08ec27013428c6eeda1ed4489ff840d7790276534d",
     "raw_exit_record_sha256": "dbba5e898905f6947044f09c0f1bef22a085b93db64d052e57ad8f554b4bfe65",
     "root_reconciliation_sha256": "c6de1e4d970a8d5589cf7a56ea5d51e99b432bfc0de5cfbff99689d22c887465",
@@ -165,8 +165,42 @@
     "audit_launcher_sha256": "b62601cd208fff21448543c88bcbd4d2e6454bc984ea8daf628c4409587db2b4"
   },
   "public_artifact_hashes": {
-    "fit-summary.json": "306456df1ddf8a84e16b7ff6e5354b045a97d602fdfe230546c6cc1a9d534b6e",
-    "audit-summary.json": "abdbb06eaf0fcd1fdc0881eee47d8e01d3c2b20f5a0af3b426e15a781ede871f",
+    "fit-summary.json": "de036dd142698e863f9da10726aac5195c8a92a7dfaaebc35d16e468800f825c",
+    "audit-summary.json": "716af2d1689e28458c89f47479da76d446ce451b88911b998e95dba2b3a1f474",
     "launcher-record-sanitized.json": "d792015b5cf846bfbab60a33a9cb66edfac5b164fa238fe80d626dfd47bacd05"
+  },
+  "forecast_comparison_support": {
+    "status": "comparison NOT RUN; source-support admission executed",
+    "horizon_source_seconds": 30,
+    "partition_checks": {
+      "validation": {
+        "candidate_origins": 59,
+        "origin_frame_range": [
+          2877,
+          2935
+        ],
+        "common_missing_report_frame": 3242,
+        "tile": 1,
+        "reports": 0,
+        "missing_cell_inside_every_candidate_horizon": true,
+        "complete_future_support_upper_bound": 0
+      },
+      "test": {
+        "candidate_origins": 60,
+        "origin_frame_range": [
+          3836,
+          3895
+        ],
+        "common_missing_report_frame": 4266,
+        "tile": 1,
+        "reports": 0,
+        "missing_cell_inside_every_candidate_horizon": true,
+        "complete_future_support_upper_bound": 0
+      }
+    },
+    "original_support_output_sha256": "d6d9f91efd336ddb5de092426b6f026e852704bd2ebf3570cd012795c8c1b879",
+    "independent_missing_report_witness_review_sha256": "5ee99b51a784c1c50a5a9aff3fee002bebb3304ec4f10f6c71e2805761b952d0",
+    "independent_witness_script_sha256": "d1503b129e45a9b9ac23041c27a698a43c88f972f741b81f9fb8aeb173191841",
+    "interpretation": "Every potentially complete horizon contains at least one absent tile report. No fitted boundary, future proxy target, forecast, score or alternative horizon was evaluated for this exclusion."
   }
 }

@@ -1,5 +1,5 @@
 {
-  "archive_status": "fitted-exploratory training-only proxy fit; original audit exited 1 and passed=false on provenance assertions; root maintainer reconciliation accepted numerical and provenance evidence, see audit-summary.json",
+  "archive_status": "fitted-exploratory training-only proxy fit; original audit exited 1 and passed=false on provenance assertions; maintainer reconciliation accepted numerical and provenance evidence, see audit-summary.json",
   "article": {
     "article_number": 718,
     "authors": [

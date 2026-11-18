@@ -1,10 +1,10 @@
 # Lyon training-only proxy fit
 
-**Fitted exploratory package.** The fit used one Lyon recording's training portion. No forecast or effectiveness evaluation ran. The raw independent audit exited 1 and recorded `passed=false` after three provenance assertions. A separate root maintainer reconciliation checked the preserved launcher, freeze, and child-run records, then accepted the numerical and provenance evidence. Both records are summarized in [audit-summary.json](audit-summary.json); the reconciliation does not change the raw audit's exit code or pass field.
+**Fitted exploratory package.** The fit used one Lyon recording's training portion. No forecast or effectiveness evaluation ran. The raw independent audit exited 1 and recorded `passed=false` after three provenance assertions. A separate maintainer reconciliation checked the preserved launcher, freeze, and child-run records, then accepted the numerical and provenance evidence. Both records are summarized in [audit-summary.json](audit-summary.json); the reconciliation does not change the raw audit's exit code or pass field.
 
 The fit computed marginal statistical proxy drift and residual diffusion once. It computed a statistical percentile boundary once. Coupling `0.15` was fixed, not estimated; jump parameters were disabled. The fit did not estimate joint causal coupling, test on held-out events, or invoke the calibrated production forecast interface. These quantities do not establish physical force, danger, or calibrated probability validity. There is no baseline or score because this was fit-only.
 
-The reported proxy is trajectory rows per fixed training tile area multiplied by the population variance of available tile-mean source-coordinate rates in the inclusive trailing one source-clock second. The variance uses no future data. Its units follow source declarations; it is not persons per square metre or pressure. Four equal-area tiles came from training-only bounds. The public summary withholds those bounds.
+The reported proxy is trajectory rows per fixed training tile area multiplied by the population variance of available tile-mean source-coordinate rates in the inclusive trailing one source-clock second. The feature code uses no later rows. Source preprocessing causality was not independently verified. Its units follow source declarations; it is not persons per square metre or pressure. Four equal-area tiles came from training-only bounds. The public summary withholds those bounds.
 
 | Tile | Marginal drift per source second | Residual diffusion per square-root source second |
 |---:|---:|---:|
@@ -14,6 +14,8 @@ The reported proxy is trajectory rows per fixed training tile area multiplied by
 | 3 | 0.00005618780644703064 | 0.004163191797640135 |
 
 The nearest-rank training 95th-percentile proxy boundary was computed once as `0.017703076301339493` over 11,500 q values. It is a statistical boundary, not a danger threshold. The 11,500 aggregate training q rows remain in ignored local work. The archive records their count and checksum but does not publish them.
+
+The prepared 30-source-second forecast comparison remains **NOT RUN**. A separate source-support check found 59 validation and 60 test candidate origins; none had complete future four-tile reports. Missing-report witnesses inside every candidate horizon independently confirm that exclusion. The horizon and split stayed fixed. These are support counts, not forecast scores.
 
 ## Source and attribution
 

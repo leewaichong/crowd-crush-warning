@@ -3,7 +3,7 @@
     "raw_audit_exit_code": 1,
     "raw_audit_passed": false,
     "root_maintainer_reconciliation": "RECONCILED_NUMERICAL_AND_PROVENANCE_PASS",
-    "interpretation": "The raw audit status is preserved. The root reconciliation accepts the numerical and provenance evidence after correcting three invalid provenance equality assertions; it does not relabel the raw audit as passed."
+    "interpretation": "The raw audit status is preserved. The maintainer reconciliation accepts the numerical and provenance evidence after correcting three invalid provenance equality assertions; it does not relabel the raw audit as passed."
   },
   "provenance": {
     "raw_audit_sha256": "8cb75f78fb566c97986c0c08ec27013428c6eeda1ed4489ff840d7790276534d",
@@ -44,7 +44,7 @@
     "This checks source-derived statistical proxy quantities, not forecast performance or effectiveness.",
     "No physical force, danger, causal coupling, latent physical state, or calibrated probability conclusion follows.",
     "The calibrated production interface was not invoked.",
-    "The audit executable and launcher are identified by hash but not copied into this archive; the audit summary is a derived extract of the preserved raw audit and root reconciliation.",
+    "The audit executable and launcher are identified by hash but not copied into this archive; the audit summary is a derived extract of the preserved raw audit and maintainer reconciliation.",
     "No q rows, coordinates, trajectory IDs, or private tile bounds are included."
   ]
 }
