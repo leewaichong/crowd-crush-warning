@@ -14,6 +14,8 @@ The Pamplona table contains 90,000 rows with author-declared time in seconds rel
 
 **Density forecasting component: evaluated descriptively** on one published spatial-average density series. The [30-second benchmark](results/pamplona-density-30s-2026-11-18/README.md) and [exploratory change-point run](results/pamplona-change-point-2026-11-18/README.md) do not establish independent measurement accuracy, venue generalization, or warning effectiveness. The change-point results passed a 21-check independent audit and maintainer review; the audit's nine split-fit spot checks are not a full refit. **Motion accuracy: NOT RUN. Real crowd warning evaluation: NOT RUN.** See the [status snapshot](docs/STATE.md).
 
+The [controlled-trial co-movement study](results/controlled-co-movement-2026-11-18/README.md) reports an independently audited, exploratory analysis of native-frame motion in one previously inspected trial. It describes correlations and common-mode sensitivity, without estimating propagation, physical response time, force, or warning accuracy.
+
 ## Local commands
 
 For the current source-integrity, timestamp/decode, pixel-motion, and density-replay workflow, see the [offline research workflow](docs/offline-research-workflow.md).

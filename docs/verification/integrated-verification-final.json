@@ -1,0 +1,21 @@
+{
+  "git_sha": "498d647681fcd3bc51d9d323321c87c687719d96",
+  "tracked_clean": true,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONPATH": "src"
+  },
+  "started_at_utc": "2026-11-18T06:17:14.663397+00:00",
+  "completed_at_utc": "2026-11-18T06:17:20.532803+00:00",
+  "exit_code": 0,
+  "log_sha256": "9e2e3227e9c0fb8aa3892e12ef483f0666997b80d1579f008c42d328f1720c01",
+  "scope": "Software verification only. Full suite repeated after final status-validation fix. No motion accuracy or warning evaluation."
+}
