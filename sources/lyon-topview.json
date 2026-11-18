@@ -1,0 +1,24 @@
+{
+  "manifest_version": 1,
+  "source_record": {
+    "doi": "10.5281/zenodo.13830435",
+    "url": "https://zenodo.org/records/13830435",
+    "version": "record 13830435, revision 6, published 2024-09-23",
+    "license": {
+      "id": "CC-BY-4.0",
+      "scope": "record"
+    }
+  },
+  "files": [
+    {
+      "path": "Data_Madras.zip",
+      "url": "https://zenodo.org/api/records/13830435/files/Data_Madras.zip/content",
+      "size_bytes": 33639872,
+      "sha256": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+      "source_checksum": "md5:2ad3436fb8c6b25ebc72d51eacfa1abb",
+      "retrieved_at": "2026-11-18T03:05:41.568887+00:00",
+      "purpose": "measurement",
+      "status": "inspected"
+    }
+  ]
+}

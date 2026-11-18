@@ -43,7 +43,42 @@ PYTHONPATH=src python3 -m crowd_warning replay-density data/data_density_over_ti
 
 The parser accepts this exact tab-separated source schema and rejects partial or non-trailing missing pairs, non-finite values, negative densities, and non-increasing time. The viewer runs offline, uses a light-only display, and does not interpolate across missing rows. It refuses to overwrite an existing output file. The data file is not included in this repository.
 
-The reviewed subset contains five selected source files totaling 4,697,499 bytes, checked against official source checksums. That inspection did not fetch or audit the full 1.22 GB Zenodo record. Source-file integrity does not establish rights clearance, label validity, or measurement calibration.
+The original five-file CrowdDNA subset totals 4,697,499 bytes. The selected CrowdDNA video and Lyon archive are separate additions, recorded in [their manifests](sources/pamplona-video.json) and [Lyon manifest](sources/lyon-topview.json). These are selected files, not full-record inventories. Source-record licence metadata and file integrity checks do not establish measurement calibration or clear rights beyond the stated source terms.
+
+### Inspect selected video timestamps and decoding
+
+Download the selected video from the [CrowdDNA Zenodo record](https://doi.org/10.5281/zenodo.14050598), then check the local file against its selected-file manifest:
+
+```sh
+mkdir -p data
+curl --fail --location \
+  'https://zenodo.org/api/records/14050598/files/video_crowd.mov/content' \
+  --output data/video_crowd.mov
+PYTHONPATH=src python3 -m crowd_warning verify-source sources/pamplona-video.json --base-dir data
+PYTHONPATH=src python3 -m crowd_warning inspect-video data/video_crowd.mov
+```
+
+`inspect-video` requires local `ffprobe` and `ffmpeg`. It reports stream metadata and actual presentation timestamps, then decodes the video stream to a null output without audio. A completed command reports timing status `ok` or `abstain`; missing, duplicate, or non-monotonic timestamps can cause abstention. Tool, probe, decode, or input failures produce a nonzero command status. Optional `--max-gap-s` reports caller-declared timestamp gaps and marks timing `abstain` when a gap exceeds that value. It is not a safety threshold and does not infer missing physical frames. Nominal frame rate is metadata, not a substitute for decoded timestamps.
+
+### Read one Lyon TopView trajectory member
+
+The [Lyon Zenodo record](https://doi.org/10.5281/zenodo.13830435) contains the separately admitted `Data_Madras.zip` archive and declares CC BY 4.0 at record scope. The archive homepage describes attributed research use. Manifest verification checks file integrity, not the applicability of rights to every use. Check the selected archive before reading it:
+
+```sh
+curl --fail --location \
+  'https://zenodo.org/api/records/13830435/files/Data_Madras.zip/content' \
+  --output data/Data_Madras.zip
+PYTHONPATH=src python3 -m crowd_warning verify-source sources/lyon-topview.json --base-dir data
+```
+
+The Lyon reader is a Python API, not a command-line subcommand. It reads one exact nine-column TopView ZIP member and can produce a summary while preserving the source clock. It excludes `id_global` from trajectory rows. This is not a calibrated motion-field pipeline.
+
+```python
+from crowd_warning.lyon import read_lyon_topview, summarize_lyon_topview
+
+table = read_lyon_topview("data/Data_Madras.zip")
+summary = summarize_lyon_topview(table)
+```
 
 ## Observation schema
 
@@ -53,4 +88,4 @@ Event matching uses recording identifiers when present, then event identifiers a
 
 ## Data terms and attribution
 
-MIT applies to original code in this repository only. Papers, datasets, videos, and other third-party material retain their own terms. The Zenodo record declares record-level CC BY 4.0; that declaration does not by itself settle file-level rights. Keep downloaded data external and review applicable terms before use. The [research references](CITATIONS.md) distinguish the five-author Nature paper from the three-author dataset record.
+MIT applies to original code in this repository only. Papers, datasets, videos, and other third-party material retain their own terms. The selected CrowdDNA video and Lyon ZIP are identified under record-level CC BY 4.0 terms in their manifests. Integrity verification checks bytes against those manifests; it does not grant rights clearance. Keep downloaded data external. The [research references](CITATIONS.md) distinguish the five-author Nature paper from the three-author CrowdDNA dataset record and cite the Lyon paper and archive separately.

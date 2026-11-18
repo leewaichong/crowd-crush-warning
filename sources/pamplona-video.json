@@ -1,0 +1,24 @@
+{
+  "manifest_version": 1,
+  "source_record": {
+    "doi": "10.5281/zenodo.14050598",
+    "url": "https://zenodo.org/records/14050598",
+    "version": "record 14050598, revision 6, published 2025-02-06",
+    "license": {
+      "id": "CC-BY-4.0",
+      "scope": "record"
+    }
+  },
+  "files": [
+    {
+      "path": "video_crowd.mov",
+      "url": "https://zenodo.org/api/records/14050598/files/video_crowd.mov/content",
+      "size_bytes": 51275828,
+      "sha256": "28bb4f5634c3b6274a021bf4dab0ea9624f342c68e6b95d761c5185f9ddbd7f3",
+      "source_checksum": "md5:630fadd1b78240b9a104dfe07a23b088",
+      "retrieved_at": "2026-11-18T03:07:19.207660+00:00",
+      "purpose": "measurement",
+      "status": "inspected"
+    }
+  ]
+}
