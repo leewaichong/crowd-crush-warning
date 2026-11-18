@@ -93,16 +93,17 @@ def assess_motion_quality(
         evidence_reasons.append("camera_stability_evidence_missing_or_negative")
     if nominated is None or not visibility_reference:
         evidence_reasons.append("visibility_evidence_missing")
+    admitted = eligible if not evidence_reasons else []
     counts = {
         "total_cells": len(by_id),
-        "eligible_cells": len(eligible),
-        "excluded_cells": len(by_id) - len(eligible),
-        "eligible_fraction": len(eligible) / len(by_id) if by_id else 0.0,
+        "eligible_cells": len(admitted),
+        "excluded_cells": len(by_id) - len(admitted),
+        "eligible_fraction": len(admitted) / len(by_id) if by_id else 0.0,
     }
     return {
         "field_sha256": digest,
         "status": "eligible_under_supplied_evidence" if not evidence_reasons and eligible else "abstain",
-        "eligible_cell_ids": eligible if not evidence_reasons else [],
+        "eligible_cell_ids": admitted,
         "counts": counts,
         "reasons": dict(sorted(reasons.items())),
         "abstention_reasons": evidence_reasons or ([] if eligible else ["no_eligible_cells"]),

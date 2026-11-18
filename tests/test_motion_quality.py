@@ -12,7 +12,8 @@ class MotionQualityTests(unittest.TestCase):
         result = assess_motion_quality(field)
         self.assertEqual(result["status"], "abstain")
         self.assertEqual(result["eligible_cell_ids"], [])
-        self.assertEqual(result["counts"]["eligible_cells"], 1)
+        self.assertEqual(result["counts"], {"total_cells": 1, "eligible_cells": 0,
+                                             "excluded_cells": 1, "eligible_fraction": 0.0})
 
     def test_moving_camera_abstains(self):
         field = {"cells": [{"cell_id": "a", "dx_px": 1, "dy_px": 2,
@@ -20,6 +21,9 @@ class MotionQualityTests(unittest.TestCase):
         result = assess_motion_quality(field, camera_stable=False, camera_reference="camera note",
                                        visible_cell_ids=["a"], visibility_reference="visibility note")
         self.assertEqual(result["status"], "abstain")
+        self.assertEqual(result["eligible_cell_ids"], [])
+        self.assertEqual(result["counts"]["eligible_cells"], 0)
+        self.assertEqual(result["counts"]["excluded_cells"], 1)
         self.assertIn("camera_stability_evidence_missing_or_negative", result["abstention_reasons"])
 
     def test_supplied_references_keep_only_eligible_cells_and_coverage(self):
