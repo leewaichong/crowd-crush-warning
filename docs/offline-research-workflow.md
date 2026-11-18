@@ -63,15 +63,15 @@ Camera calibration and visibility remain unknown unless supported by separate ev
 
 ## Existing density forecast result
 
-The [published Pamplona density benchmark bundle](../results/pamplona-density-30s-2026-11-18/README.md) records a completed descriptive run at clean Git SHA `53c35c42087d76614e16d2b14bfd630acfb5e15`, completed at `2026-11-18T04:19:21.269627+00:00`. Its input was the 4,636,050-byte source table with SHA-256 `cbc48912b51e1824017b046a6ee5f1d5eef19a529ba33d9aee361d21cd36561c`. The bundle retains `origins.jsonl`, `metrics.json`, model and configuration files, run provenance, and figure checksums. The comparison control is persistence, which carries forward the latest observed density.
+The [published Pamplona density benchmark bundle](../results/pamplona-density-30s-2026-11-18/README.md) records a completed descriptive run at clean Git SHA `53c35c42087d76614e16d2b14bfd630acfb5e15b`, completed at `2026-11-18T04:19:21.269627+00:00`. Its input was the 4,636,050-byte source table with SHA-256 `cbc48912b51e1824017b046a6ee5f1d5eef19a529ba33d9aee361d21cd36561c`. The bundle retains `origins.jsonl`, `metrics.json`, model and configuration files, run provenance, and figure checksums. The comparison control is persistence, which carries forward the latest observed density.
 
 Only the global discrete AR(1) fit uses 2022 training observations. At each origin, local trend is refit on the causal trailing 30 seconds of available history, including later years, without future values. Persistence uses the latest value at that origin. The 2023 check contains 113 completed origins; the 2024 same-venue holdout contains 118. The bundle reports MAE and RMSE against source-declared density in m^-2. This is a descriptive forecast evaluation on one spatial-average series, not independent measurement accuracy or warning effectiveness. Motion accuracy and warning effectiveness are **NOT RUN**.
 
-## Acceptance evidence and status
+## Review evidence
 
-This runbook packages the inputs, dependencies, checks, and evidence for the parent developer/research acceptance review. Existing local evidence is recorded in [project status](STATE.md): the integrated suite passed 133 tests at SHA `53c35c42087d76614e16d2b14bfd630acfb5e15`. The earlier real-input replay and browser evidence is retained at `/Users/waichong/projects/crowd-crush-warning/work/milestone-02/release-check/verification.json`, `replay.stdout`, and `browser-check.json`. That record ties the replay to source SHA-256 `cbc48912b51e1824017b046a6ee5f1d5eef19a529ba33d9aee361d21cd36561c`, records a successful replay and expected overwrite refusal, and records browser checks at 1280 px and 390 px with no body overflow, a 720 px chart scroll width, year selection, keyboard cursor movement, and a light background. These are prior software checks, not a new run or a safety study.
+The integrated suite passed 133 tests at clean Git SHA `53c35c42087d76614e16d2b14bfd630acfb5e15b`, as recorded in [project status](STATE.md). Prior real-input replay and browser checks are recorded in local release evidence. The [published density result bundle](../results/pamplona-density-30s-2026-11-18/README.md) retains the separate benchmark run and its provenance. These checks establish software behavior for the recorded inputs. They do not establish independent measurement accuracy or warning effectiveness.
 
-The developer/research acceptance review is the parent review now. A trained safety-operator study is **NOT RUN** and is separate. Issue 24 does not require a new operator application. No user study, warning-effectiveness evaluation, or operational acceptance is claimed.
+This checklist supports a developer/research review; it is not a trained safety-operator study. No safety-operator study is claimed.
 
 ## Developer and research acceptance checklist
 
