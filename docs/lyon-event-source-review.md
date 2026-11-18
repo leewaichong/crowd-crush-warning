@@ -2,7 +2,7 @@
 
 ## Status
 
-This is source admission only. It contains no model forecast, feature analysis, fit, score, or effectiveness evaluation. CROWD4 and CROWD49 remain open.
+This is source admission only. It contains no model forecast, feature analysis, fit, score, or effectiveness evaluation. Any event-level comparison remains NOT RUN. CROWD4 and CROWD49 remain open.
 
 The catalog contains 33 timed observations in final Supplementary Information Tables 4–8 and one untimed ambulance observation. The observations describe temporary standing groups, running, density heterogeneity, serpentine groups, pushchairs, and bicycles. They are qualitative interval labels reported by the paper authors. The paper does not provide independent adjudication, annotator agreement, injury labels, or crush labels for these cases.
 
@@ -13,6 +13,16 @@ The final paper is by Oscar Dufour, Huu-Tu Dang, Jakob Cordes, Raphael Korbmache
 The dataset is credited separately as Oscar Dufour et al., “Dense Crowd Dynamics and Pedestrian Trajectories: A Multiscale Field Study at the Fête des Lumières in Lyon,” [Zenodo record 13830435](https://doi.org/10.5281/zenodo.13830435), CC BY 4.0. The admitted `Data_Madras.zip` is 33,639,872 bytes, SHA-256 `efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c`.
 
 The source-manifest file `sources/lyon-topview.json` has SHA-256 `f4b9f0f1fc3343ab20d3f18f0f523d0aac753c4d7302cbd1f00013190f0037cf`. The downloaded final supplement PDF has SHA-256 `807e8b1de354779e6331ea93aaa53647878c21dcdee3e04f2d9b28c17375f54a`. The private original trajectory-member manifest has SHA-256 `653d071662146d6de9da95f3b9f06df0353d2dfb58c34f3e2673e04d04d30f98`. The sanitized interval-support manifest in [lyon-event-interval-support.json](lyon-event-interval-support.json) has SHA-256 `06e54513473ebdbb63d167fb9ff08cbf1298a6ed6bdc4e1501bc3fceec60d587`. It contains aggregate frame/time support and per-member hashes, without coordinates or person IDs.
+
+## Current companion-video route
+
+The earlier route check used the archived app release `v1.0`. Its two generic YouTube links did not identify Lyon sequences. That finding applies only to that archived release. The official [current app repository](https://github.com/PedestrianDynamics/madras-data-app/tree/09c41edffcb9b555b5ee1b810d99bc23a9d4157b) has a camera configuration with 20 camera-specific video links. The current data factory still points to the already admitted Zenodo `Data_Madras.zip`.
+
+I checked public oEmbed metadata for all 20 links. Nineteen returned metadata and one returned HTTP 404. I also checked watch-page metadata for the four whose titles name a TopView sequence. The camera configuration Git blob is `820f2ce0dab485b3f8a3200a831346f164aeeb81`; the data-factory blob is `999500365bfae13a1154c5914cab0cf2454e2840`. The current repository commit is `09c41edffcb9b555b5ee1b810d99bc23a9d4157b`. Its code license is MIT (LICENSE blob `ff23a3cab188b57da9f175a966fd5509dcb17bfc`). Private request records and per-response hashes are retained under ignored `.planning/m08/current-youtube-metadata/`; the compact admission summary has SHA-256 `ff29801eefeb94f0d1a198c07056bd07e0159baf2bfd80f9364ed10ed2685b8c`.
+
+Four video titles name TopView 1A, 1B, 2D, and 2F. Supplementary Table 3 gives their recording starts as 22:40:45, 22:55:06, 23:10:16, and 23:54:59 UTC+1. The YouTube metadata reports durations of 219, 166, 166, and 82 seconds. The published Table 3 intervals span 210, 160, 161, and 91 seconds. These title matches make the clips candidates for review. They do not establish where each clip begins within its named recording. The 2F clip is also shorter than the published interval. The other current links have generic or LargeView titles; their metadata does not name the remaining TopView sequences.
+
+The four watch pages report 2024 upload dates, empty descriptions, and no video-license value in the returned metadata. They give no native PTS, source-clock offset, original-versus-transcoded provenance, or explicit reuse terms. The paper and dataset CC BY 4.0 terms and the app code's MIT license do not establish permission to reuse these YouTube videos. No video bytes were downloaded. An exact video-to-annotation time join and applicable video reuse terms remain unresolved, so none of these clips is admitted for comparison. This does not change the separate trajectory-file support counts above: 26 full-in-range, 5 partial-overhang, 0 no-support, and 2 unverified-clock.
 
 ## Admission checks
 
