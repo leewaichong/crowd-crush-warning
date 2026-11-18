@@ -1,6 +1,6 @@
 # Controlled co-movement result bundle
 
-Prepared for maintainer review. Independent review in the calibration lane is underway; its result is pending. This bundle does not claim an independent pass or approval for public release.
+Maintainer review accepted. An independent audit passed for the reproducibility of the derived profiles and controls. This does not validate safety, warning effectiveness, or the broader claims ruled out below.
 
 ## Study
 
@@ -14,13 +14,19 @@ Some maximum-absolute correlations occur at -10 or +10, the edges of the searche
 
 At lag zero, raw head correlations range from 0.0761 to 0.6678 across the ten ordinal profiles. Residual head correlations range from 0.1273 to 0.5273. The common-mode lag-zero correlation is 0.4844. All computed profile correlations were available in this run. These are descriptive values from one trial, with no uncertainty estimate or independent-sample interpretation.
 
+## Independent audit
+
+The independent audit recomputed 21 profiles containing 441 correlation values. All values, tie summaries, and lag-zero controls matched. The maximum absolute difference was `5.551115123125783e-16`, below the audit tolerance of `1e-12`. The audit reported no failures and no unavailable values. Ten of the 21 profiles have a maximum-absolute correlation at a search boundary, either -10 or +10 frames. These are boundary extrema, not arrival estimates.
+
+The audit checked the frozen producer script, protocol, output profile, tracked Git state, source hashes, lag-zero controls, ties, and profile values. It did not test warning performance or establish physical interpretation. The copied report and exact audit script are `audit.json` and `audit_script.py`. `independent-profiles.json` preserves the auditor's derived profiles byte-for-byte.
+
 ## Data and credits
 
-The source dataset is [Impulse propagation through a small standing crowd, DOI 10.34735/ped.2022.6](https://doi.org/10.34735/ped.2022.6). Dataset metadata credits Sina Feldmann, Alica Kandler, Armin Seyfried, and Maik Boltes.
+The dataset is [Impulse propagation through a small standing crowd, DOI 10.34735/ped.2022.6](https://doi.org/10.34735/ped.2022.6), described in the [archive record](https://ped.fz-juelich.de/da/doku.php?id=impulse_crowd). Reference 16 of the 2024 publisher article cites this dataset to Sina Feldmann, Juliane Adrian, Maik Boltes, Jernej Čamernik, Thomas Chatagnon, Marc Comino-Trinidad, Alica Kandler, and Armin Seyfried. The four names in the selected local metadata are not a complete creator list.
 
-The [archive record](https://ped.fz-juelich.de/da/doku.php?id=impulse_crowd) describes the dataset. Its [research-use terms](https://ped.fz-juelich.de/da/doku.php?id=start) permit further research with attribution. Those terms do not grant commercial use or permission to redistribute the source data. Preserve the source attribution and terms in any later permitted use.
+The archive's [research-use terms](https://ped.fz-juelich.de/da/doku.php?id=start) permit further research with attribution. They do not grant commercial use or permission to redistribute the source data. Preserve the source attribution and terms in any later permitted use.
 
-Related primary work is Sina Feldmann, Juliane Adrian, Maik Boltes et al. (2024), “Impulse propagation through a small standing crowd,” [DOI 10.17815/CD.2024.148](https://doi.org/10.17815/CD.2024.148). This analysis does not reproduce that paper or validate its findings.
+The related primary paper is by Sina Feldmann, Juliane Adrian, and Maik Boltes (2024), [publisher record A148](https://collective-dynamics.eu/index.php/cod/article/view/A148), DOI [10.17815/CD.2024.148](https://doi.org/10.17815/CD.2024.148). This analysis does not reproduce that paper or validate its findings.
 
 The project code is MIT licensed. That code license does not change the source dataset's terms. The derived correlations are research outputs; this bundle contains no source coordinates, source rows, trace identifiers, identity map, pressure matrices, or raw source payload.
 
@@ -52,5 +58,7 @@ The earlier v1 invocation stopped at a parser gate before calculation. The first
 - `executed_script.py`: byte-for-byte copy of the frozen script used for the successful run.
 - `freeze-manifest.json`, `start-manifest.json`, and `run-record.json`: frozen inputs and execution record.
 - `events.jsonl`, stdout/stderr, and smoke logs: retained run evidence.
-- `artifact-hashes.json`: source run's artifact hash inventory.
-- `bundle-manifest.json`: hashes of the package copies.
+- `artifact-hashes.json`: original run's artifact hash inventory. Its byte-for-byte copy and hash remain unchanged.
+- `bundle-manifest.json`: original bundle-copy inventory, preserved unchanged.
+- `audit.json`, `audit_script.py`, and `independent-profiles.json`: byte-for-byte copies of the passed independent audit artifacts.
+- `publication-audit-manifest.json`: separate hashes for this audit appendix and the updated README.

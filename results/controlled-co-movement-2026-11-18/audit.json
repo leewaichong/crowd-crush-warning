@@ -1,0 +1,79 @@
+{
+  "audit_command": "python3 work/m06-calibration-review/audit.py",
+  "audit_ended_utc": "2026-11-18T06:13:11.069611+00:00",
+  "audit_script_sha256": "5569c4da2014e10529e621f0357d0bb5fbd48c46a6fe2f1193466104f034e15e",
+  "audit_started_utc": "2026-11-18T06:13:10.910206+00:00",
+  "audit_status": "pass",
+  "frozen_producer_script_sha256_before_after": [
+    "497e0eba205dc5eee077031d4a22f1625f14e2c988777eb99ec4aaf15f625940",
+    "497e0eba205dc5eee077031d4a22f1625f14e2c988777eb99ec4aaf15f625940"
+  ],
+  "frozen_protocol_sha256_before_after": [
+    "66f9715c8c67f19ad27dd1782d2e703f8739f14b6e219c853e18db3c81a55315",
+    "66f9715c8c67f19ad27dd1782d2e703f8739f14b6e219c853e18db3c81a55315"
+  ],
+  "independent_profiles_sha256": "7f476ad3ce38c04299f47ff0f65fba39614e5e74a9fb1fc5b45e4b4e4a7ca14e",
+  "lag_zero_control_failures": [],
+  "limitations": [
+    "single previously viewed controlled trial",
+    "common vector subtraction also removes real shared motion and is not a background reference",
+    "native frame index only; no physical clock, force, arrival, propagation, mechanism, or warning inference"
+  ],
+  "metadata_failures": [],
+  "producer_profile_sha256_before_after": [
+    "940d1100945dd301be53bca022d954c6f769478d7978c3e545f9f443e949d31a",
+    "940d1100945dd301be53bca022d954c6f769478d7978c3e545f9f443e949d31a"
+  ],
+  "producer_tracked_state_before_after": [
+    {
+      "head": "345275100aaae31b9810a95a8eeec8cfe8a0a3b9",
+      "tracked_clean": true
+    },
+    {
+      "head": "345275100aaae31b9810a95a8eeec8cfe8a0a3b9",
+      "tracked_clean": true
+    }
+  ],
+  "profile_comparison": {
+    "absolute_tolerance": 1e-12,
+    "boundary_extrema_series": [
+      "raw_head_magnitude/head_01",
+      "raw_head_magnitude/head_02",
+      "raw_head_magnitude/head_05",
+      "raw_head_magnitude/head_07",
+      "residual_head_magnitude/head_01",
+      "residual_head_magnitude/head_03",
+      "residual_head_magnitude/head_05",
+      "residual_head_magnitude/head_06",
+      "residual_head_magnitude/head_07",
+      "common_mode_magnitude"
+    ],
+    "failures": [],
+    "finite_value_count": 441,
+    "max_abs_delta": 5.551115123125783e-16,
+    "max_delta_location": "raw_head_magnitude/head_04@+10",
+    "producer_at_max_delta": 0.5206380768677675,
+    "profile_value_count": 441,
+    "recomputed_at_max_delta": 0.520638076867767,
+    "series_count": 21,
+    "tie_summary_checks": 21,
+    "unavailable_count": 0
+  },
+  "source_archive_sha256_before_after": [
+    "1a197b0fd068f7b9bea3ac53118a31f7fc698f90167d871bb44b8de34b10030f",
+    "1a197b0fd068f7b9bea3ac53118a31f7fc698f90167d871bb44b8de34b10030f"
+  ],
+  "source_member": "2022impulse_crowd_trajectories_txt/1A11_240_n10_fs_d0_p+.txt",
+  "source_member_bytes": 72456,
+  "source_member_sha256_before_after": [
+    "3f5bfdaf2d9c4a07b22b489f8cef3c7d8b3fdc16c9d5a37a32e74ed8b6f627a1",
+    "3f5bfdaf2d9c4a07b22b489f8cef3c7d8b3fdc16c9d5a37a32e74ed8b6f627a1"
+  ],
+  "source_roles": {
+    "bag_count": 1,
+    "frames_per_trace": 102,
+    "head_count": 10,
+    "head_ordinal_order": "ascending numeric source trace ID, matching producer selection; IDs omitted"
+  },
+  "source_rows": 1122
+}
