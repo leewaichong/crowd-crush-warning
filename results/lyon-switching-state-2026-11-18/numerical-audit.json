@@ -1,0 +1,72 @@
+{
+  "audit_execution": {
+    "command": "python3 run_v2.py",
+    "ended_utc": "2026-11-18T07:31:23.675294+00:00",
+    "exit_code": 1,
+    "reason_for_exit": "The v2 report retained the run-completion status finding. A separate finite reconciliation verified the completed run-record and attempt status. It did not recompute forecasts or metrics.",
+    "reconciliation_created_utc": "2026-11-18T07:33:58.271783+00:00",
+    "reconciliation_findings": [],
+    "reconciliation_status": "RECONCILED_NUMERICAL_PASS",
+    "started_utc": "2026-11-18T07:30:50.790140+00:00"
+  },
+  "checks": {
+    "eligible_origin_keys_matched": 255463,
+    "fit_provenance": "20 updates; converged; no cap, degeneracy, or nonmonotonic likelihood; all 21 parameter versions normalized; final parameters exactly matched version 20.",
+    "max_arm_metric_delta": 3.469446951953614e-18,
+    "max_paired_summary_delta": 4.336808689942018e-19,
+    "memoryless_forecast_max_abs": 1.734723475976807e-18,
+    "nine_anchor_max_abs": {
+      "conditional_mean_source_units": 6.938893903907228e-18,
+      "filtered_probability": 4.163336342344337e-17,
+      "next_state_probability": 1.1102230246251565e-16
+    },
+    "partition_origins": {
+      "test": 46699,
+      "train": 160143,
+      "validation": 48621
+    },
+    "source_reconstruction_max_abs": {
+      "latest": 0.0,
+      "source_time": 0.0,
+      "target": 0.0,
+      "trailing5": 0.0
+    },
+    "split_crossing_increments_excluded": 106,
+    "split_crossing_origins_excluded": 105,
+    "training_likelihood_abs_difference": 8.731149137020111e-10,
+    "training_likelihood_tolerance": 1e-05
+  },
+  "corrected_audit_scope": "Independent source reconstruction, aggregate metric/control verification, nine deterministic causal-filter anchors, and one final training-likelihood recomputation. No HMM refit and no full HMM-forecast replay.",
+  "corrected_filter_initialization": "First observation uses pi multiplied by its emission; transitions apply between later observations.",
+  "filtered_state_mean_occupancy_over_eligible_origins": {
+    "definition": "Causal filtered probabilities averaged over eligible forecast origins; statistical clusters only.",
+    "test": [
+      0.8211390324807409,
+      0.1788609675192602
+    ],
+    "train": [
+      0.6579827419519175,
+      0.34201725804809996
+    ],
+    "validation": [
+      0.7470794874102337,
+      0.2529205125897757
+    ]
+  },
+  "initialization_clarification": "Raw training-coordinate variance selected axis 0, followed by stable sorting of standardized values on that axis. This is an operational clarification of ambiguous frozen wording.",
+  "limitations": [
+    "One recording only.",
+    "Independent measurement accuracy, online performance, and warning effectiveness NOT RUN.",
+    "No safety, danger-state, force, or venue-generalization claim."
+  ],
+  "reconciliation_findings": [],
+  "source_artifact_hashes": {
+    "audit_v2_executable_sha256": "2255e1a3b2d9467c10e08890aa55813525f5cb42c498dd0db3af1eab4e0c9691",
+    "audit_v2_helper_sha256": "e864288f5229cc1b1251f0bdd8f16816fa4bf15942289f4a14718bf1d0e8fe3b",
+    "audit_v2_reconciliation_sha256": "a0dfdee189a025df2da8b3ae7fb0447d1b1de962617910708c542ea742c18dc5",
+    "audit_v2_report_sha256": "5e443ec2489d5e21136c3cc4647224e1eecefe7a9e0d06562bd5047dc54fc730",
+    "status_reconciliation_scope": "Finite completion-status and provenance reconciliation; it did not recompute forecasts or metrics."
+  },
+  "status": "RECONCILED_NUMERICAL_PASS",
+  "superseded_history": "An earlier audit attempt was aborted after an extra transition was applied at the first observation. The corrected v2 audit supersedes it. The v2 report kept one run-completion status finding; a separate finite reconciliation verified that run-record and attempt status were completed and left no findings."
+}

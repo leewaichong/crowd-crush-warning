@@ -1,0 +1,144 @@
+{
+  "coverage": {
+    "test": 46699,
+    "train": 160143,
+    "validation": 48621
+  },
+  "filtered_state_mean_occupancy_over_eligible_origins": {
+    "definition": "Causal filtered probabilities averaged over eligible forecast origins; statistical clusters only.",
+    "test": [
+      0.8211390324807409,
+      0.1788609675192602
+    ],
+    "train": [
+      0.6579827419519175,
+      0.34201725804809996
+    ],
+    "validation": [
+      0.7470794874102337,
+      0.2529205125897757
+    ]
+  },
+  "fit": {
+    "converged": true,
+    "hit_cap": false,
+    "nonmonotonic_likelihood_observed": false,
+    "updates": 20
+  },
+  "fit_diagnostics": {
+    "converged": true,
+    "degenerate_parameter_versions": 0,
+    "hit_iteration_cap": false,
+    "iteration_cap": 30,
+    "nonmonotonic_likelihood_observed": false,
+    "recorded_final_training_log_likelihood": -402869.287355942,
+    "updates": 20
+  },
+  "limits": [
+    "Single chronological recording and supplied anonymous traces; no new-person, event, or venue generalization.",
+    "Forecasts target the next native-frame reported x_RGF,y_RGF increment from already observed consecutive increments ending at or before the origin.",
+    "Training metrics are in-sample. Validation and test are descriptive within-record partitions.",
+    "Reported projected-coordinate increments are source units, not independently verified physical velocity or measurement truth.",
+    "Unknown source preprocessing may be smoothed or noncausal.",
+    "Latent states are statistical clusters, not danger states or physical mechanisms.",
+    "Independent measurement accuracy, online performance, warning effectiveness, and safety are NOT RUN."
+  ],
+  "partition_frame_ranges_inclusive": {
+    "test": [
+      3836,
+      4795
+    ],
+    "train": [
+      0,
+      2876
+    ],
+    "validation": [
+      2877,
+      3835
+    ]
+  },
+  "results_by_partition": {
+    "test": {
+      "arms": {
+        "latest": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.011650401293373944,
+          "n": 46699,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.016174080838065055
+        },
+        "memoryless_transition": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.016457201195596884,
+          "n": 46699,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.019528475632616702
+        },
+        "switching_hmm": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.012580382911243328,
+          "n": 46699,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.015625774391752376
+        },
+        "trailing_mean_5": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.00883591869926299,
+          "n": 46699,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.01207122129891067
+        }
+      },
+      "eligible_origins": 46699
+    },
+    "train": {
+      "arms": {
+        "latest": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.011092767016347158,
+          "n": 160143,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.015541810274591523
+        },
+        "memoryless_transition": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.015322802172371214,
+          "n": 160143,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.019307005836966408
+        },
+        "switching_hmm": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.012325705629705284,
+          "n": 160143,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.015331097005349225
+        },
+        "trailing_mean_5": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.008440060459088489,
+          "n": 160143,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.011598728954689783
+        }
+      },
+      "eligible_origins": 160143
+    },
+    "validation": {
+      "arms": {
+        "latest": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.011801508702972849,
+          "n": 48621,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.016354661702825877
+        },
+        "memoryless_transition": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.015824175930399066,
+          "n": 48621,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.01921766804608865
+        },
+        "switching_hmm": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.012330476452766373,
+          "n": 48621,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.015377323597220556
+        },
+        "trailing_mean_5": {
+          "mean_vector_euclidean_error_source_units_per_native_frame": 0.008990304056279399,
+          "n": 48621,
+          "rmse_vector_euclidean_error_source_units_per_native_frame": 0.012289167253354443
+        }
+      },
+      "eligible_origins": 48621
+    }
+  },
+  "source_units": "source-declared EPSG:2154 metres per native-frame increment",
+  "split_crossing_exclusions": {
+    "eligible_origins": 105,
+    "increments": 106
+  },
+  "status": "EXPLORATORY_REPORTED_INCREMENT_FORECAST_COMPARISON_EXECUTED",
+  "task": "next native-frame x_RGF,y_RGF reported increment within existing trace"
+}

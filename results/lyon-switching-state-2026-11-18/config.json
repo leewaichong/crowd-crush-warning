@@ -1,0 +1,17 @@
+{
+  "coordinate_fields": ["projected_x_epsg2154_m", "projected_y_epsg2154_m"],
+  "states": 2,
+  "covariance": "diagonal_gaussian",
+  "variance_floor_standardized": 0.0001,
+  "initial_pi": [0.5, 0.5],
+  "initial_transition": [[0.95, 0.05], [0.05, 0.95]],
+  "count_pseudocount": 0.000001,
+  "max_em_updates": 30,
+  "convergence_mean_loglik_delta_per_increment": 0.00001,
+  "history_increments": 5,
+  "split": {"train_end_exclusive": 2877, "validation_end_exclusive": 3836},
+  "tie_tolerance": 1e-12,
+  "wall_limit_seconds": 1200,
+  "memory_limit_bytes": 1073741824,
+  "raw_output_limit_bytes": 104857600
+}

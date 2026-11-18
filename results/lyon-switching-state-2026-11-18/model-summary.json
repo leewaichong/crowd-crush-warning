@@ -1,0 +1,118 @@
+{
+  "degenerate_parameter_versions": 0,
+  "em_updates": 20,
+  "filtered_state_mean_occupancy_over_eligible_origins": {
+    "definition": "Causal filtered probabilities averaged over eligible forecast origins; statistical clusters only.",
+    "test": [
+      0.8211390324807409,
+      0.1788609675192602
+    ],
+    "train": [
+      0.6579827419519175,
+      0.34201725804809996
+    ],
+    "validation": [
+      0.7470794874102337,
+      0.2529205125897757
+    ]
+  },
+  "final_parameters": {
+    "emission_diagonal_variances_source_increment_units_squared": [
+      [
+        0.00011899948139027397,
+        0.00010423220025568309
+      ],
+      [
+        0.0001864768065194594,
+        7.338254860088527e-05
+      ]
+    ],
+    "emission_diagonal_variances_standardized": [
+      [
+        0.426400799060325,
+        1.0862218493796216
+      ],
+      [
+        0.6681866036486266,
+        0.7647322752269878
+      ]
+    ],
+    "emission_means_source_increment_units": [
+      [
+        -0.017964009087882614,
+        -0.0011378685075948238
+      ],
+      [
+        0.006762461427803301,
+        0.001999498717500273
+      ]
+    ],
+    "emission_means_standardized": [
+      [
+        -0.5029018983354112,
+        -0.10881990566570157
+      ],
+      [
+        0.9772238022401526,
+        0.21145555887945205
+      ]
+    ],
+    "initial_state_probability": [
+      0.7709424723316293,
+      0.22905752766837068
+    ],
+    "initialization_sort_axis": 0,
+    "memoryless_stationary_weights": [
+      0.6687015943459086,
+      0.33129840565409135
+    ],
+    "training_increment_center_source_units": [
+      -0.009562703065943038,
+      -7.188611659784074e-05
+    ],
+    "training_increment_scale_source_units": [
+      0.01670565581428033,
+      0.009795840057716252
+    ],
+    "transition_matrix": [
+      [
+        0.9979583853509036,
+        0.0020416146490963003
+      ],
+      [
+        0.004120849806672769,
+        0.9958791501933273
+      ]
+    ]
+  },
+  "fit_status": "converged",
+  "hit_30_update_cap": false,
+  "initialization_operational_rule": "Select the axis with greatest raw training-coordinate variance, then stably sort standardized values on that axis. This is an operational clarification of ambiguous frozen wording, not an exact confirmatory-protocol claim.",
+  "model_endpoint": null,
+  "nonmonotonic_likelihood_observed": false,
+  "state_interpretation": "Statistical clusters only; no danger meaning.",
+  "statistical_model": "Local NumPy float64 two-state diagonal-Gaussian HMM",
+  "training_log_likelihood_by_parameter_version": [
+    -413133.16461495025,
+    -405273.8028814218,
+    -403488.48188944004,
+    -403164.037191582,
+    -403082.42847371585,
+    -403042.3042126709,
+    -403009.37622404454,
+    -402981.253500406,
+    -402960.2274977105,
+    -402947.7037918359,
+    -402938.841036073,
+    -402929.59389258997,
+    -402920.0632913613,
+    -402909.7196945252,
+    -402898.65305706137,
+    -402888.45833021385,
+    -402881.9374716193,
+    -402876.63026584894,
+    -402871.91129304917,
+    -402869.8027975905,
+    -402869.287355942
+  ]
+}

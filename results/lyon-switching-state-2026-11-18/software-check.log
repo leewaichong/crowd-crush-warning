@@ -1,0 +1,7 @@
+test_conditional_prediction_is_analytic_and_causal (test_hmm.FixedHMMSoftwareChecks) ... ok
+test_forward_backward_matches_short_brute_force (test_hmm.FixedHMMSoftwareChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.029s
+
+OK

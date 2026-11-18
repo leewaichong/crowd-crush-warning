@@ -1,0 +1,66 @@
+{
+  "copyright": "MIT applies to original code only; dataset terms and source attribution are separate.",
+  "executed_artifact_sha256": {
+    "config_json": "deb406bc2d89968f46fffb3ff1e5e49993e76f921046df8669fd4d0bdedb9df3",
+    "hmm_py": "e19c4bcb8bfefb6e65781f36efc6da5c9a667207d5bdfbbcc4dee61fdb2a5d30",
+    "software_check_log": "f9b500e1f8bc5cbe80031acecff8f79fc1cf4083a34a08e558d0094fd57371ac",
+    "software_test_source": "a4150eef00d7b3843c1e673ca31a0537de05894d57972dea7de72a87d97113f8"
+  },
+  "extract_type": "Derived public provenance extract. Original private freeze and run record were not altered.",
+  "private_original_provenance_hashes": {
+    "freeze_sha256": "6c09b3a9d6ed8bccc6b41d349078992713b6bc9e468c7285a4fb66bfb37abbd6",
+    "run_manifest_sha256": "bb9a0bfa9cdff64230ddd3755149dc2780d2f0cdcf79d992ab01bad7217d9219",
+    "run_record_sha256": "794da7b308f8291bc896b5f0be4d498d12a15fb2460ddf698dd0a94487ebe884"
+  },
+  "private_records_retained": {
+    "fit_progress_sha256": "282f9db9a52a17d196c4fa60394597d77661708d5ed9dd2a66897ef5285ffeef",
+    "fit_record_sha256": "1f5868fc59fde64e31f6c80018cc0718fdc25f508d8698c3690e006ebe512190",
+    "raw_forecasts_sha256": "d1a8f64f11c940b1350d566eab5bd0a2c6cbac8bfee4bbcb73d1fc37dd7f5a03"
+  },
+  "protocol_sha256": "233f0e064d93e25d465302fbf7ac8cd6a73fb6292e8920b8adc61d0a207cc841",
+  "run": {
+    "command": "python3 work/m07-model/runner.py",
+    "elapsed_seconds": 468.53214083399996,
+    "ended_utc": "2026-11-18T07:11:40.913821Z",
+    "endpoint": null,
+    "peak_rss_bytes": 420528128,
+    "raw_private_forecast_bytes": 12389359,
+    "raw_private_forecast_sha256": "d1a8f64f11c940b1350d566eab5bd0a2c6cbac8bfee4bbcb73d1fc37dd7f5a03",
+    "runtime": {
+      "numpy": "1.24.1",
+      "platform": "macOS-26.4.1-arm64-arm-64bit",
+      "python": "3.9.12"
+    },
+    "started_utc": "2026-11-18T07:03:52.776337Z",
+    "statistical_model": "Local NumPy float64 two-state diagonal-Gaussian HMM",
+    "status": "completed",
+    "workspace_specific_output_path": "work/m07-model/runs/attempt-20261118T070352.776951Z"
+  },
+  "runner_derivative": {
+    "executed_runner_sha256": "de446f1445d9e4ddbf6c23260e644f233e86de67e9a76b4f0c6546d2ad3d7859",
+    "public_reproduction_runner_sha256": "f8f9f6cf452f7af8c2b835193cad26f37ae5cbbcf5c6dcf9756603cf394d4e76",
+    "transformation": "Public runner copy omits only the profile and model_identity dictionary entries. Parsed-code comparison confirms no other change.",
+    "workspace_specific": "Archived helper expects repository-local source paths, manifest, reader, admission record, and freeze context. It is not a standalone production CLI."
+  },
+  "software_checks": {
+    "command": "PYTHONPATH=work/m07-model python3 -m unittest discover -s work/m07-model/tests -v",
+    "result": "2 software-only analytic methods passed before the real run; no tests were rerun for publication.",
+    "software_check_log_sha256": "f9b500e1f8bc5cbe80031acecff8f79fc1cf4083a34a08e558d0094fd57371ac",
+    "test_source_sha256": "a4150eef00d7b3843c1e673ca31a0537de05894d57972dea7de72a87d97113f8"
+  },
+  "source": {
+    "archive_bytes": 33639872,
+    "archive_sha256": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+    "before_after_hashes_matched": true,
+    "member_path": "Data_Madras/TopView_trajectories/TopView_1B.txt",
+    "member_sha256": "1419d83a1568c8f6aff82e93af14294c9a4dbbe853c5dc1da97dedf3b497fe0c",
+    "record": "Dufour et al. (2025), Scientific Data 12, 718, DOI 10.1038/s41597-025-04732-3; Zenodo 13830435, record-level CC BY 4.0.",
+    "source_admission_sha256": "17204cd6d9b10fd45216077bd256a8cd08f96a4d9d751241ea436a7cbd8a50e1",
+    "source_manifest_sha256": "f4b9f0f1fc3343ab20d3f18f0f523d0aac753c4d7302cbd1f00013190f0037cf",
+    "source_reader_sha256": "928925be73800856da3879f066f981993283b20fa80e00de16dc91caeb66021b",
+    "workspace_archive_path": "data/zenodo-13830435/Data_Madras.zip"
+  },
+  "status": "evaluated_exploratory_run_with_corrected_independent_numerical_audit",
+  "tracked_git_sha_at_execution": "6b51f744684fa71c55e91bec452a3072f55087eb",
+  "tracked_worktree_clean_at_execution": true
+}

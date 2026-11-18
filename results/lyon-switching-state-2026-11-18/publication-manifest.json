@@ -1,0 +1,63 @@
+{
+  "artifacts": {
+    "LICENSE": {
+      "bytes": 1070,
+      "sha256": "9495d2475f1b7410c438f7eee9ac309973f626d5156bea7f8db2e5c0be9af9b5"
+    },
+    "README.md": {
+      "bytes": 4875,
+      "sha256": "04885f725147f51b7a5f272aea57018f387e18e4fb62264d2360365fb0c224f1"
+    },
+    "aggregate-summary.json": {
+      "bytes": 5413,
+      "sha256": "2381a4fc628d3bd3a5c7df5d96218bfc622443f05cecec31e1b9a0463cad6f65"
+    },
+    "audit_helpers_v2.py": {
+      "bytes": 4946,
+      "sha256": "e864288f5229cc1b1251f0bdd8f16816fa4bf15942289f4a14718bf1d0e8fe3b"
+    },
+    "config.json": {
+      "bytes": 604,
+      "sha256": "deb406bc2d89968f46fffb3ff1e5e49993e76f921046df8669fd4d0bdedb9df3"
+    },
+    "hmm.py": {
+      "bytes": 8357,
+      "sha256": "e19c4bcb8bfefb6e65781f36efc6da5c9a667207d5bdfbbcc4dee61fdb2a5d30"
+    },
+    "model-summary.json": {
+      "bytes": 3066,
+      "sha256": "a73047725b032dcbb115321bc3dbf239d577d8eb7308ce9499c43613508bd291"
+    },
+    "numerical-audit.json": {
+      "bytes": 3826,
+      "sha256": "358e221f9e28788e573b2193264796b051901e3cab43f2176f3a7e704f72a6d8"
+    },
+    "provenance.json": {
+      "bytes": 4135,
+      "sha256": "03c1fa66a020e959c42b0c40cd2736819fe748acf2a947c53afaf440c4c59d8d"
+    },
+    "run.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "run.stdout.log": {
+      "bytes": 100,
+      "sha256": "461548169353ed93dfb8d12d952bf6e5e27773d4ca6fe56ad0b1cfd58ac7cc00"
+    },
+    "runner.py": {
+      "bytes": 23818,
+      "sha256": "f8f9f6cf452f7af8c2b835193cad26f37ae5cbbcf5c6dcf9756603cf394d4e76"
+    },
+    "software-check.log": {
+      "bytes": 279,
+      "sha256": "f9b500e1f8bc5cbe80031acecff8f79fc1cf4083a34a08e558d0094fd57371ac"
+    },
+    "test_hmm.py": {
+      "bytes": 2559,
+      "sha256": "a4150eef00d7b3843c1e673ca31a0537de05894d57972dea7de72a87d97113f8"
+    }
+  },
+  "generated_from_tracked_sha": "6b51f744684fa71c55e91bec452a3072f55087eb",
+  "no_private_origin_level_forecasts_or_coordinates_included": true,
+  "status": "EXPLORATORY_RESULT_BUNDLE"
+}
