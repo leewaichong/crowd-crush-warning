@@ -53,6 +53,8 @@ def assess_motion_quality(
             raise ValueError(f"cell {cell_id} at_search_boundary must be a boolean")
         if not isinstance(cell.get("status"), str):
             raise ValueError(f"cell {cell_id} status must be a string")
+        if cell["status"] not in {"unique_minimum", "ambiguous"}:
+            raise ValueError(f"cell {cell_id} status must be unique_minimum or ambiguous")
         if cell["status"] == "unique_minimum":
             for axis in ("dx_px", "dy_px"):
                 value = cell.get(axis)

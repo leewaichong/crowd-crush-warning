@@ -54,6 +54,9 @@ class MotionQualityTests(unittest.TestCase):
         malformed = {"cells": [{**base["cells"][0], "at_search_boundary": "false"}]}
         with self.assertRaisesRegex(ValueError, "must be a boolean"):
             assess_motion_quality(malformed)
+        unknown_status = {"cells": [{**base["cells"][0], "status": "unavailable"}]}
+        with self.assertRaisesRegex(ValueError, "status must be unique_minimum or ambiguous"):
+            assess_motion_quality(unknown_status)
         with self.assertRaisesRegex(ValueError, "camera_stable"):
             assess_motion_quality(base, camera_stable=1)
 
