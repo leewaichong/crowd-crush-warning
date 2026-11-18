@@ -145,9 +145,12 @@ class SourceManifestTests(unittest.TestCase):
         self.assertTrue(report["integrity_verified"])
         self.assertTrue(report["rights_review_required"])
 
-    def test_file_scope_does_not_require_record_level_review(self):
+    def test_arbitrary_file_scope_does_not_clear_rights_review(self):
+        self.manifest["source_record"]["license"]["id"] = "unreviewed-license-name"
         self.manifest["source_record"]["license"]["scope"] = "file-level"
-        self.assertFalse(self.check()["rights_review_required"])
+        report = self.check()
+        self.assertTrue(report["integrity_verified"])
+        self.assertTrue(report["rights_review_required"])
 
 
 if __name__ == "__main__":
