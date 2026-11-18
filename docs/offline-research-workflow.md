@@ -1,0 +1,87 @@
+# Offline research workflow
+
+This page describes the current local tools. They support source inspection and research review; they do not form a validated crowd safety system. Keep the downloaded source files outside Git. The manifests record the source URL, retrieval time, byte count, SHA-256, source checksum, and record-level terms. Verify every local source file before using it. Integrity is a byte check, not rights clearance or evidence of measurement accuracy.
+
+## 1. Check source integrity
+
+From the repository root, put a downloaded file at the path named in its manifest, then run the matching command. Paths below are examples; replace them with the actual local files.
+
+```sh
+PYTHONPATH=src python3 -m crowd_warning verify-source sources/pamplona-density.json --base-dir /example/local-data
+PYTHONPATH=src python3 -m crowd_warning verify-source sources/pamplona-video.json --base-dir /example/local-data
+```
+
+Each manifest entry names a relative `path`, source `url`, `size_bytes`, `sha256`, `source_checksum`, `retrieved_at`, `purpose`, and `status`. `--base-dir` is the directory containing those relative paths. A successful result has `integrity_verified: true`; missing files or metadata or a byte mismatch makes verification fail with a nonzero exit. This command does not download anything. Keep raw source payloads external. Original repository code is MIT licensed; source material retains the terms and attribution recorded in its manifest. The Pamplona video manifest identifies CC BY 4.0 at record scope, which does not by itself settle rights for a particular use.
+
+## 2. Inspect video timestamps and decode
+
+`inspect-video` requires a local video file plus `ffprobe` and `ffmpeg` on `PATH`. It probes stream metadata and presentation timestamps, then decodes the video stream to a null output without audio.
+
+```sh
+PYTHONPATH=src python3 -m crowd_warning inspect-video /example/local-data/video_crowd.mov
+```
+
+The JSON includes the input byte count and SHA-256, tool versions, stream metadata, frame count, timestamp counts and intervals, decode status, and `timing_status`. A completed inspection can report `ok` or `abstain`; missing, duplicate, or decreasing timestamps cause abstention. Use `--max-gap-s SECONDS` only to report caller-selected timestamp intervals. Exceeding that value causes abstention; the command does not infer missing physical frames. A missing input, missing tool, failed probe, or failed decode is a command error, printed as JSON on stderr with a nonzero exit status. An abstention is a completed inspection, not a command failure.
+
+## 3. Inspect image-space motion
+
+`inspect-motion` requires the same video file and tools, plus NumPy. It samples grayscale frames at intervals based on actual presentation timestamps and reports integer-pixel block matches. The defaults are width 320 pixels and a one-second minimum sample interval.
+
+```sh
+PYTHONPATH=src python3 -m crowd_warning inspect-motion /example/local-data/video_crowd.mov
+```
+
+Options are `--width PIXELS` and `--sample-interval-s SECONDS`. The command rejects videos over 2,000 native frames or 60 seconds, and bounds decoded frame memory. A completed result reports `motion_status` as `ok` or `abstain`; invalid input, unavailable tools or NumPy, and probe or decode failures are command errors. The output describes image pixels only. Camera movement, visibility, calibration, and physical scale remain unknown. A block match or a unique minimum is not an accuracy or confidence measure and does not measure physical motion or force. Human review remains outside any operational claim.
+
+## 4. Inspect and replay the temporal-density table
+
+`inspect-density` parses the exact six-column tab-separated Pamplona table. It checks the expected description and header, finite values, nonnegative densities, strictly increasing times, and paired trailing missing values. It reports counts and ranges by year.
+
+```sh
+PYTHONPATH=src python3 -m crowd_warning inspect-density /example/local-data/data_density_over_time.txt
+```
+
+To make the standalone viewer, give `replay-density` a new output path. It refuses to overwrite an existing file.
+
+```sh
+PYTHONPATH=src python3 -m crowd_warning replay-density /example/local-data/data_density_over_time.txt --output /example/review/pamplona-density-viewer.html
+```
+
+The command prints JSON with `status: written`, the resolved output path, and `input_sha256`. Retain that digest with the review so the viewed table can be tied to the exact input bytes. The viewer identifies the source and terms, reports missing trailing padding, and may decimate displayed points while retaining endpoints and bucket extrema. It does not interpolate missing rows, set a hazard threshold, or make a forecast. Unknown camera scale and source gaps stay unknown.
+
+## Reading results and review limits
+
+Separate these cases when reviewing output:
+
+- **Data checks:** `verify-source` checks manifest metadata and local bytes. The density parser checks its stated file schema and numeric consistency. Passing these checks does not establish that measurements are accurate or calibrated.
+- **Completed abstention:** `inspect-video` may complete with `timing_status: abstain`; `inspect-motion` may complete with `motion_status: abstain`. Read the reason and counts. Do not treat abstention as a warning or as evidence that conditions are safe.
+- **Command failure:** nonzero exit and JSON error on stderr means the requested operation did not complete. Resolve the missing input, dependency, or processing error before interpreting any result.
+- **Independent accuracy:** these tools do not compare motion estimates with independent ground truth. Independent measurement accuracy has not been established by successful parsing, decoding, or replay.
+- **Warning effectiveness:** these source-inspection tools do not evaluate warnings. Do not infer warning effectiveness, safety thresholds, calibrated probabilities, or physical force from their outputs.
+
+Camera calibration and visibility remain unknown unless supported by separate evidence. Human review can check whether files and outputs are internally consistent, but it does not supply a trained safety-operator study or authorize operational use.
+
+## Existing density forecast result
+
+The [published Pamplona density benchmark bundle](../results/pamplona-density-30s-2026-11-18/README.md) records a completed descriptive run at clean Git SHA `53c35c42087d76614e16d2b14bfd630acfb5e15`, completed at `2026-11-18T04:19:21.269627+00:00`. Its input was the 4,636,050-byte source table with SHA-256 `cbc48912b51e1824017b046a6ee5f1d5eef19a529ba33d9aee361d21cd36561c`. The bundle retains `origins.jsonl`, `metrics.json`, model and configuration files, run provenance, and figure checksums. The comparison control is persistence, which carries forward the latest observed density.
+
+Only the global discrete AR(1) fit uses 2022 training observations. At each origin, local trend is refit on the causal trailing 30 seconds of available history, including later years, without future values. Persistence uses the latest value at that origin. The 2023 check contains 113 completed origins; the 2024 same-venue holdout contains 118. The bundle reports MAE and RMSE against source-declared density in m^-2. This is a descriptive forecast evaluation on one spatial-average series, not independent measurement accuracy or warning effectiveness. Motion accuracy and warning effectiveness are **NOT RUN**.
+
+## Acceptance evidence and status
+
+This runbook packages the inputs, dependencies, checks, and evidence for the parent developer/research acceptance review. Existing local evidence is recorded in [project status](STATE.md): the integrated suite passed 133 tests at SHA `53c35c42087d76614e16d2b14bfd630acfb5e15`. The earlier real-input replay and browser evidence is retained at `/Users/waichong/projects/crowd-crush-warning/work/milestone-02/release-check/verification.json`, `replay.stdout`, and `browser-check.json`. That record ties the replay to source SHA-256 `cbc48912b51e1824017b046a6ee5f1d5eef19a529ba33d9aee361d21cd36561c`, records a successful replay and expected overwrite refusal, and records browser checks at 1280 px and 390 px with no body overflow, a 720 px chart scroll width, year selection, keyboard cursor movement, and a light background. These are prior software checks, not a new run or a safety study.
+
+The developer/research acceptance review is the parent review now. A trained safety-operator study is **NOT RUN** and is separate. Issue 24 does not require a new operator application. No user study, warning-effectiveness evaluation, or operational acceptance is claimed.
+
+## Developer and research acceptance checklist
+
+For a bounded local review of these existing tools:
+
+1. Confirm each source file is external and matches its selected-file manifest, including recorded byte count and checksums.
+2. Run timestamp inspection and record the JSON status, tool versions, frame count, and any timestamp defects or configured gap check.
+3. If reviewing motion, confirm NumPy is available, inspect the reported image dimensions and sample intervals, and record abstentions or boundary matches without treating them as accuracy.
+4. Parse and replay the temporal-density table. Retain the `input_sha256` from the replay JSON and inspect the viewer's source labels, counts, and missing padding.
+5. Record command failures separately from completed abstentions and data validation failures. State explicitly what each check establishes and what remains unknown.
+6. Have a research reviewer check the local artifacts and evidence limits. Record this as a developer/research acceptance review only. No trained safety-operator acceptance study or warning-effectiveness evaluation is claimed.
+
+This checklist is a review of existing offline behavior, not a protocol for an effectiveness experiment.
