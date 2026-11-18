@@ -16,6 +16,8 @@ The Pamplona table contains 90,000 rows with author-declared time in seconds rel
 
 For the current source-integrity, timestamp/decode, pixel-motion, and density-replay workflow, see the [offline research workflow](docs/offline-research-workflow.md).
 
+For source access, annotation limits, and reuse terms across real and synthetic crowd datasets, see the [crowd annotation source review](docs/annotation-source-review.md).
+
 The commands use Python's standard library unless noted below. They read local files and do not connect to a camera or service, except for the explicit `curl` downloads shown here.
 
 ```sh
