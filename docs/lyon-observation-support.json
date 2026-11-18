@@ -1,0 +1,430 @@
+{
+  "archive_sha256": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+  "attempt_id": "20261118T093924Z",
+  "endpoint": null,
+  "members": [
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "valid_unaligned_metadata",
+      "member": "Data_Madras/TopView_trajectories/TopView_1A.txt",
+      "member_sha256": "4f5c49d6569fce3f803bdb2b5e35e44d8b32a2aa94b78f266db2a4362fb6ff0b",
+      "member_size_bytes": 22879299,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 369,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 369,
+          "total_frames": 1269
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 3804
+        },
+        "validation": {
+          "candidate_horizon_origins": 368,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 368,
+          "total_frames": 1268
+        }
+      },
+      "source_frame_count_by_max_plus_one": 6341,
+      "split_edges": {
+        "floor_0_6_N": 3804,
+        "floor_0_8_N": 5072
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    },
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "valid_unaligned_metadata",
+      "member": "Data_Madras/TopView_trajectories/TopView_1B.txt",
+      "member_sha256": "1419d83a1568c8f6aff82e93af14294c9a4dbbe853c5dc1da97dedf3b497fe0c",
+      "member_size_bytes": 16638524,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 60,
+          "first_failure_reasons": {
+            "future_missing_report": 60
+          },
+          "full_support_upper_bound": 0,
+          "total_frames": 960
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 2877
+        },
+        "validation": {
+          "candidate_horizon_origins": 59,
+          "first_failure_reasons": {
+            "future_missing_report": 59
+          },
+          "full_support_upper_bound": 0,
+          "total_frames": 959
+        }
+      },
+      "source_frame_count_by_max_plus_one": 4796,
+      "split_edges": {
+        "floor_0_6_N": 2877,
+        "floor_0_8_N": 3836
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    },
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "valid_unaligned_metadata",
+      "member": "Data_Madras/TopView_trajectories/TopView_1C.txt",
+      "member_sha256": "19b254edaaa7e411e3697e0dee482737edf1290767183b36d51fa3abadc9cf54",
+      "member_size_bytes": 11714984,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 324,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 324,
+          "total_frames": 1224
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 3670
+        },
+        "validation": {
+          "candidate_horizon_origins": 324,
+          "first_failure_reasons": {
+            "future_insufficient_increment_history": 1,
+            "future_missing_report": 79
+          },
+          "full_support_upper_bound": 244,
+          "total_frames": 1224
+        }
+      },
+      "source_frame_count_by_max_plus_one": 6118,
+      "split_edges": {
+        "floor_0_6_N": 3670,
+        "floor_0_8_N": 4894
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    },
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "valid_unaligned_metadata",
+      "member": "Data_Madras/TopView_trajectories/TopView_2A.txt",
+      "member_sha256": "8c099f61bf7ba74b615af1a54e3c685a586d96c0df4c3aee48ce6d2326788a4f",
+      "member_size_bytes": 24891062,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 66,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 66,
+          "total_frames": 966
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 2897
+        },
+        "validation": {
+          "candidate_horizon_origins": 66,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 66,
+          "total_frames": 966
+        }
+      },
+      "source_frame_count_by_max_plus_one": 4829,
+      "split_edges": {
+        "floor_0_6_N": 2897,
+        "floor_0_8_N": 3863
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    },
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "valid_unaligned_metadata",
+      "member": "Data_Madras/TopView_trajectories/TopView_2B.txt",
+      "member_sha256": "544b6d9eafb5ca3e713e392afa4ce5bd0c856727e156d94749ad561fd3757f16",
+      "member_size_bytes": 15604045,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 814
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 2439
+        },
+        "validation": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 813
+        }
+      },
+      "source_frame_count_by_max_plus_one": 4066,
+      "split_edges": {
+        "floor_0_6_N": 2439,
+        "floor_0_8_N": 3252
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    },
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "valid_unaligned_metadata",
+      "member": "Data_Madras/TopView_trajectories/TopView_2C.txt",
+      "member_sha256": "b13754ef7b35bc997b67a279d716e3cbe8e00a3033f940924981ade8ee18ef2a",
+      "member_size_bytes": 17281570,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 193,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 193,
+          "total_frames": 1093
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 3279
+        },
+        "validation": {
+          "candidate_horizon_origins": 193,
+          "first_failure_reasons": {
+            "future_missing_report": 193
+          },
+          "full_support_upper_bound": 0,
+          "total_frames": 1093
+        }
+      },
+      "source_frame_count_by_max_plus_one": 5465,
+      "split_edges": {
+        "floor_0_6_N": 3279,
+        "floor_0_8_N": 4372
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    },
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "valid_unaligned_metadata",
+      "member": "Data_Madras/TopView_trajectories/TopView_2D.txt",
+      "member_sha256": "18ca776f09a61f5ef6c2890b2225c907916d5b6646997c250da004c246483a5a",
+      "member_size_bytes": 9135337,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 65,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 65,
+          "total_frames": 965
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 2894
+        },
+        "validation": {
+          "candidate_horizon_origins": 65,
+          "first_failure_reasons": {
+            "future_missing_report": 65
+          },
+          "full_support_upper_bound": 0,
+          "total_frames": 965
+        }
+      },
+      "source_frame_count_by_max_plus_one": 4824,
+      "split_edges": {
+        "floor_0_6_N": 2894,
+        "floor_0_8_N": 3859
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    },
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "valid_unaligned_metadata",
+      "member": "Data_Madras/TopView_trajectories/TopView_2E.txt",
+      "member_sha256": "d3b788388e2fefe7346dd95682f905019d657a9204acd48360497a4dedd51cc5",
+      "member_size_bytes": 3590198,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 437
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 1309
+        },
+        "validation": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 436
+        }
+      },
+      "source_frame_count_by_max_plus_one": 2182,
+      "split_edges": {
+        "floor_0_6_N": 1309,
+        "floor_0_8_N": 1745
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    },
+    {
+      "admission_status": "admitted",
+      "calendar_header_status": "invalid_unparsed_calendar_timestamp",
+      "member": "Data_Madras/TopView_trajectories/TopView_2F.txt",
+      "member_sha256": "8c7d5502052008cd6dbd93fd8f2f5f7f85436991d8ac270bc57581244df8d928",
+      "member_size_bytes": 2405188,
+      "partitions": {
+        "test": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 480
+        },
+        "train": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 1438
+        },
+        "validation": {
+          "candidate_horizon_origins": 0,
+          "first_failure_reasons": {},
+          "full_support_upper_bound": 0,
+          "total_frames": 479
+        }
+      },
+      "source_frame_count_by_max_plus_one": 2397,
+      "split_edges": {
+        "floor_0_6_N": 1438,
+        "floor_0_8_N": 1917
+      },
+      "time_consistency": {
+        "one_source_time_per_frame": true,
+        "source_clock_field": "t/s",
+        "source_frame_index_complete_from_zero": true,
+        "source_time_strictly_increasing_by_frame": true,
+        "source_time_unit": "s"
+      }
+    }
+  ],
+  "model_identity": "none/source-availability-only",
+  "provenance": {
+    "earlier_attempt": "Earlier executed helper attempt produced no usable coverage counts due to manifest schema error; raw records and unexecuted prepared versions retained privately.",
+    "ended_utc": "2026-11-18T09:40:51.161464+00:00",
+    "exact_helper_command": "/Library/Frameworks/Python.framework/Versions/3.9/bin/python3 /Users/waichong/worktrees/crowd-m08-support-inventory/.planning/crowd16-support-inventory/20261118T093924Z/support_inventory.py",
+    "exact_launch_command": "python3 .planning/crowd16-support-inventory/20261118T093924Z/launch.py --attempt-dir .planning/crowd16-support-inventory/20261118T093924Z",
+    "executed_clean_tracked_sha": "982b145e43f3e1c6f15729861a594f993a396155",
+    "freeze_sha256": "1974650f28cc897d2a8b785710788b045607aaf4e9bf03294b0a2f11b1f68350",
+    "frozen_hashes": {
+      "definition_sha256": "3140c47c48e3724596ab94a0fdd74a414fcf2781cb7376e5c1a01d71b184d1e1",
+      "helper_sha256": "e0eaaadc4f4bd58502301fe737d9e60dbc860ce6e2ef2782c2d0fdf0f6032247",
+      "launcher_sha256": "612dde319a040df1b93002de0a1211d9a29fae85ea94d839e2fac92aa43145bf",
+      "manifest_sha256": "f4b9f0f1fc3343ab20d3f18f0f523d0aac753c4d7302cbd1f00013190f0037cf",
+      "parser_sha256": "e0eaaadc4f4bd58502301fe737d9e60dbc860ce6e2ef2782c2d0fdf0f6032247",
+      "protocol_sha256": "4a30db370e7005603ee1d7561e6a359aa8ae14f694b19f4c7da1b987a6100a80",
+      "reader_sha256": "928925be73800856da3879f066f981993283b20fa80e00de16dc91caeb66021b"
+    },
+    "original_execution_sha256": "94b061532ce617e843f7a8190e2a905265379266a6ae1864734801c69253e948",
+    "original_inventory_sha256": "a6e9376eba182f523f48841b4ba9128b3043ecb00efed6b1d807b9684381f882",
+    "python_runtime": "3.9.12 (v3.9.12:b28265d7e6, Mar 23 2022, 18:22:40) \n[Clang 13.0.0 (clang-1300.0.29.30)]",
+    "return_code": 0,
+    "review_scope": "static method review, actual-header preflight, provenance and count accounting; not independent numerical reproduction of all support counts",
+    "source_hashes_after": {
+      "archive": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+      "definition": "3140c47c48e3724596ab94a0fdd74a414fcf2781cb7376e5c1a01d71b184d1e1",
+      "helper": "e0eaaadc4f4bd58502301fe737d9e60dbc860ce6e2ef2782c2d0fdf0f6032247",
+      "manifest": "f4b9f0f1fc3343ab20d3f18f0f523d0aac753c4d7302cbd1f00013190f0037cf",
+      "parser": "e0eaaadc4f4bd58502301fe737d9e60dbc860ce6e2ef2782c2d0fdf0f6032247",
+      "protocol": "4a30db370e7005603ee1d7561e6a359aa8ae14f694b19f4c7da1b987a6100a80",
+      "reader": "928925be73800856da3879f066f981993283b20fa80e00de16dc91caeb66021b"
+    },
+    "source_hashes_before": {
+      "archive": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+      "definition": "3140c47c48e3724596ab94a0fdd74a414fcf2781cb7376e5c1a01d71b184d1e1",
+      "helper": "e0eaaadc4f4bd58502301fe737d9e60dbc860ce6e2ef2782c2d0fdf0f6032247",
+      "manifest": "f4b9f0f1fc3343ab20d3f18f0f523d0aac753c4d7302cbd1f00013190f0037cf",
+      "parser": "e0eaaadc4f4bd58502301fe737d9e60dbc860ce6e2ef2782c2d0fdf0f6032247",
+      "protocol": "4a30db370e7005603ee1d7561e6a359aa8ae14f694b19f4c7da1b987a6100a80",
+      "reader": "928925be73800856da3879f066f981993283b20fa80e00de16dc91caeb66021b"
+    },
+    "started_utc": "2026-11-18T09:40:20.037418+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "3df09309e56cdb63c3968117eab86d24aef180996b53d9a64a02b577fa6d38cd",
+    "timed_out": false,
+    "tracked_state_after": {
+      "clean": true,
+      "git_sha": "982b145e43f3e1c6f15729861a594f993a396155"
+    },
+    "tracked_state_before": {
+      "clean": true,
+      "git_sha": "982b145e43f3e1c6f15729861a594f993a396155"
+    }
+  },
+  "purpose": "Relative-clock source observation availability only; fit, forecast, model effectiveness and crowd warning effectiveness NOT RUN",
+  "source": {
+    "article_doi": "https://doi.org/10.1038/s41597-025-04732-3",
+    "record_level_license": "CC BY 4.0",
+    "record_url": "https://zenodo.org/records/13830435",
+    "source_units": "source-declared projected coordinate metres and supplied relative t/s; physical calibration and wall-clock/event/video alignment unverified"
+  },
+  "status": "completed"
+}
