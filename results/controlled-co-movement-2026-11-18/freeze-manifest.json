@@ -1,0 +1,24 @@
+{
+  "archive_path": "/Users/waichong/projects/crowd-crush-warning/.planning/milestone03-worktree-archive/crowd-m03-controlled-data/data/source/2022impulse_crowd_trajectories_txt.zip",
+  "archive_sha256_before_run": "1a197b0fd068f7b9bea3ac53118a31f7fc698f90167d871bb44b8de34b10030f",
+  "command": "python3 work/m06-controlled/v2r1/controlled_head_lag_v2r1.py",
+  "expected_archive_sha256": "1a197b0fd068f7b9bea3ac53118a31f7fc698f90167d871bb44b8de34b10030f",
+  "expected_member_sha256": "3f5bfdaf2d9c4a07b22b489f8cef3c7d8b3fdc16c9d5a37a32e74ed8b6f627a1",
+  "freeze_utc": "2026-11-18T06:07:25.658999+00:00",
+  "member": "2022impulse_crowd_trajectories_txt/1A11_240_n10_fs_d0_p+.txt",
+  "model_identity": "local deterministic Python standard library; no model endpoint",
+  "preserved_prior_snapshots": [
+    "work/m06-controlled/failed-attempt-preserved-v1",
+    "work/m06-controlled/failed-attempt-preserved-v2-smoke"
+  ],
+  "protocol_path": "/Users/waichong/worktrees/crowd-m06-controlled/.planning/m06/controlled-head-lag-protocol-v2r1.md",
+  "protocol_sha256": "66f9715c8c67f19ad27dd1782d2e703f8739f14b6e219c853e18db3c81a55315",
+  "python": "3.9.12 (v3.9.12:b28265d7e6, Mar 23 2022, 18:22:40) \n[Clang 13.0.0 (clang-1300.0.29.30)]",
+  "script_path": "/Users/waichong/worktrees/crowd-m06-controlled/work/m06-controlled/v2r1/controlled_head_lag_v2r1.py",
+  "script_sha256": "497e0eba205dc5eee077031d4a22f1625f14e2c988777eb99ec4aaf15f625940",
+  "selection": "same previously admitted trial/member, one marker-778 bag and ten documented heads, frames 0..101, x/y only",
+  "smoke_command": "python3 work/m06-controlled/v2r1/controlled_head_lag_v2r1.py --smoke",
+  "smoke_status": "passed; in-memory only; not experimental evidence",
+  "tracked_git_sha": "345275100aaae31b9810a95a8eeec8cfe8a0a3b9",
+  "tracked_worktree_clean": true
+}

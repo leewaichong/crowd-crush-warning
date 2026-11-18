@@ -1,0 +1,14 @@
+{
+  "archive_sha256_after": "1a197b0fd068f7b9bea3ac53118a31f7fc698f90167d871bb44b8de34b10030f",
+  "archive_sha256_before": "1a197b0fd068f7b9bea3ac53118a31f7fc698f90167d871bb44b8de34b10030f",
+  "command": "python3 work/m06-controlled/v2r1/controlled_head_lag_v2r1.py",
+  "end_utc": "2026-11-18T06:07:47.010757+00:00",
+  "exit_status": 0,
+  "member_sha256_after": "3f5bfdaf2d9c4a07b22b489f8cef3c7d8b3fdc16c9d5a37a32e74ed8b6f627a1",
+  "member_sha256_before": "3f5bfdaf2d9c4a07b22b489f8cef3c7d8b3fdc16c9d5a37a32e74ed8b6f627a1",
+  "model_identity": "local deterministic Python standard library; no model endpoint",
+  "profile_sha256": "940d1100945dd301be53bca022d954c6f769478d7978c3e545f9f443e949d31a",
+  "python": "3.9.12 (v3.9.12:b28265d7e6, Mar 23 2022, 18:22:40) \n[Clang 13.0.0 (clang-1300.0.29.30)]",
+  "start_utc": "2026-11-18T06:07:46.754679+00:00",
+  "status": "executed"
+}

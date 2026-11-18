@@ -1,0 +1,226 @@
+{
+  "common_anchor_count_per_lag": 81,
+  "common_mode": {
+    "lag_zero_r": 0.4843863919257125,
+    "max_abs_lag_frames": 10,
+    "ties": [
+      10
+    ],
+    "unavailable_lags": 0
+  },
+  "heads": {
+    "head_01": {
+      "raw": {
+        "lag_zero_r": 0.21146789285905834,
+        "max_abs_lag_frames": 10,
+        "ties": [
+          10
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.1470118022708271,
+        "max_abs_lag_frames": 10,
+        "ties": [
+          10
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_02": {
+      "raw": {
+        "lag_zero_r": 0.27364292536142126,
+        "max_abs_lag_frames": 10,
+        "ties": [
+          10
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.3941736815091479,
+        "max_abs_lag_frames": -4,
+        "ties": [
+          -4
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_03": {
+      "raw": {
+        "lag_zero_r": 0.07606641878690393,
+        "max_abs_lag_frames": 8,
+        "ties": [
+          8
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.12730841704137122,
+        "max_abs_lag_frames": -10,
+        "ties": [
+          -10
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_04": {
+      "raw": {
+        "lag_zero_r": 0.6677515383050736,
+        "max_abs_lag_frames": 2,
+        "ties": [
+          2
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.5259834012890746,
+        "max_abs_lag_frames": 1,
+        "ties": [
+          1
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_05": {
+      "raw": {
+        "lag_zero_r": 0.2613484744725998,
+        "max_abs_lag_frames": 10,
+        "ties": [
+          10
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.2990593209477237,
+        "max_abs_lag_frames": 10,
+        "ties": [
+          10
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_06": {
+      "raw": {
+        "lag_zero_r": 0.3544877318659761,
+        "max_abs_lag_frames": 8,
+        "ties": [
+          8
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.32007977403816734,
+        "max_abs_lag_frames": 10,
+        "ties": [
+          10
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_07": {
+      "raw": {
+        "lag_zero_r": 0.17751009777841997,
+        "max_abs_lag_frames": 10,
+        "ties": [
+          10
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.3748304895024002,
+        "max_abs_lag_frames": 10,
+        "ties": [
+          10
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_08": {
+      "raw": {
+        "lag_zero_r": 0.4596522313501434,
+        "max_abs_lag_frames": 9,
+        "ties": [
+          9
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.442673350866911,
+        "max_abs_lag_frames": -2,
+        "ties": [
+          -2
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_09": {
+      "raw": {
+        "lag_zero_r": 0.5781857818475352,
+        "max_abs_lag_frames": 3,
+        "ties": [
+          3
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.5273095507672703,
+        "max_abs_lag_frames": 2,
+        "ties": [
+          2
+        ],
+        "unavailable_lags": 0
+      }
+    },
+    "head_10": {
+      "raw": {
+        "lag_zero_r": 0.47742806290897966,
+        "max_abs_lag_frames": 3,
+        "ties": [
+          3
+        ],
+        "unavailable_lags": 0
+      },
+      "residual": {
+        "lag_zero_r": 0.41561862448103,
+        "max_abs_lag_frames": 0,
+        "ties": [
+          0
+        ],
+        "unavailable_lags": 0
+      }
+    }
+  },
+  "lag_range": [
+    -10,
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "raw_lag_zero_range": [
+    0.07606641878690393,
+    0.6677515383050736
+  ],
+  "residual_lag_zero_range": [
+    0.12730841704137122,
+    0.5273095507672703
+  ],
+  "source_rows_written": false,
+  "status": "executed descriptive analysis"
+}

@@ -1,0 +1,68 @@
+{
+  "artifact_hashes_exclude_this_manifest": true,
+  "artifacts": [
+    {
+      "bytes": 9701,
+      "path": "work/m06-controlled/v2r1/controlled_head_lag_v2r1.py",
+      "sha256": "497e0eba205dc5eee077031d4a22f1625f14e2c988777eb99ec4aaf15f625940"
+    },
+    {
+      "bytes": 4333,
+      "path": "work/m06-controlled/v2r1/descriptive-summary.json",
+      "sha256": "c9c882a603112d7abb0025672393913ff2a6fbc128a627a6cf80b4dbae79406d"
+    },
+    {
+      "bytes": 235,
+      "path": "work/m06-controlled/v2r1/events.jsonl",
+      "sha256": "f9bc832964aa4711740a1fe43521a4e64805aa6644ef004b5debde17022bef25"
+    },
+    {
+      "bytes": 1828,
+      "path": "work/m06-controlled/v2r1/freeze-manifest.json",
+      "sha256": "684e72666f3c99c08c87842910867359707142f3389c5d526d1388ace2c39a60"
+    },
+    {
+      "bytes": 64739,
+      "path": "work/m06-controlled/v2r1/lag_profiles.json",
+      "sha256": "940d1100945dd301be53bca022d954c6f769478d7978c3e545f9f443e949d31a"
+    },
+    {
+      "bytes": 878,
+      "path": "work/m06-controlled/v2r1/run-record.json",
+      "sha256": "4229f306b0b52f1a224f7905ccec966dda5480cd557167fd784213a92c0feee3"
+    },
+    {
+      "bytes": 0,
+      "path": "work/m06-controlled/v2r1/run.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "work/m06-controlled/v2r1/run.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "work/m06-controlled/v2r1/smoke.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "work/m06-controlled/v2r1/smoke.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2125,
+      "path": "work/m06-controlled/v2r1/start-manifest.json",
+      "sha256": "ffca43781162339aefbffb008d3aa77b62c7a63c7193e1c70507d13fa4bc38d7"
+    },
+    {
+      "bytes": 5530,
+      "path": "/Users/waichong/worktrees/crowd-m06-controlled/.planning/m06/controlled-head-lag-protocol-v2r1.md",
+      "sha256": "66f9715c8c67f19ad27dd1782d2e703f8739f14b6e219c853e18db3c81a55315"
+    }
+  ],
+  "created_utc": "2026-11-18T06:09:03.226602+00:00",
+  "run_status": "executed once; exit 0",
+  "tracked_git_sha": "345275100aaae31b9810a95a8eeec8cfe8a0a3b9"
+}
