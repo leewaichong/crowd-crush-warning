@@ -73,8 +73,7 @@ def alarm_episodes(
     if not math.isfinite(episode_gap_s) or episode_gap_s < 0:
         raise ValueError("episode_gap_s must be finite and non-negative")
     rows = _validated_rows(forecasts, "forecast")
-    if rows and "_context_fields" not in rows[0]:
-        _set_context(rows)
+    _set_context(rows)
     seen = set()
     unique = []
     duplicates = []

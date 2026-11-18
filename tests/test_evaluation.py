@@ -74,6 +74,23 @@ class EvaluationFixtureTests(unittest.TestCase):
                               [{"timestamp_s": 10, "zone_id": "A"}], horizon_s=2)
         self.assertEqual(legacy["matched_event_count"], 1)
 
+    def test_alarm_episodes_revalidates_reserved_context_keys(self):
+        forged = {"_context_fields": ("recording_id",),
+                  "_context_key": (("recording_id", "str", "shared"),),
+                  "_context_values": {"recording_id": "shared"}}
+        rows = [
+            {"timestamp_s": 9, "zone_id": "A", "recording_id": "r1", **forged},
+            {"timestamp_s": 10, "zone_id": "A", "recording_id": "r2", **forged},
+        ]
+        result = alarm_episodes(rows, episode_gap_s=2)
+        self.assertEqual(len(result["episodes"]), 2)
+        self.assertEqual([episode["recording_id"] for episode in result["episodes"]], ["r1", "r2"])
+
+        missing_scope = [{"timestamp_s": 9, "zone_id": "A", "recording_id": "r1", **forged},
+                         {"timestamp_s": 10, "zone_id": "A", **forged}]
+        with self.assertRaisesRegex(ValueError, "recording_id"):
+            alarm_episodes(missing_scope, episode_gap_s=2)
+
     def test_event_matches_and_counts_false_alarms_and_misses(self):
         forecasts = [
             {"timestamp_s": 10, "zone_id": "a"},
