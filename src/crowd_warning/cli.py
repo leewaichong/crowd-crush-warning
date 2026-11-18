@@ -52,6 +52,15 @@ def _parser() -> argparse.ArgumentParser:
     replay_density = commands.add_parser("replay-density", help="write a temporal density source viewer")
     replay_density.add_argument("input", help="path to a temporal density table")
     replay_density.add_argument("--output", required=True, help="new HTML output path; existing files are refused")
+
+    inspect_video = commands.add_parser(
+        "inspect-video", help="inspect local video timestamps and decode the video stream"
+    )
+    inspect_video.add_argument("input", help="path to a local video file")
+    inspect_video.add_argument(
+        "--max-gap-s", type=float,
+        help="report timestamp intervals above this positive finite research check",
+    )
     return parser
 
 
@@ -135,6 +144,11 @@ def _run(args: argparse.Namespace) -> Any:
             "output": str(output_path.resolve()),
             "input_sha256": input_sha256,
         }
+
+    if args.command == "inspect-video":
+        from .video import inspect_video
+
+        return inspect_video(args.input, max_gap_s=args.max_gap_s)
 
     raise ValueError(f"unsupported command: {args.command}")
 
