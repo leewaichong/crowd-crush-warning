@@ -14,7 +14,7 @@ The Pamplona table contains 90,000 rows with author-declared time in seconds rel
 
 ## Local commands
 
-The commands use Python's standard library. They read local files and do not connect to a camera or service, except for the explicit `curl` download shown below.
+The commands use Python's standard library unless noted below. They read local files and do not connect to a camera or service, except for the explicit `curl` downloads shown here.
 
 ```sh
 PYTHONPATH=src python3 -m crowd_warning validate observations.jsonl
@@ -59,6 +59,14 @@ PYTHONPATH=src python3 -m crowd_warning inspect-video data/video_crowd.mov
 ```
 
 `inspect-video` requires local `ffprobe` and `ffmpeg`. It reports stream metadata and actual presentation timestamps, then decodes the video stream to a null output without audio. A completed command reports timing status `ok` or `abstain`; missing, duplicate, or non-monotonic timestamps can cause abstention. Tool, probe, decode, or input failures produce a nonzero command status. Optional `--max-gap-s` reports caller-declared timestamp gaps and marks timing `abstain` when a gap exceeds that value. It is not a safety threshold and does not infer missing physical frames. Nominal frame rate is metadata, not a substitute for decoded timestamps.
+
+`inspect-motion` uses the same local `ffprobe` and `ffmpeg` tools and also requires NumPy. NumPy is imported only for this command; the other commands above do not need it. The command resizes grayscale frames to width 320 by default and samples at one-second intervals by actual decoder presentation timestamps, not nominal frame rate. It reports integer-pixel, mean-SSD block matches. It does not reproduce Gu et al.'s method or a PIV method. The block matcher is an image-space baseline. Scale, physical motion, camera motion, and visibility remain unknown. A unique SSD minimum is not a confidence score, an accuracy measure, or visibility clearance. `at_search_boundary` means the selected minimum reaches the configured search limit, so the match may be truncated by that limit. The optional caller-supplied background summary does not independently verify that those cells are background.
+
+```sh
+PYTHONPATH=src python3 -m crowd_warning inspect-motion data/video_crowd.mov
+```
+
+At clean SHA `5c1d268c4060798701f6a1be3ec1ba2704537f35`, a real-input software check completed successfully on the selected CrowdDNA video on 18 November 2026. It bound 251 decoded frames to native timestamps and selected 10 pairs, each with 190 blocks at 320 by 180 pixels. Between 17 and 32 block matches per pair reached a search boundary. This verifies software operation on that input only. It does not establish motion beyond the search window, camera stability, or people motion. Independent motion accuracy and warning effectiveness are **NOT RUN**.
 
 ### Read one Lyon TopView trajectory member
 

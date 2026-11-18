@@ -8,6 +8,8 @@ The offline CLI supports observation validation, causal temporal features, condi
 
 The source-inspection additions include `inspect-video`, which requires local `ffprobe` and `ffmpeg`, reports actual presentation timestamps, and performs video-only null decoding. A completed inspection separates timing abstention from command failure; optional `--max-gap-s` is caller-declared and is not a safety threshold. The Lyon reader is a Python API for one exact nine-column TopView ZIP member and its summary. It preserves source time, excludes `id_global`, and does not provide a calibrated motion-field pipeline.
 
+`inspect-motion` requires local `ffprobe`, `ffmpeg`, and NumPy. It resizes grayscale frames to width 320 by default and samples at one-second intervals using actual decoder PTS. Its integer-pixel mean-SSD block matching is an image-space baseline, not a replication of Gu et al. or PIV. Camera motion, physical scale, and visibility remain unknown. Caller-nominated background cells are not independently verified. A unique SSD minimum does not measure confidence, accuracy, or visibility; a boundary match may be truncated by the search limit.
+
 Baseline signals include current density, previous valid pressure proxy, and one-sided excess CUSUM against the causal past mean. Parameters are explicit research settings. They are not safety limits or calibrated warning thresholds. The CUSUM family is informed by Page (1954), not a calibrated reproduction.
 
 Event matching and alarm-episode matching scope pooled data by recording identifier when present, otherwise event identifier, and by venue when supplied. Without identifiers, callers must partition inputs by recording. Episode matching expects selected alarm rows and does not automatically convert all forecasts to alarms.
@@ -17,6 +19,8 @@ The temporal-density source describes spatially averaged density in m^-2 against
 ## Local verification
 
 At clean Git SHA `45ea60dc0d9610bbafd629cf5ef0d02e2103b174`, local verification decoded 251 video frames with actual PTS from 0.0 to 10.0 seconds and zero missing, duplicate, or non-monotonic timestamps. No gap threshold was configured. The Lyon member summary reported 259,676 rows, 685 traces, preserved negative source time, zero within-trace frame-gap intervals, and member SHA-256 `1419d83a1568c8f6aff82e93af14294c9a4dbbe853c5dc1da97dedf3b497fe0c`. The full suite passed 128 tests; compile and diff checks passed. These are software and source checks, not a component-accuracy or warning-effectiveness evaluation.
+
+At clean Git SHA `5c1d268c4060798701f6a1be3ec1ba2704537f35`, `inspect-motion` completed on the selected CrowdDNA video on 18 November 2026. It bound 251 decoded frames to native timestamps and produced 10 selected pairs with 190 blocks per pair at 320 by 180 pixels. Boundary matches ranged from 17 to 32 per pair. This was real-input software verification only. It does not show motion beyond the search window, camera stability, or people motion. Independent motion accuracy, warning effectiveness, and the density benchmark are **NOT RUN**.
 
 ## Evaluation
 
