@@ -71,6 +71,31 @@ class SourceManifestTests(unittest.TestCase):
                 mutate(manifest)
                 self.assertFalse(self.check(manifest)["integrity_verified"])
 
+    def test_rejects_empty_files_list_because_no_payload_was_verified(self):
+        manifest = copy.deepcopy(self.manifest)
+        manifest["files"] = []
+        report = self.check(manifest)
+        self.assertFalse(report["integrity_verified"])
+        self.assertEqual(report["files_checked"], 0)
+        self.assertIn("at least one file", " ".join(report["errors"]))
+
+    def test_malformed_urls_return_structured_errors(self):
+        manifest = copy.deepcopy(self.manifest)
+        manifest["source_record"]["url"] = "http://[broken"
+        manifest["files"][0]["url"] = "http://[broken"
+        report = self.check(manifest)
+        self.assertFalse(report["integrity_verified"])
+        self.assertEqual(len(report["errors"]), 2)
+
+    def test_unhashable_purpose_and_status_return_schema_errors(self):
+        manifest = copy.deepcopy(self.manifest)
+        manifest["files"][0]["purpose"] = ["documentation"]
+        manifest["files"][0]["status"] = {"state": "inspected"}
+        report = self.check(manifest)
+        self.assertFalse(report["integrity_verified"])
+        self.assertTrue(any("purpose" in error for error in report["errors"]))
+        self.assertTrue(any("status" in error for error in report["errors"]))
+
     def test_rejects_malformed_checksums_and_wrong_size_or_bytes(self):
         changes = (
             {"sha256": "xyz"},
@@ -114,8 +139,14 @@ class SourceManifestTests(unittest.TestCase):
         self.assertFalse(report["integrity_verified"])
         self.assertIn("duplicated", " ".join(report["errors"]))
 
-    def test_rights_flag_is_false_for_non_record_scope(self):
+    def test_unknown_license_scope_requires_rights_review(self):
         self.manifest["source_record"]["license"]["scope"] = "dataset"
+        report = self.check()
+        self.assertTrue(report["integrity_verified"])
+        self.assertTrue(report["rights_review_required"])
+
+    def test_file_scope_does_not_require_record_level_review(self):
+        self.manifest["source_record"]["license"]["scope"] = "file-level"
         self.assertFalse(self.check()["rights_review_required"])
 
 

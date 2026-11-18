@@ -36,7 +36,10 @@ def _nonempty_text(value: Any) -> bool:
 def _valid_url(value: Any) -> bool:
     if not _nonempty_text(value):
         return False
-    parsed = urlparse(value)
+    try:
+        parsed = urlparse(value)
+    except ValueError:
+        return False
     return parsed.scheme in {"http", "https"} and bool(parsed.netloc)
 
 
@@ -71,13 +74,13 @@ def verify_source_manifest(manifest: Any, *, base_dir: str | Path) -> dict[str, 
     errors: list[str] = []
     files_checked = 0
     bytes_checked = 0
-    rights_review_required = False
+    rights_review_required = True
 
     if not _finite_json(manifest):
         errors.append("manifest metadata must contain only finite JSON values")
     if not isinstance(manifest, Mapping):
         return {"integrity_verified": False, "errors": [*errors, "manifest must be an object"],
-                "files_checked": 0, "bytes_checked": 0, "rights_review_required": False}
+                "files_checked": 0, "bytes_checked": 0, "rights_review_required": True}
 
     version = manifest.get("manifest_version")
     if isinstance(version, bool) or not isinstance(version, int) or version != 1:
@@ -101,13 +104,17 @@ def verify_source_manifest(manifest: Any, *, base_dir: str | Path) -> dict[str, 
         scope = license_info.get("scope")
         if not _nonempty_text(scope):
             errors.append("source_record.license.scope must be a non-empty string")
-        elif scope.strip().lower().replace("-", "_") in {"record", "record_only", "record_level"}:
-            rights_review_required = True
+        else:
+            normalized_scope = scope.strip().lower().replace("-", "_")
+            if normalized_scope in {"file", "file_level"}:
+                rights_review_required = False
 
     entries = manifest.get("files")
     if not isinstance(entries, list):
         errors.append("files must be a list")
         entries = []
+    elif not entries:
+        errors.append("files must contain at least one file to verify")
 
     base = Path(base_dir).resolve()
     seen: set[str] = set()
@@ -131,9 +138,11 @@ def verify_source_manifest(manifest: Any, *, base_dir: str | Path) -> dict[str, 
             errors.append(f"{label}.source_checksum must be algorithm:hex with a valid digest length")
         if not _valid_timestamp(entry.get("retrieved_at")):
             errors.append(f"{label}.retrieved_at must be an ISO8601 timestamp with timezone")
-        if entry.get("purpose") not in {"documentation", "measurement"}:
+        purpose = entry.get("purpose")
+        if not isinstance(purpose, str) or purpose not in {"documentation", "measurement"}:
             errors.append(f"{label}.purpose must be documentation or measurement")
-        if entry.get("status") not in {"downloaded", "inspected"}:
+        status = entry.get("status")
+        if not isinstance(status, str) or status not in {"downloaded", "inspected"}:
             errors.append(f"{label}.status must be downloaded or inspected")
 
         relative = entry.get("path")
