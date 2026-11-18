@@ -1,0 +1,137 @@
+{
+  "archive_status": "fitted-exploratory training-only proxy fit; original audit exited 1 and passed=false on provenance assertions; root maintainer reconciliation accepted numerical and provenance evidence, see audit-summary.json",
+  "article": {
+    "article_number": 718,
+    "authors": [
+      "Oscar Dufour",
+      "Huu-Tu Dang",
+      "Jakob Cordes",
+      "Raphael Korbmacher",
+      "Mohcine Chraibi",
+      "Benoit Gaudou",
+      "Alexandre Nicolas",
+      "Antoine Tordeux"
+    ],
+    "doi": "10.1038/s41597-025-04732-3",
+    "journal": "Scientific Data",
+    "title": "Dense Crowd Dynamics and Pedestrian Trajectories: A Multiscale Field Dataset from the Festival of Lights in Lyon",
+    "volume": 12,
+    "year": 2025
+  },
+  "fit": {
+    "fixed_settings": {
+      "coupling": 0.15,
+      "coupling_status": "fixed, not estimated; no fitted joint causal coupling",
+      "jumps": "disabled; rate and scale are zero"
+    },
+    "four_equal_area_tiles": "tile boundaries were derived from training coordinates and are withheld from this sanitized summary",
+    "marginal_tile_parameters": {
+      "0": {
+        "diffusion_per_sqrt_source_second": 0.004255466675814542,
+        "drift_per_source_second": 0.00013604735400043227,
+        "observation_count": 2875,
+        "training_time_range_s": [
+          -75893.933,
+          -75798.133
+        ]
+      },
+      "1": {
+        "diffusion_per_sqrt_source_second": 0.005708907038464851,
+        "drift_per_source_second": 8.068883988034143e-05,
+        "observation_count": 2875,
+        "training_time_range_s": [
+          -75893.933,
+          -75798.133
+        ]
+      },
+      "2": {
+        "diffusion_per_sqrt_source_second": 0.002519202662849646,
+        "drift_per_source_second": 4.795276578940277e-05,
+        "observation_count": 2875,
+        "training_time_range_s": [
+          -75893.933,
+          -75798.133
+        ]
+      },
+      "3": {
+        "diffusion_per_sqrt_source_second": 0.004163191797640135,
+        "drift_per_source_second": 5.618780644703064e-05,
+        "observation_count": 2875,
+        "training_time_range_s": [
+          -75893.933,
+          -75798.133
+        ]
+      }
+    },
+    "missing_proxy_frame_cells_by_tile": {
+      "0": 2,
+      "1": 2,
+      "2": 2,
+      "3": 2
+    },
+    "proxy_definition": "training reported trajectory rows per tile area times population variance of available causal tile-mean source-coordinate rates in inclusive trailing [t-1s,t] window",
+    "proxy_threshold": {
+      "rank": 10925,
+      "rule": "nearest-rank pooled training proxy 95th percentile",
+      "sample_count": 11500,
+      "value": 0.017703076301339493
+    },
+    "proxy_unit": "reported-track-record m^-2 times source-declared (m/s)^2; statistical proxy only",
+    "training_frames_inclusive": [
+      0,
+      2876
+    ],
+    "training_q_values": {
+      "count": 11500,
+      "count_by_tile": {
+        "0": 2875,
+        "1": 2875,
+        "2": 2875,
+        "3": 2875
+      },
+      "first_source_frame": 2,
+      "last_source_frame": 2876,
+      "private_aggregate_file_sha256": "f40a28ad891ec475851415f4633ff4e3721d2de11c3731b27b0c3abd08c69379",
+      "private_file_not_in_archive": true
+    }
+  },
+  "interpretation_limits": [
+    "The fit estimates marginal statistical proxy drift and residual diffusion from one recording training portion.",
+    "Reported-track counts are not a complete census or persons-per-square-metre measurements.",
+    "Source-declared coordinates and time were used; independent calibration accuracy and drift were not measured.",
+    "No event-held-out evidence; the source provides no event IDs for this fit.",
+    "No physical force, danger, or calibrated probability validity is established.",
+    "The calibrated production forecast interface was not exercised.",
+    "No forecasts, baseline comparisons, scores, or effectiveness evaluation were run.",
+    "The raw independent audit exited 1 and recorded passed=false because of three provenance assertion errors. Root maintainer reconciliation accepted the numerical and provenance evidence; see audit-summary.json for both statuses."
+  ],
+  "scope": "one recording, training portion only; no forecasts or scores",
+  "software_license": "MIT; see research-code/LICENSE. Dataset terms are separate.",
+  "source": {
+    "archive_name": "Data_Madras.zip",
+    "archive_sha256": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+    "archive_size_bytes": 33639872,
+    "archive_source_checksum": "md5:2ad3436fb8c6b25ebc72d51eacfa1abb",
+    "dataset_record_title": "Dense Crowd Dynamics and Pedestrian Trajectories: A Multiscale Field Study at the Fête des Lumières in Lyon",
+    "declared_coordinate_system": "EPSG:2154",
+    "declared_coordinate_unit": "metres",
+    "declared_time_field": "t/s",
+    "declared_time_unit": "seconds",
+    "independent_calibration": "not established by this archive fit",
+    "member_path": "Data_Madras/TopView_trajectories/TopView_1B.txt",
+    "member_sha256": "1419d83a1568c8f6aff82e93af14294c9a4dbbe853c5dc1da97dedf3b497fe0c",
+    "member_size_bytes": 16638524,
+    "record_doi": "10.5281/zenodo.13830435",
+    "record_license": "CC BY 4.0 at record scope",
+    "dataset_creators": [
+      "Oscar Dufour",
+      "Huu-Tu Dang",
+      "Jakob Cordes",
+      "Raphael Korbmacher",
+      "Mohcine Chraibi",
+      "Benoit Gaudou",
+      "Alexandre Nicolas",
+      "Antoine Tordeux"
+    ]
+  }
+}

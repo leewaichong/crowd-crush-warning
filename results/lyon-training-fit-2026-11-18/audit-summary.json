@@ -1,0 +1,50 @@
+{
+  "status": {
+    "raw_audit_exit_code": 1,
+    "raw_audit_passed": false,
+    "root_maintainer_reconciliation": "RECONCILED_NUMERICAL_AND_PROVENANCE_PASS",
+    "interpretation": "The raw audit status is preserved. The root reconciliation accepts the numerical and provenance evidence after correcting three invalid provenance equality assertions; it does not relabel the raw audit as passed."
+  },
+  "provenance": {
+    "raw_audit_sha256": "8cb75f78fb566c97986c0c08ec27013428c6eeda1ed4489ff840d7790276534d",
+    "raw_exit_record_sha256": "dbba5e898905f6947044f09c0f1bef22a085b93db64d052e57ad8f554b4bfe65",
+    "root_reconciliation_sha256": "c6de1e4d970a8d5589cf7a56ea5d51e99b432bfc0de5cfbff99689d22c887465",
+    "preaudit_freeze_sha256": "64695307d55ca533522eefb5340e2c506ac2648ab0d34de434a6036ead154252",
+    "audit_protocol_sha256": "d32213663125ec5f38aff9bcbd6cb43837438ccfc0a9a3548b82bff4ec9057bd",
+    "audit_executable_sha256": "a3da10fdca101f705934364d16d82f2aa76deee90fdc264cafd7ec237840c711",
+    "audit_launcher_sha256": "b62601cd208fff21448543c88bcbd4d2e6454bc984ea8daf628c4409587db2b4",
+    "audit_started_at_utc": "2026-11-18T08:32:30.735356+00:00",
+    "audit_ended_at_utc": "2026-11-18T08:32:34.178148+00:00"
+  },
+  "raw_audit_errors": [
+    "fit argv differs from launcher/freeze",
+    "fit UTC start/end differs from launcher record",
+    "launcher time interval does not match fit provenance"
+  ],
+  "reconciliation_checks": {
+    "fit_sys_argv_matches_launcher_after_removing_interpreter": true,
+    "launcher_argv_matches_prefit_freeze": true,
+    "fit_command_matches_prefit_freeze": true,
+    "child_utc_interval_is_contained_by_launcher_interval": true,
+    "launcher_completed_without_timeout_with_exit_0": true,
+    "python_and_platform_match_prefit_runtime": true,
+    "fit_freeze_hash_matches": true,
+    "raw_numerical_discrepancy_within_frozen_tolerance": true
+  },
+  "numerical_scope": {
+    "training_aggregate_q_rows_checked": 11500,
+    "all_q_rows_coefficients_bounds_tile_area_support_counts_and_percentile_boundary_matched": true,
+    "maximum_absolute_discrepancy": 1.3877787807814457e-17,
+    "frozen_absolute_relative_tolerance": 1e-10,
+    "source_archive_sha256": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+    "source_member_sha256": "1419d83a1568c8f6aff82e93af14294c9a4dbbe853c5dc1da97dedf3b497fe0c"
+  },
+  "limitations": [
+    "One recording training portion only; no event-held-out evidence.",
+    "This checks source-derived statistical proxy quantities, not forecast performance or effectiveness.",
+    "No physical force, danger, causal coupling, latent physical state, or calibrated probability conclusion follows.",
+    "The calibrated production interface was not invoked.",
+    "The audit executable and launcher are identified by hash but not copied into this archive; the audit summary is a derived extract of the preserved raw audit and root reconciliation.",
+    "No q rows, coordinates, trajectory IDs, or private tile bounds are included."
+  ]
+}

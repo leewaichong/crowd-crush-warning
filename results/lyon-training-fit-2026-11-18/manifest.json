@@ -1,0 +1,172 @@
+{
+  "archive_status": {
+    "execution": "fitted-exploratory training-only proxy fit; process completed with return code 0",
+    "forecast_or_effectiveness_evaluation": "not run",
+    "independent_numerical_audit": "raw audit exited 1 and marked passed=false due to three provenance assertions; root maintainer reconciliation accepted numerical and provenance evidence. See audit-summary.json."
+  },
+  "execution_records": {
+    "copied_original_logs": [
+      {
+        "byte_identical": true,
+        "path": "run-logs/stdout.log",
+        "sha256": "8d388940f63dd95ee2a177a242eca5666274077cee19ab9d6fcecf13abd4a591",
+        "source_private_sha256": "8d388940f63dd95ee2a177a242eca5666274077cee19ab9d6fcecf13abd4a591"
+      },
+      {
+        "byte_identical": true,
+        "path": "run-logs/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "source_private_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "freeze_manifest_sha256": "cb2071c2a7bfe4055f6c28aa1633f76735d0cdce6ed714f7fb80c14d82789b62",
+    "launcher_record": {
+      "byte_identical": false,
+      "derived_sanitized_sha256": "d792015b5cf846bfbab60a33a9cb66edfac5b164fa238fe80d626dfd47bacd05",
+      "path": "launcher-record-sanitized.json",
+      "sanitization": "Absolute canonical repository prefix replaced with <canonical-repo>. Original launcher record remains in ignored local work.",
+      "source_private_original_sha256": "3a56b3ad04993a14270b2ec53c50a12eaf3ed00eacfe50b0a71dc0498a0ac61e"
+    },
+    "private_fit_output_sha256": "30e1f19d53a6b4c11fbed57fa498a6b371ad5cafa5095cd0cbc4a1f28cabf209"
+  },
+  "fit_output_sanitization": {
+    "changes": "Public summary was built by allowlisting safe fields. It removes tile_bounds_source_declared_m_private and input.provenance.archive_path; omits the original provenance object (command argv, platform, script/protocol/freeze hashes and Git-before/after fields); replaces the private q-value file path with its checksum/count; and omits the q rows. It contains no individual trajectory IDs or coordinates. The safe manifest retains run hashes and provenance separately. Fit parameter and proxy-threshold values remain copied from the original fit output without numerical edits.",
+    "private_original_path": "work/m08-crowd15/run-20261118T082232Z/training-fit.json",
+    "private_original_sha256": "30e1f19d53a6b4c11fbed57fa498a6b371ad5cafa5095cd0cbc4a1f28cabf209",
+    "private_q_data_treatment": "The 11,500 q rows were never embedded in the private fit JSON; the separate ignored JSONL is retained locally and excluded from this archive. The sanitized summary carries only its SHA-256 and row count.",
+    "public_derived_path": "fit-summary.json",
+    "public_derived_sha256": "306456df1ddf8a84e16b7ff6e5354b045a97d602fdfe230546c6cc1a9d534b6e",
+    "removed_or_replaced_fields": [
+      "tile_bounds_source_declared_m_private",
+      "input.provenance.archive_path",
+      "provenance.command_argv",
+      "provenance.platform",
+      "provenance.prepared_script_sha256",
+      "provenance.protocol_sha256",
+      "provenance.freeze_manifest_sha256",
+      "provenance.frozen_file_sha256",
+      "provenance.git_before",
+      "provenance.git_after",
+      "provenance.tracked_worktree_clean_before",
+      "provenance.tracked_worktree_clean_after",
+      "aggregate_training_q_values.path"
+    ]
+  },
+  "frozen_protocol": {
+    "private_ignored_only": true,
+    "protocol_body_in_archive": false,
+    "sha256": "4a30db370e7005603ee1d7561e6a359aa8ae14f694b19f4c7da1b987a6100a80"
+  },
+  "private_aggregate_q_values": {
+    "fields": "native source time, source frame, tile index, q, reported-row count and rolling/current support counts; no IDs or coordinates",
+    "not_in_public_archive": true,
+    "per_tile_count": {
+      "0": 2875,
+      "1": 2875,
+      "2": 2875,
+      "3": 2875
+    },
+    "private_ignored_path": "work/m08-crowd15/run-20261118T082232Z/training-fit-q-values.jsonl",
+    "reproducibility": "The source hashes and archived numerical definitions allow independent recreation of the quantities. The original run depends on ignored protocol/freeze inputs and original paths; this archive is not a one-command replay.",
+    "row_count": 11500,
+    "sha256": "f40a28ad891ec475851415f4633ff4e3721d2de11c3731b27b0c3abd08c69379"
+  },
+  "research_code": {
+    "exact_frozen_code_path_note": "The archived helper and launcher are byte-identical to the frozen run scripts and are provided for inspection. The helper depends on ignored protocol/freeze inputs and original paths; no public one-command replay is claimed. Original execution metadata and private frozen inputs remain in ignored local work and are identified by checksum.",
+    "files": [
+      {
+        "copy": "byte-identical frozen run helper",
+        "frozen_sha256": "b8d748d2446401dc1f390c1997ef4ceb51c5c90148c534b5eb30e461fcc9dc76",
+        "path": "research-code/fit_training_parameters.py",
+        "sha256": "b8d748d2446401dc1f390c1997ef4ceb51c5c90148c534b5eb30e461fcc9dc76"
+      },
+      {
+        "copy": "byte-identical frozen run launcher",
+        "frozen_sha256": "38dd6c04c87e68c74d4b14c128646308238454a19ace5671ef2f0696baec1f96",
+        "path": "research-code/run_fit.py",
+        "sha256": "38dd6c04c87e68c74d4b14c128646308238454a19ace5671ef2f0696baec1f96"
+      },
+      {
+        "copy": "repository MIT license",
+        "path": "research-code/LICENSE",
+        "sha256": "9495d2475f1b7410c438f7eee9ac309973f626d5156bea7f8db2e5c0be9af9b5"
+      }
+    ],
+    "license": "MIT; copy of repository LICENSE is included, separate from source-data terms"
+  },
+  "run": {
+    "command_redaction": "Only the absolute canonical repository prefix was replaced with <canonical-repo>; command flags, values and relative paths are unchanged. The unredacted launcher argv remains in ignored local work.",
+    "ended_at_utc": "2026-11-18T08:22:45.595604+00:00",
+    "endpoint": null,
+    "exact_command_redacted": "python3 work/m08-crowd15/run_fit.py --record work/m08-crowd15/run-20261118T082232Z/launcher-record.json --stdout work/m08-crowd15/run-20261118T082232Z/stdout.log --stderr work/m08-crowd15/run-20261118T082232Z/stderr.log --timeout-seconds 600 -- python3 work/m08-crowd15/fit_training_parameters.py --archive <canonical-repo>/data/zenodo-13830435/Data_Madras.zip --output work/m08-crowd15/run-20261118T082232Z/training-fit.json --freeze-manifest work/m08-crowd15/run-20261118T082232Z/freeze.json",
+    "returncode": 0,
+    "runtime_python": "3.9.12",
+    "started_at_utc": "2026-11-18T08:22:41.298717+00:00",
+    "statistical_model_identity": "local offline fixed-parameter adapter using coupled-zone-first-passage-v1 equations",
+    "timed_out": false,
+    "timeout_seconds": 600,
+    "tracked_git_sha_after": "2a4b71bd25f9600b55121b284b5da7caf67568c2",
+    "tracked_git_sha_before": "2a4b71bd25f9600b55121b284b5da7caf67568c2",
+    "tracked_worktree_clean_after": true,
+    "tracked_worktree_clean_before": true
+  },
+  "sanitization_scope": "No source tracks, coordinates, trajectory IDs, or raw q rows are published.",
+  "source": {
+    "archive_md5": "2ad3436fb8c6b25ebc72d51eacfa1abb",
+    "archive_name": "Data_Madras.zip",
+    "archive_sha256_before_and_after": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+    "archive_size_bytes": 33639872,
+    "final_article": {
+      "article_number": 718,
+      "authors": [
+        "Oscar Dufour",
+        "Huu-Tu Dang",
+        "Jakob Cordes",
+        "Raphael Korbmacher",
+        "Mohcine Chraibi",
+        "Benoit Gaudou",
+        "Alexandre Nicolas",
+        "Antoine Tordeux"
+      ],
+      "doi": "10.1038/s41597-025-04732-3",
+      "journal": "Scientific Data",
+      "title": "Dense Crowd Dynamics and Pedestrian Trajectories: A Multiscale Field Dataset from the Festival of Lights in Lyon",
+      "volume": 12,
+      "year": 2025
+    },
+    "member_path": "Data_Madras/TopView_trajectories/TopView_1B.txt",
+    "member_sha256_before_and_after": "1419d83a1568c8f6aff82e93af14294c9a4dbbe853c5dc1da97dedf3b497fe0c",
+    "member_size_bytes": 16638524,
+    "record_doi": "10.5281/zenodo.13830435",
+    "record_license": "CC BY 4.0 at record scope",
+    "record_title": "Dense Crowd Dynamics and Pedestrian Trajectories: A Multiscale Field Study at the Fête des Lumières in Lyon",
+    "source_manifest_sha256": "f4b9f0f1fc3343ab20d3f18f0f523d0aac753c4d7302cbd1f00013190f0037cf",
+    "source_reader_sha256": "928925be73800856da3879f066f981993283b20fa80e00de16dc91caeb66021b",
+    "dataset_creators": [
+      "Oscar Dufour",
+      "Huu-Tu Dang",
+      "Jakob Cordes",
+      "Raphael Korbmacher",
+      "Mohcine Chraibi",
+      "Benoit Gaudou",
+      "Alexandre Nicolas",
+      "Antoine Tordeux"
+    ]
+  },
+  "audit": {
+    "summary_path": "audit-summary.json",
+    "summary_status": "derived summary of preserved raw audit and root maintainer reconciliation; original audit exit and pass fields are retained as recorded",
+    "raw_audit_sha256": "8cb75f78fb566c97986c0c08ec27013428c6eeda1ed4489ff840d7790276534d",
+    "raw_exit_record_sha256": "dbba5e898905f6947044f09c0f1bef22a085b93db64d052e57ad8f554b4bfe65",
+    "root_reconciliation_sha256": "c6de1e4d970a8d5589cf7a56ea5d51e99b432bfc0de5cfbff99689d22c887465",
+    "preaudit_freeze_sha256": "64695307d55ca533522eefb5340e2c506ac2648ab0d34de434a6036ead154252",
+    "audit_protocol_sha256": "d32213663125ec5f38aff9bcbd6cb43837438ccfc0a9a3548b82bff4ec9057bd",
+    "audit_executable_sha256": "a3da10fdca101f705934364d16d82f2aa76deee90fdc264cafd7ec237840c711",
+    "audit_launcher_sha256": "b62601cd208fff21448543c88bcbd4d2e6454bc984ea8daf628c4409587db2b4"
+  },
+  "public_artifact_hashes": {
+    "fit-summary.json": "306456df1ddf8a84e16b7ff6e5354b045a97d602fdfe230546c6cc1a9d534b6e",
+    "audit-summary.json": "abdbb06eaf0fcd1fdc0881eee47d8e01d3c2b20f5a0af3b426e15a781ede871f",
+    "launcher-record-sanitized.json": "d792015b5cf846bfbab60a33a9cb66edfac5b164fa238fe80d626dfd47bacd05"
+  }
+}

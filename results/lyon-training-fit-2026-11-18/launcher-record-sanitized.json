@@ -1,0 +1,22 @@
+{
+  "command_argv": [
+    "python3",
+    "work/m08-crowd15/fit_training_parameters.py",
+    "--archive",
+    "<canonical-repo>/data/zenodo-13830435/Data_Madras.zip",
+    "--output",
+    "work/m08-crowd15/run-20261118T082232Z/training-fit.json",
+    "--freeze-manifest",
+    "work/m08-crowd15/run-20261118T082232Z/freeze.json"
+  ],
+  "ended_at_utc": "2026-11-18T08:22:45.595604+00:00",
+  "record_type": "derived sanitized copy of launcher record; not a byte-identical copy",
+  "returncode": 0,
+  "sanitization": "Replaced the absolute canonical repository prefix in the archive argument with <canonical-repo>; all other argv values, times, timeout and exit status are retained.",
+  "source_launcher_record_sha256": "3a56b3ad04993a14270b2ec53c50a12eaf3ed00eacfe50b0a71dc0498a0ac61e",
+  "started_at_utc": "2026-11-18T08:22:41.298717+00:00",
+  "stderr_path": "run-logs/stderr.log",
+  "stdout_path": "run-logs/stdout.log",
+  "timed_out": false,
+  "timeout_seconds": 600
+}

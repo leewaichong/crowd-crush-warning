@@ -1,0 +1,9 @@
+{
+  "status": "fitted-exploratory training-only parameters; no forecasts or scores",
+  "output": "work/m08-crowd15/run-20261118T082232Z/training-fit.json",
+  "input_sha256": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c",
+  "training_frames": [
+    0,
+    2876
+  ]
+}

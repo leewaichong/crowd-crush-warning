@@ -16,7 +16,7 @@ The Pamplona table contains 90,000 rows with author-declared time in seconds rel
 
 The [controlled-trial co-movement study](results/controlled-co-movement-2026-11-18/README.md) reports an independently audited, exploratory analysis of native-frame motion in one previously inspected trial. It describes correlations and common-mode sensitivity, without estimating propagation, physical response time, force, or warning accuracy.
 
-The [Lyon switching-state result](results/lyon-switching-state-2026-11-18/README.md) reports one descriptive evaluation of chronological source-reported next-frame increments within supplied traces. It does not establish physical measurement accuracy, generalization, or warning effectiveness.
+The [Lyon switching-state result](results/lyon-switching-state-2026-11-18/README.md) reports one descriptive evaluation of chronological source-reported next-frame increments within supplied traces. It does not establish physical measurement accuracy, generalization, or warning effectiveness. The separate [Lyon training-only proxy fit](results/lyon-training-fit-2026-11-18/README.md) contains no forecast evaluation.
 
 ## Local commands
 
