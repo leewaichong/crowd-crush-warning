@@ -15,7 +15,9 @@ def fixture():
         "scaled_dimensions": {"width": 4, "height": 4},
         "transform": {"method": "aspect-preserving resize to explicit even dimensions", "scale_x": 0.5, "scale_y": 0.5},
         "pairs": [{"actual_dt_s": 2.0, "motion": field}]}
-    quality = [{"field_sha256": digest, "status": "eligible_under_supplied_evidence", "eligible_cell_ids": ["0:0"]}]
+    quality = [{"field_sha256": digest, "status": "eligible_under_supplied_evidence", "eligible_cell_ids": ["0:0"],
+        "supplied_evidence": {"camera_reference": "camera note", "visibility_reference": "visibility note",
+                              "scope": "caller supplied; not independently verified"}}]
     calibration = {"verified": True, "reference": "test plane", "source_sha256": "a" * 64,
         "native_width": 8, "native_height": 8,
         "image_to_plane_m": [[1, 0, 0], [0, 1, 0], [0, 0, 1]]}
@@ -25,22 +27,26 @@ def fixture():
 class CalibrationTests(unittest.TestCase):
     def test_unknown_evidence_abstains_without_metric_values(self):
         result, quality, cal = fixture()
-        out = project_motion_video(result)
+        out = project_motion_video(result, quality_by_pair=quality)
         cell = out["pairs"][0]["motion"]["cells"][0]
         self.assertIsNone(cell["plane_vx_mps"])
         self.assertIsNone(cell["plane_vy_mps"])
         self.assertEqual(out["projection_status"], "abstain")
+        self.assertEqual(out["quality_supplied_evidence"], [quality[0]["supplied_evidence"]])
+        self.assertEqual(out["pairs"][0]["quality_supplied_evidence"], quality[0]["supplied_evidence"])
         cal["verified"] = False
         out = project_motion_video(result, calibration=cal, quality_by_pair=quality)
         self.assertEqual(out["projection_status"], "abstain")
         self.assertEqual(out["pairs"][0]["motion"]["cells"][0]["projection_abstention_reason"], "calibration_unverified")
         _, quality, cal = fixture()
         quality[0]["status"] = "abstain"
-        quality[0]["evidence_references"] = ["visibility log"]
+        quality[0]["supplied_evidence"] = {"camera_reference": None, "visibility_reference": "visibility log",
+                                            "scope": "caller supplied; not independently verified"}
         out = project_motion_video(result, calibration=cal, quality_by_pair=quality)
         self.assertIsNone(out["pairs"][0]["motion"]["cells"][0]["plane_vx_mps"])
         self.assertEqual(out["pairs"][0]["motion"]["cells"][0]["projection_abstention_reason"], "quality_abstain")
-        self.assertEqual(out["pairs"][0]["quality_reference"], ["visibility log"])
+        self.assertEqual(out["pairs"][0]["quality_supplied_evidence"], quality[0]["supplied_evidence"])
+        self.assertEqual(out["quality_supplied_evidence"], [quality[0]["supplied_evidence"]])
 
     def test_known_scale_planar_translation(self):
         result, quality, cal = fixture()
@@ -51,6 +57,8 @@ class CalibrationTests(unittest.TestCase):
         out = project_motion_video(result, calibration=cal, quality_by_pair=quality)
         self.assertEqual(out["pairs"][0]["motion"]["units"], "pixels_per_pair")
         self.assertIn("m_per_s", out["projection_units"])
+        self.assertEqual(out["quality_supplied_evidence"], [quality[0]["supplied_evidence"]])
+        self.assertEqual(out["pairs"][0]["quality_supplied_evidence"]["scope"], "caller supplied; not independently verified")
         cal["image_to_plane_m"] = [[v * 1e-20 for v in row] for row in cal["image_to_plane_m"]]
         self.assertAlmostEqual(project_motion_video(result, calibration=cal, quality_by_pair=quality)["pairs"][0]["motion"]["cells"][0]["plane_vx_mps"], 1.0)
 

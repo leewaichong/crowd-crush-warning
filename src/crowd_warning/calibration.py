@@ -29,13 +29,14 @@ def project_motion_video(
               "calibration_reference": None,
               "calibration_source_sha256": None,
               "calibration_reference_independently_verified": False,
-              "quality_references": []}
+              "quality_supplied_evidence": []}
     # An absent or explicitly unverified calibration is missing evidence.
     if isinstance(calibration, Mapping) and "verified" in calibration and not isinstance(calibration["verified"], bool):
         raise ValueError("calibration verified flag must be boolean")
     if calibration is None or (isinstance(calibration, Mapping) and calibration.get("verified") is not True):
         reason = "calibration_not_supplied" if calibration is None else "calibration_unverified"
         output["projection_abstention_reason"] = reason
+        output["quality_supplied_evidence"] = _aligned_supplied_evidence(quality_by_pair, len(pairs))
         output["pairs"] = [_abstain_pair(p, reason, quality_by_pair[i] if isinstance(quality_by_pair, list) and i < len(quality_by_pair) else None)
                            for i, p in enumerate(pairs)]
         return output
@@ -52,7 +53,9 @@ def project_motion_video(
         raise ValueError("quality_by_pair must align exactly with result pairs")
     output["calibration_reference"] = calibration["reference"]
     output["calibration_source_sha256"] = calibration["source_sha256"]
-    output["quality_references"] = [q.get("evidence_references") for q in quality_by_pair if isinstance(q, Mapping)]
+    output["quality_supplied_evidence"] = [
+        q.get("supplied_evidence") if isinstance(q, Mapping) else None for q in quality_by_pair
+    ]
     any_projected = False
     for pair, quality in zip(pairs, quality_by_pair):
         projected = _project_pair(result, pair, quality, matrix, shape)
@@ -60,6 +63,15 @@ def project_motion_video(
         output["pairs"].append(projected)
     output["projection_status"] = "conditional_projection" if any_projected else "abstain"
     return output
+
+
+def _aligned_supplied_evidence(quality_by_pair: Any, pair_count: int) -> list[Any]:
+    if not isinstance(quality_by_pair, list):
+        return [None] * pair_count
+    return [
+        q.get("supplied_evidence") if isinstance(q, Mapping) else None
+        for q in quality_by_pair[:pair_count]
+    ] + [None] * max(0, pair_count - len(quality_by_pair))
 
 
 def _validate_result_shape(result: Mapping[str, Any]) -> tuple[int, int, int, int]:
@@ -190,7 +202,7 @@ def _project_pair(result: Mapping[str, Any], pair: Mapping[str, Any], quality: M
     new_field = {**field, "cells": projected_cells}
     return {**pair, "motion": new_field,
             "projection_status": "conditional_projection" if any(_finite(c["plane_vx_mps"]) and _finite(c["plane_vy_mps"]) for c in projected_cells) else "abstain",
-            "quality_reference": quality.get("evidence_references"),
+            "quality_supplied_evidence": quality.get("supplied_evidence"),
             "quality_status": status}
 
 
@@ -220,5 +232,5 @@ def _abstain_pair(pair: Any, reason: str, quality: Any = None) -> Any:
                        "projection_abstention_reason": reason} for cell in cells if isinstance(cell, Mapping)]
     out = {**pair, "motion": field, "projection_status": "abstain"}
     if isinstance(quality, Mapping):
-        out["quality_reference"] = quality.get("evidence_references")
+        out["quality_supplied_evidence"] = quality.get("supplied_evidence")
     return out
