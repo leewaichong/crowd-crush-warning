@@ -74,8 +74,6 @@ def verify_source_manifest(manifest: Any, *, base_dir: str | Path) -> dict[str, 
     errors: list[str] = []
     files_checked = 0
     bytes_checked = 0
-    rights_review_required = True
-
     if not _finite_json(manifest):
         errors.append("manifest metadata must contain only finite JSON values")
     if not isinstance(manifest, Mapping):
@@ -104,10 +102,6 @@ def verify_source_manifest(manifest: Any, *, base_dir: str | Path) -> dict[str, 
         scope = license_info.get("scope")
         if not _nonempty_text(scope):
             errors.append("source_record.license.scope must be a non-empty string")
-        else:
-            normalized_scope = scope.strip().lower().replace("-", "_")
-            if normalized_scope in {"file", "file_level"}:
-                rights_review_required = False
 
     entries = manifest.get("files")
     if not isinstance(entries, list):
@@ -202,4 +196,4 @@ def verify_source_manifest(manifest: Any, *, base_dir: str | Path) -> dict[str, 
 
     return {"integrity_verified": not errors, "errors": errors,
             "files_checked": files_checked, "bytes_checked": bytes_checked,
-            "rights_review_required": rights_review_required}
+            "rights_review_required": True}
