@@ -8,7 +8,7 @@ The offline CLI supports observation validation, causal temporal features, condi
 
 The source-inspection additions include `inspect-video`, which requires local `ffprobe` and `ffmpeg`, reports actual presentation timestamps, and performs video-only null decoding. A completed inspection separates timing abstention from command failure; optional `--max-gap-s` is caller-declared and is not a safety threshold. The Lyon reader is a Python API for one exact nine-column TopView ZIP member and its summary. It preserves source time, excludes `id_global`, and does not provide a calibrated motion-field pipeline.
 
-`inspect-motion` requires local `ffprobe`, `ffmpeg`, and NumPy. It resizes grayscale frames to width 320 by default and samples at one-second intervals using actual decoder PTS. Its integer-pixel mean-SSD block matching is an image-space baseline, not a replication of Gu et al. or PIV. Camera motion, physical scale, and visibility remain unknown. Caller-nominated background cells are not independently verified. A unique SSD minimum does not measure confidence, accuracy, or visibility; a boundary match may be truncated by the search limit.
+`inspect-motion` requires local `ffprobe`, `ffmpeg`, and NumPy. It resizes grayscale frames to width 320 by default and samples at one-second intervals using actual decoder PTS. Its integer-pixel mean-SSD block matching is an image-space baseline, not a replication of Gu et al. or PIV. The resize dimensions are specified; physical scale and motion remain unknown. Camera motion and visibility are not assessed. Caller-nominated background cells are not independently verified. A unique SSD minimum does not measure confidence, accuracy, or visibility; a boundary match may be truncated by the search limit.
 
 Baseline signals include current density, previous valid pressure proxy, and one-sided excess CUSUM against the causal past mean. Parameters are explicit research settings. They are not safety limits or calibrated warning thresholds. The CUSUM family is informed by Page (1954), not a calibrated reproduction.
 
@@ -20,11 +20,15 @@ The temporal-density source describes spatially averaged density in m^-2 against
 
 At clean Git SHA `45ea60dc0d9610bbafd629cf5ef0d02e2103b174`, local verification decoded 251 video frames with actual PTS from 0.0 to 10.0 seconds and zero missing, duplicate, or non-monotonic timestamps. No gap threshold was configured. The Lyon member summary reported 259,676 rows, 685 traces, preserved negative source time, zero within-trace frame-gap intervals, and member SHA-256 `1419d83a1568c8f6aff82e93af14294c9a4dbbe853c5dc1da97dedf3b497fe0c`. The full suite passed 128 tests; compile and diff checks passed. These are software and source checks, not a component-accuracy or warning-effectiveness evaluation.
 
-At clean Git SHA `5c1d268c4060798701f6a1be3ec1ba2704537f35`, `inspect-motion` completed on the selected CrowdDNA video on 18 November 2026. It bound 251 decoded frames to native timestamps and produced 10 selected pairs with 190 blocks per pair at 320 by 180 pixels. Boundary matches ranged from 17 to 32 per pair. This was real-input software verification only. It does not show motion beyond the search window, camera stability, or people motion. Independent motion accuracy, warning effectiveness, and the density benchmark are **NOT RUN**.
+At clean Git SHA `5c1d268c4060798701f6a1be3ec1ba2704537f35`, the integrated suite passed 133 tests. The real-video motion software check decoded 251 native frames and selected 10 pairs. These checks do not establish motion accuracy.
+
+At clean Git SHA `5c1d268c4060798701f6a1be3ec1ba2704537f35`, `inspect-motion` completed on the selected CrowdDNA video on 18 November 2026. It bound 251 decoded frames to native timestamps and produced 10 selected pairs with 190 blocks per pair at 320 by 180 pixels. Boundary matches ranged from 17 to 32 per pair. This was real-input software verification only. It does not show motion beyond the search window, camera stability, or people motion. Independent motion accuracy and warning effectiveness are **NOT RUN**.
 
 ## Evaluation
 
-**Real crowd evaluation: NOT RUN. Warning effectiveness: NOT RUN.** The source inspection is technical only. No effectiveness experiment, validated warning, calibrated harm probability, or useful-warning result is claimed.
+The density forecasting component was evaluated descriptively at clean Git SHA `53c35c42087d76614e16d2b14bfd630acfb5e15b` on the published Pamplona spatial-average density series. It used 2022 for training, 2023 for a check (113 completed origins), and 2024 as a same-venue holdout (118 completed origins). The run reports forecast errors in source-declared m^-2; the source preprocessing and causal interpretation are unverified. The [result bundle](../results/pamplona-density-30s-2026-11-18/README.md) includes the metric summary, raw outputs, and provenance. This one-series benchmark establishes no venue generalization, statistical significance, promotion, sensor accuracy, or warning performance.
+
+**Motion accuracy: NOT RUN. Real crowd warning evaluation: NOT RUN. Warning effectiveness: NOT RUN.** No validated warning, calibrated harm probability, or useful-warning result is claimed.
 
 ## Rights and evidence limits
 

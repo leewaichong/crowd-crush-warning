@@ -1,0 +1,37 @@
+{
+  "arms": [
+    "persistence",
+    "local_trend",
+    "ar1"
+  ],
+  "control": "persistence, latest observed density",
+  "expected_outputs": [
+    "origins.jsonl",
+    "model.json",
+    "metrics.json",
+    "manifest.json",
+    "trail.jsonl",
+    "protocol.snapshot.md",
+    "config.json"
+  ],
+  "grid_s": 0.04,
+  "horizon_s": 30.0,
+  "origin_spacing_s": 30.0,
+  "seed_policy": {
+    "bootstrap": 0,
+    "other": "N/A"
+  },
+  "split": {
+    "check": [
+      2023
+    ],
+    "same_venue_holdout": [
+      2024
+    ],
+    "train_in_sample_diagnostic": [
+      2022
+    ]
+  },
+  "units": "source-declared m^-2",
+  "warmup_s": 30.0
+}

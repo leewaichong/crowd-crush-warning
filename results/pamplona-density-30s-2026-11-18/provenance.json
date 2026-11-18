@@ -1,0 +1,78 @@
+{
+  "distributed_raw_outputs": [
+    "origins.jsonl",
+    "metrics.json",
+    "model.json",
+    "config.json"
+  ],
+  "execution": {
+    "control": "persistence, latest observed density",
+    "dependencies": "Python standard library plus repository read_density_table",
+    "deterministic": true,
+    "deterministic_seed_policy": {
+      "bootstrap": 0,
+      "other": "N/A"
+    },
+    "external_endpoint": null,
+    "model_identity": "local discrete density forecasts; no external endpoint",
+    "split": {
+      "check": [
+        2023
+      ],
+      "same_venue_holdout": [
+        2024
+      ],
+      "train_in_sample_diagnostic": [
+        2022
+      ]
+    }
+  },
+  "limits": [
+    "Descriptive forecast errors for the published spatial-average density series only.",
+    "Source preprocessing and causal interpretation are unverified.",
+    "No venue generalization, statistical significance, promotion, sensor accuracy, or warning-effectiveness claim.",
+    "Motion accuracy and warning effectiveness were not run."
+  ],
+  "raw_output_sha256": {
+    "config.json": "ecc511f1c53a9207586bb94350d9e33e37c5b7f08af071d99ab8ab7e6966af14",
+    "manifest.json": "4472327353d6855f46fd82652bdfb537528c5df993300f7d08b1a356e3f8d7ea",
+    "metrics.json": "b01ec1ac4f07b03051827c46d19fdbe30ca831a19beeb06ecb84ff25b466987b",
+    "model.json": "02d8f04747790f9b0faedf4e6f68167bfcb1674b83b5f296c52c17f5873bd573",
+    "origins.jsonl": "326ae2c32aa896874ffcacaf390b3c3180f1c1b556812e7dadb815974beda55f",
+    "protocol.snapshot.md": "6512863719d3da2aabdcdb49b0b2b15b77db7be2e001b0be31ae9931e2f2b3d0"
+  },
+  "run": {
+    "command": {
+      "arguments": [
+        "scripts/density_forecast_benchmark.py",
+        "data/zenodo-14050598/data_density_over_time.txt",
+        "--output-dir",
+        "runs/pamplona-density-30s-2026-11-18",
+        "--protocol",
+        ".planning/m04/frozen-density-observation-protocol.md"
+      ],
+      "executable": "python3",
+      "pythonpath": "src"
+    },
+    "completed_at_utc": "2026-11-18T04:19:21.269627+00:00",
+    "git_clean_before_run": true,
+    "git_sha": "53c35c42087d76614e16d2b14bfd630acfb5e15b",
+    "protocol": {
+      "distributed": false,
+      "recorded_path": ".planning/m04/frozen-density-observation-protocol.md",
+      "sha256": "6512863719d3da2aabdcdb49b0b2b15b77db7be2e001b0be31ae9931e2f2b3d0"
+    },
+    "python_version": "3.9.12",
+    "start_manifest_status": "started",
+    "started_at_utc": "2026-11-18T04:19:17.480974+00:00",
+    "status": "completed"
+  },
+  "source": {
+    "bytes": 4636050,
+    "doi": "10.5281/zenodo.14050598",
+    "filename": "data_density_over_time.txt",
+    "format": "source-declared spatial-average density, units m^-2",
+    "repository_relative_path": "data/zenodo-14050598/data_density_over_time.txt",
+    "sha256": "cbc48912b51e1824017b046a6ee5f1d5eef19a529ba33d9aee361d21cd36561c"
+  }
+}
