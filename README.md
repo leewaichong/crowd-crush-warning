@@ -18,7 +18,7 @@ The [controlled-trial co-movement study](results/controlled-co-movement-2026-11-
 
 The [Lyon switching-state result](results/lyon-switching-state-2026-11-18/README.md) reports one descriptive evaluation of chronological source-reported next-frame increments within supplied traces. It does not establish physical measurement accuracy, generalization, or warning effectiveness. The separate [Lyon training-only proxy fit](results/lyon-training-fit-2026-11-18/README.md) contains no forecast evaluation.
 
-The [Lyon coupled-proxy comparison](results/lyon-coupled-proxy-2026-11-18/README.md) archives one bounded descriptive run and an independent numerical consistency pass. Every record-partition had a single target class, and the coupled arm failed the predeclared test comparison against both controls. This is not an effectiveness result or production promotion.
+The [Lyon coupled-proxy comparison](results/lyon-coupled-proxy-2026-11-18/README.md) archives one bounded descriptive run and an independent numerical consistency pass. Every record partition had only one target class, so these scores cannot establish discrimination or calibration. On both test partitions, coupling scored worse than uncoupled diffusion and better than persistence. It therefore failed the predeclared requirement to beat both controls. This run does not establish warning effectiveness or support production promotion.
 
 ## Local commands
 

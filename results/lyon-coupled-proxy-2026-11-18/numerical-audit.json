@@ -10,9 +10,19 @@
   },
   "v2_actual_audit": {
     "assertion_groups_checked": 30,
+    "command_argv": [
+      "/Library/Frameworks/Python.framework/Versions/3.9/bin/python3",
+      "work/milestone-09/comparison-audit/v2/audit_comparison.py",
+      "--attempt-dir",
+      "/Users/waichong/worktrees/crowd-m08-support-inventory/.planning/crowd16-comparison/20261118T095914Z",
+      "--timeout-seconds",
+      "180"
+    ],
     "comparison_run_sha": "982b145e43f3e1c6f15729861a594f993a396155",
     "completed_utc": "2026-11-18T10:31:37.660931+00:00",
     "correction_completion_sha256": "9855a267dfc0ae9a9d2877718d0096898bed85216a877444567e46557548230c",
+    "endpoint": null,
+    "exact_command": "/Library/Frameworks/Python.framework/Versions/3.9/bin/python3 work/milestone-09/comparison-audit/v2/audit_comparison.py --attempt-dir /Users/waichong/worktrees/crowd-m08-support-inventory/.planning/crowd16-comparison/20261118T095914Z --timeout-seconds 180",
     "execution_sha256": "7dbdf7a3f8f41f31330168179691391ed36c46b321b7ec9a5f82852d4e3aeb64",
     "exit_status": 0,
     "frozen_input_sha256": {
@@ -23,6 +33,7 @@
       "comparison_run_completion": "47457ec93eb31156395f894f3307fc980d5cf520f215674d3ccba667cf37244f",
       "source_archive": "efd80ef53dcf124286e5ca280d7d3daf52e0b6b2fe9441afb1d23c9a0baf150c"
     },
+    "invocation_cwd": "unverified",
     "method": "local standard-library independent recomputation from retained data and selected-origin Euler/RNG replay",
     "metric_deltas_vs_retained_outputs": [
       {
@@ -123,6 +134,7 @@
       }
     ],
     "protocol_sha256": "30d892efb8c1450a5d740c8ed828a585316f404e69d6952b9680ce041b6e044c",
+    "python_runtime": "3.9.12 (v3.9.12:b28265d7e6, Mar 23 2022, 18:22:40) \n[Clang 13.0.0 (clang-1300.0.29.30)]",
     "result_sha256": "f96b38eecf7c8901caef6a555e961cb2d958f456e948e1ad75fcd5a122dbe636",
     "runtime_seconds": 3.706400208,
     "scope": "Numerical consistency of retained private outputs only. Fit coefficients are recomputed from retained training q; no independent source-q reconstruction is claimed. This does not verify source measurements or warning effectiveness.",

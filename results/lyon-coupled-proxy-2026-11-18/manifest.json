@@ -3,8 +3,8 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "f1b98fe590a9226263e3d51754790e15681dc2ba57fbbc27070e4af629083489",
-      "size_bytes": 6749
+      "sha256": "7a79826ed0246b5449c65cdbecc6e6ecef24928ec45e78c78d7a58f211a82d23",
+      "size_bytes": 6784
     },
     {
       "path": "artifact-hashes.json",
@@ -18,8 +18,8 @@
     },
     {
       "path": "numerical-audit.json",
-      "sha256": "cf63521038604f40e01e0d82fdc7d4015e01473a6a3a08df6fc4436e7ed15acf",
-      "size_bytes": 5141
+      "sha256": "9ad370e7509f4ef2e64444a76312760bf078193efbd09d97af6a3314337cdfd7",
+      "size_bytes": 5931
     },
     {
       "path": "provenance.json",
